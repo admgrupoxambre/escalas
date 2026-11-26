@@ -404,6 +404,40 @@ section.card,.kpis,#faixaVisao{scroll-margin-top:100px}
 .dd-leg .it i{width:26px;height:18px;border-radius:4px;display:inline-block}
 .dd-leg .it small{display:block;color:var(--gx-muted);font-size:11.5px}
 #cardFluxo{display:none!important}
+/* calendário de folgas dos gerentes */
+.cg-topo{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.cg-leg{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--gx-muted)}
+.cg-leg span{display:inline-flex;align-items:center;gap:5px}.cg-leg i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.cg-grade{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--gx-border);border-radius:10px;overflow:hidden}
+.cg-sem{background:var(--gx-head);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--gx-muted);padding:8px 10px;border-bottom:1px solid var(--gx-border)}
+.cg-dia{min-height:96px;border-right:1px solid var(--gx-border);border-bottom:1px solid var(--gx-border);padding:6px 6px 8px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.cg-grade>.cg-dia:nth-child(7n){border-right:0}
+.cg-dia.fora{background:#FAFAFB}
+.cg-dia.dom{background:#F7F8FA}
+.cg-dia.fechado{background:repeating-linear-gradient(135deg,#F7F8FA 0,#F7F8FA 6px,#EEF0F3 6px,#EEF0F3 8px)}
+.cg-num{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;color:var(--gx-text)}
+.cg-num small{font-size:10.5px;font-weight:600;color:var(--gx-muted)}
+.cg-it{display:block;width:100%;text-align:left;border:0;border-left:3px solid #151820;background:#F2F4F7;border-radius:4px;padding:2px 6px;font:inherit;font-size:11px;line-height:1.3;color:var(--gx-text);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cg-it b{font-weight:600}.cg-it span{color:var(--gx-muted)}
+.cg-it:hover{background:var(--gx-primary-soft)}
+.cg-it.FF{border-left-color:#FF641C}.cg-it.DAY{border-left-color:#F5B544}.cg-it.CO{border-left-color:#667085}.cg-it.FER{border-left-color:#98A2B3;background:#fff;box-shadow:inset 0 0 0 1px #E4E7EC}.cg-it.AF{border-left-color:#C9C9C9}
+.cg-mais{font-size:11px;color:var(--gx-muted);padding-left:6px}
+.cg-sub{font-size:14px;margin:18px 0 8px}
+table.cg-tot{width:100%;border-collapse:collapse;font-size:12.5px}
+table.cg-tot th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--gx-muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--gx-border)}
+table.cg-tot td{padding:6px 8px;border-bottom:1px solid var(--gx-border)}
+table.cg-tot th.n,table.cg-tot td.n{text-align:right;font-variant-numeric:tabular-nums;width:86px}
+table.cg-tot td.tot{font-weight:700}
+table.cg-tot tfoot td{font-weight:700;border-bottom:0;background:var(--gx-head)}
+table.cg-tot tr.lnk{cursor:pointer}table.cg-tot tr.lnk:hover td{background:var(--gx-primary-soft)}
+@media(max-width:900px){.cg-grade{display:block}.cg-sem{display:none}.cg-dia{min-height:0;border-right:0}.cg-dia.fora,.cg-dia.vazio-dia{display:none}}
+/* modo consulta (supervisor): só leitura */
+.nota-leitura{margin:-4px 0 12px;padding:8px 12px;border-radius:8px;background:#EEF4FF;color:#1D3A8A;font-size:12.5px}
+body.leitura .be-codigos,body.leitura .be-ferr,body.leitura #btnGerar,body.leitura #btnLimpar,body.leitura #beSalvo,body.leitura #btnFeriado,body.leitura #btnVisao,
+body.leitura #heRH,body.leitura #cardPedidos,body.leitura #cardEquipe,body.leitura #cardAnalise,body.leitura #cardDiag,body.leitura #cardAlertas,body.leitura #cardHist,body.leitura #cardAcessos,body.leitura #cardAvisos,body.leitura #cardRegras,body.leitura #cardContest,body.leitura #cardJornada,body.leitura .grid2{display:none!important}
+body.leitura .be-acoes{border-top:0;margin-top:0;padding-top:0}
+body.leitura .sino-w,body.leitura #faixaAvisos{display:none!important}
+body.leitura table.grade td.cel{cursor:default}
 #cardAlertas{grid-column:1/-1}
 #cardAjuda{position:fixed;top:86px;right:0;bottom:0;width:min(560px,100%);z-index:45;overflow:auto;border-radius:0;transform:translateX(105%);visibility:hidden;transition:transform .2s ease,visibility .2s;box-shadow:-12px 0 30px -12px rgba(16,24,40,.35)}
 #cardAjuda.aberta{transform:none;visibility:visible}
@@ -723,6 +757,7 @@ table.sim td.n,table.sim th.n{text-align:right}.sim-m{color:var(--gx-success);fo
   <section class="card" id="cardGrade">
     <h2>Escala do mês <span class="tag" id="tagMes"></span></h2>
     <div class="regime" id="regimeInfo"></div>
+    <div class="nota-leitura" id="notaLeitura" hidden></div>
     <div class="barra-ed" id="barraEd">
       <div class="be-codigos" role="toolbar" aria-label="Códigos da escala">
         <div class="be-princ" id="pinceis"></div>
@@ -784,6 +819,21 @@ table.sim td.n,table.sim th.n{text-align:right}.sim-m{color:var(--gx-success);fo
     <div id="diagBox"></div>
   </section>
 
+
+  <section class="card" id="cardCalGer">
+    <h2>Folgas dos gerentes <span class="tag" id="tagCalGer"></span></h2>
+    <div class="cg-topo">
+      <div class="campo" style="width:160px"><label for="cgMes">Mês</label><input id="cgMes" type="month"></div>
+      <div class="campo" style="min-width:190px"><label for="cgLoja">Loja</label><select id="cgLoja"></select></div>
+      <button class="btn" id="cgAtualizar">↻ Atualizar</button>
+      <div style="flex:1"></div>
+      <div class="cg-leg" id="cgLeg"></div>
+    </div>
+    <div id="calGerBox" style="margin-top:12px"><div class="vazio">Carregando…</div></div>
+    <div class="dica" id="cgRodape"></div>
+    <h3 class="cg-sub">Folgas por gerente no mês</h3>
+    <div id="cgTotais"></div>
+  </section>
 
   <section class="card" id="cardHist">
     <h2>Histórico de alterações da escala <span class="tag" id="tagHist">RH</span></h2>
@@ -873,6 +923,8 @@ table.sim td.n,table.sim th.n{text-align:right}.sim-m{color:var(--gx-success);fo
 <script>
 (() => {
 'use strict';
+// supervisor: consulta escalas por loja e o calendário de folgas dos gerentes, sem editar nada
+let SOMENTE_LEITURA = false, ESCALA_NO_PORTAL = null;   // SOU_SUP vem do api_module.js
 
 /* ================= Configuração ================= */
 function hcSalvo(){ try{ const r = localStorage.getItem('xambre.escala5x2.headcount'); return r ? JSON.parse(r) : null; }catch(e){ return null; } }
@@ -912,13 +964,14 @@ function explicaFolgas(dias){
 }
 
 const TURNOS = {
-  ABE:{nome:'Abertura',     util:['09:50','19:00'], sab:['09:50','20:10']},
-  INT:{nome:'Intermediário',util:['11:00','20:10'], sab:['10:45','21:05']},
-  FEC:{nome:'Fechamento',   util:['12:50','22:00'], sab:['11:40','22:00']},
+  // 5x2: mesmo horário de segunda a sábado · 9h24 na loja com 1h de intervalo = 8h24 efetivas (5 × 8h24 = 42h)
+  ABE:{nome:'Abertura',     util:['09:50','19:14'], sab:['09:50','19:14']},
+  INT:{nome:'Intermediário',util:['11:00','20:24'], sab:['11:00','20:24']},
+  FEC:{nome:'Fechamento',   util:['12:36','22:00'], sab:['12:36','22:00']},
 };
-const H_UTIL = 8 + 10/60, H_SAB = 9 + 20/60, H_DOM = 6;   // domingo 13h–20h com 1h de intervalo
+const H_UTIL = 8 + 24/60, H_SAB = 8 + 24/60, H_DOM = 6;   // domingo 13h–20h com 1h de intervalo
 const DOM_JANELA = ['13:00','20:00'];
-const LOJA_ABRE = 9*60+50, LOJA_FECHA = 22*60, SLOT = 10;
+const LOJA_ABRE = 9*60+50, LOJA_FECHA = 22*60, SLOT = 2;   // passo de 2 min: os horários 19:14, 20:24 e 12:36 caem exatos na grade
 
 const CODIGOS = [
   {c:'ABE', cls:'c-ABE', rot:'ABE', desc:'Abertura', tipo:'trab'},
@@ -1242,8 +1295,14 @@ function mostrarTroca(){
   document.querySelector('main').style.display = 'none';
   $('trocaMsg').textContent = ''; setTimeout(()=>$('trNova').focus(), 50);
 }
+// sai do modo consulta (outro perfil entrou nesta mesma página)
+function sairLeitura(){
+  if(SOMENTE_LEITURA) document.querySelectorAll('#cardLoja input, #cardLoja select').forEach(el=>{ el.disabled = false; });
+  aplicarLeitura(false);
+}
 function modoGerente(){
-  ['cardVG','cardAcessos','cardAvisos','cardIntel','cardSim','cardAlter','cardHist'].forEach(id=>{ const el=$(id); if(el) el.style.display='none'; });
+  sairLeitura();
+  ['cardVG','cardAcessos','cardAvisos','cardIntel','cardSim','cardAlter','cardHist','cardCalGer'].forEach(id=>{ const el=$(id); if(el) el.style.display='none'; });
   const up = document.querySelector('label[for="fBase"]'); if(up) up.closest('.campo').style.display='none';
   $('fLoja').disabled = true; $('fInicio').disabled = true;
   papel('Gerente · ' + MINHA_LOJA);
@@ -1254,8 +1313,12 @@ function modoSupervisor(){
   const up = document.querySelector('label[for="fBase"]'); if(up) up.closest('.campo').style.display='none';
   $('fLoja').disabled = false; $('fInicio').disabled = true;
   papel('Supervisor · ' + LOJAS.length + ' loja(s)');
+  // supervisor só consulta (decisão do RH na versão do claude.ai): vê a escala como está salva, aprova e devolve, não edita
+  aplicarLeitura(true);
+  $('fLoja').disabled = false; $('fMes').disabled = false;
 }
 function modoRH(){
+  sairLeitura();
   ['cardVG','cardAcessos','cardAvisos','imEscalasW'].forEach(id=>{ const el=$(id); if(el) el.style.display=''; });
   const up = document.querySelector('label[for="fBase"]'); if(up) up.closest('.campo').style.display='';
   $('fLoja').disabled = false; $('fInicio').disabled = false;
@@ -1307,10 +1370,14 @@ async function abrirDoBanco(loja, mes, inicial){
     if(j.escala && j.escala.estado){
       const o = j.escala.estado;
       const local = storeGet(chave(loja,mes)); let lo = null; try{ lo = local ? JSON.parse(local) : null; }catch(e){}
-      if(!lo || (o.salvoEm||0) >= (lo.salvoEm||0)){
+      if(SOMENTE_LEITURA){ ESCALA_NO_PORTAL = true; notaLeitura(); }
+      if(SOMENTE_LEITURA || !lo || (o.salvoEm||0) >= (lo.salvoEm||0)){
         o.p = Object.assign({...PARAM_PADRAO}, o.p||{}); o.feriadosLocais = o.feriadosLocais||[]; o.pedidos = o.pedidos||[];
         if(S.loja===loja && S.mes===mes){ S = o; renderConfig(); renderEquipe(); render(true); }
       }
+    } else if(SOMENTE_LEITURA){
+      ESCALA_NO_PORTAL = false; notaLeitura();
+      if(S.loja===loja && S.mes===mes){ S = novoEstado(loja, mes); renderConfig(); renderEquipe(); render(true); }
     } else if(inicial){ renderConfig(); renderBaseStatus(); renderEquipe(); render(true); }
   }catch(e){ console.error(e); }
 }
@@ -1362,6 +1429,13 @@ function salvarEscalaBanco(){
       else statusSalvo('erro', e.message);
     });
   }, 1500);
+}
+// Folgas dos gerentes (RH e supervisor): o Apps Script lê as escalas salvas das lojas do usuário
+async function buscarFolgasGerentes(mes){
+  if(!API_URL || !SESSAO) throw new Error('Entre no portal para ver o calendário.');
+  const j = await api('folgas.gerentes', {mes});
+  const com = new Set(j.lojas || []);
+  return {itens: j.itens || [], semEscala: LOJAS.filter(l=>!com.has(l)).sort()};
 }
 // Histórico de alterações (só RH): o Apps Script devolve os registros; o filtro por texto e a tabela são do core
 async function buscarHistorico(f){
@@ -1901,6 +1975,7 @@ function carregar(loja,mes){
 }
 let tSalvar = null;
 function salvar(semCarimbo){
+  if(SOMENTE_LEITURA) return;
   if(!semCarimbo){ S.salvoEm = Date.now(); statusSalvo('salvando'); }
   clearTimeout(tSalvar);
   if(!semCarimbo) salvarEscalaBanco();
@@ -1987,7 +2062,7 @@ function almocosDoDia(x){
   for(const it of pessoas){
     const ini = it.j[0] + (x.dow===6 ? 210 : 180), fim = it.j[0] + 300;
     let best = null, bs = -Infinity;
-    for(let t=ini; t<=fim; t+=SLOT){
+    for(let t=ini; t<=fim; t+=10){   // almoço em múltiplos de 10 min
       const s0 = Math.round((t-LOJA_ABRE)/SLOT), s1 = s0 + 60/SLOT;
       let mn = Infinity, soma = 0, lid = 0;
       let semLid = 0;
@@ -2002,7 +2077,7 @@ function almocosDoDia(x){
   }
   // mínimo em loja durante os horários em que alguém está almoçando
   let minAlm = null;
-  for(const a of lista){ const s0 = Math.round((a.alm[0]-LOJA_ABRE)/SLOT); for(let s=s0;s<s0+6 && s<nS;s++) minAlm = minAlm==null ? pres[s] : Math.min(minAlm, pres[s]); }
+  for(const a of lista){ const s0 = Math.round((a.alm[0]-LOJA_ABRE)/SLOT); for(let s=s0;s<s0+60/SLOT && s<nS;s++) minAlm = minAlm==null ? pres[s] : Math.min(minAlm, pres[s]); }
   return {lista, minAlm, pres};
 }
 
@@ -2901,7 +2976,7 @@ function renderJornada(V){
 let VISAO_GERENTE = false;
 function rhReal(){ return typeof SOU_RH==='undefined' ? true : !!SOU_RH; }
 function ehRH(){ return rhReal() && !VISAO_GERENTE; }
-const SO_RH_IDS = ['cardVG','cardAcessos','cardRegras','cardAvisos','cardHist'];
+const SO_RH_IDS = ['cardVG','cardAcessos','cardRegras','cardAvisos','cardHist','cardCalGer'];
 function aplicarVisao(){
   const btn = $('btnVisao'), faixa = $('faixaVisao');
   if(btn){ btn.style.display = rhReal() ? '' : 'none'; btn.innerHTML = VISAO_GERENTE ? '← Voltar à visão do RH' : ic('eye')+' Ver como o gerente'; btn.classList.toggle('prim', VISAO_GERENTE); }
@@ -3364,7 +3439,7 @@ function rotPincel(c){
   const x = COD[c]; if(!x) return {cls:'', rot:c, nome:'', det:''};
   const t = TURNOS[c], mais = MAIS.find(k=>k[0]===c);
   const nome = (PRINC.find(k=>k[0]===c)||[])[2] || (mais && mais[1]) || x.desc;
-  const det = t ? t.util.join('–') + ' · sáb ' + t.sab.join('–') : (c==='DOM' ? '13:00–20:00' : (x.desc!==nome ? x.desc : ''));
+  const det = t ? t.util.join('–') + (t.sab.join()!==t.util.join() ? ' · sáb ' + t.sab.join('–') : ' · seg a sáb · 8h24') : (c==='DOM' ? '13:00–20:00' : (x.desc!==nome ? x.desc : ''));
   return {cls:x.cls, rot:c==='DAY'?'🎉':x.rot, nome, det};
 }
 function renderPinceis(){
@@ -3587,6 +3662,7 @@ function render(semCarimbo){
   salvar(semCarimbo);
   registrarHist(!!semCarimbo && !HIST.aplicando);
   renderHistFiltros(); const ch = $('cardHist'); if(ch && !ehRH()) ch.style.display = 'none';
+  const cg = $('cardCalGer'); if(cg){ if(!veCalendario()) cg.style.display = 'none'; else if(CG_DADOS && CG_MES===S.mes) renderCalGer(); }
   renderVG(); renderSim();
 }
 /* ================= Desfazer / refazer ================= */
@@ -3611,7 +3687,7 @@ function moverHist(de, para){
   atualizarHistBtns();
 }
 // escala enviada/aprovada (portal): desfazer e refazer também ficam bloqueados
-const desfazer = () => { if(travada()) return; if(HIST.des.length) origem('Desfazer'); moverHist(HIST.des, HIST.ref); }, refazer = () => { if(travada()) return; if(HIST.ref.length) origem('Refazer'); moverHist(HIST.ref, HIST.des); };
+const desfazer = () => { if(SOMENTE_LEITURA || travada()) return; if(HIST.des.length) origem('Desfazer'); moverHist(HIST.des, HIST.ref); }, refazer = () => { if(SOMENTE_LEITURA || travada()) return; if(HIST.ref.length) origem('Refazer'); moverHist(HIST.ref, HIST.des); };
 /* ================= Histórico de alterações (comum) ================= */
 const ORIGENS = new Set(), BASE_NUVEM = {};
 const origem = t => ORIGENS.add(t);
@@ -3765,12 +3841,101 @@ async function imprimirEscala(){
   setTimeout(()=>{ img.removeAttribute('src'); URL.revokeObjectURL(url); }, 2000);
 }
 
+/* ================= Calendário de folgas dos gerentes (RH e supervisores) ================= */
+const CG_COD = {FO:'Folga', FF:'Feriado', DAY:'Dayoff', CO:'Compensação', FER:'Férias', AF:'Afastamento'};
+let CG_DADOS = null, CG_MES = '', cgBusca = 0;
+const veCalendario = () => (rhReal() && !VISAO_GERENTE) || SOU_SUP;
+// folgas do gerente a partir do estado salvo de uma escala
+function folgasGerentesDoEstado(est, loja){
+  const out = [];
+  ((est && est.equipe) || []).filter(p=>p.cargo==='Gerente').forEach(p=>{
+    const gp = (est.grade||{})[p.id] || {};
+    Object.keys(gp).forEach(d=>{ if(CG_COD[gp[d]]) out.push({loja, nome:p.nome||'Gerente', dia:Number(d), cod:gp[d]}); });
+  });
+  return out;
+}
+async function carregarCalGer(forcar){
+  if(!$('cardCalGer') || !veCalendario()) return;
+  const mes = $('cgMes').value || S.mes; if(!$('cgMes').value) $('cgMes').value = mes;
+  if(!forcar && CG_DADOS && CG_MES===mes){ renderCalGer(); return; }
+  const n = ++cgBusca; $('calGerBox').innerHTML = '<div class="vazio">Buscando as escalas das lojas…</div>';
+  try{
+    const r = await buscarFolgasGerentes(mes);
+    if(n!==cgBusca) return;
+    CG_DADOS = r; CG_MES = mes;
+  }catch(e){ if(n===cgBusca){ CG_DADOS = null; $('calGerBox').innerHTML = `<div class="vazio">${esc(e.message||'Não consegui buscar as escalas')}</div>`; } return; }
+  renderCalGer();
+}
+function renderCalGer(){
+  if(!$('cardCalGer')) return;
+  const sel = $('cgLoja'), v = sel.value;
+  sel.innerHTML = '<option value="">Todas as lojas</option>' + LOJAS.map(l=>`<option ${l===v?'selected':''}>${esc(l)}</option>`).join('');
+  const CORL = {FO:'#151820', FF:'#FF641C', DAY:'#F5B544', CO:'#667085', FER:'#98A2B3', AF:'#C9C9C9'};
+  $('cgLeg').innerHTML = Object.entries(CG_COD).map(([c,n])=>`<span><i style="background:${CORL[c]}"></i>${n}</span>`).join('');
+  if(!CG_DADOS) return;
+  const mes = CG_MES, [y,m] = mes.split('-').map(Number), ndias = new Date(y, m, 0).getDate(), dow1 = new Date(y, m-1, 1).getDay();
+  // a escala aberta agora conta como está na tela (mais nova que a salva)
+  let itens = CG_DADOS.itens.slice();
+  if(S && S.mes===mes && !SOMENTE_LEITURA && LOJAS.includes(S.loja)){ itens = itens.filter(i=>i.loja!==S.loja).concat(folgasGerentesDoEstado(S, S.loja)); }
+  const filtro = sel.value; if(filtro) itens = itens.filter(i=>i.loja===filtro);
+  const porDia = {}; itens.forEach(i=>(porDia[i.dia] = porDia[i.dia] || []).push(i));
+  Object.values(porDia).forEach(l=>l.sort((a,b)=>a.loja.localeCompare(b.loja)));
+  const fecha = d => { const md = String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'); return md==='12-25' || md==='01-01'; };
+  let h = '<div class="cg-grade">' + ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'].map(t=>`<div class="cg-sem">${t}</div>`).join('');
+  for(let i=0;i<dow1;i++) h += '<div class="cg-dia fora" aria-hidden="true"></div>';
+  for(let d=1; d<=ndias; d++){
+    const dw = (dow1 + d - 1) % 7, l = porDia[d] || [], fx = fecha(d);
+    h += `<div class="cg-dia ${dw===0?'dom':''} ${fx?'fechado':''} ${l.length?'':'vazio-dia'}"><div class="cg-num">${d}<small>${fx ? 'shopping fechado' : (l.length ? l.length + (l.length===1?' de folga':' de folga') : '')}</small></div>`;
+    if(!fx) h += l.map(i=>`<button type="button" class="cg-it ${i.cod}" data-cgloja="${esc(i.loja)}" title="${esc(i.nome)} · ${esc(i.loja)} · ${CG_COD[i.cod]} em ${String(d).padStart(2,'0')}/${String(m).padStart(2,'0')}"><b>${esc(i.nome.split(' ')[0])}</b> <span>· ${esc(i.loja)}${i.cod!=='FO' ? ' · '+CG_COD[i.cod] : ''}</span></button>`).join('');
+    h += '</div>';
+  }
+  const resto = (7 - (dow1 + ndias) % 7) % 7; for(let i=0;i<resto;i++) h += '<div class="cg-dia fora" aria-hidden="true"></div>';
+  $('calGerBox').innerHTML = h + '</div>';
+  // soma por gerente (conta todos os dias do mês, inclusive 25/12 e 01/01)
+  const tot = {};
+  itens.forEach(i=>{ const k = i.loja+'|'+i.nome; const t = tot[k] = tot[k] || {loja:i.loja, nome:i.nome, FO:0, FF:0, DAY:0, CO:0, FER:0, AF:0}; t[i.cod]++; });
+  const cods = Object.keys(CG_COD), lst = Object.values(tot).sort((a,b)=>a.loja.localeCompare(b.loja) || a.nome.localeCompare(b.nome));
+  const soma = c => lst.reduce((a,t)=>a+t[c],0), totL = t => cods.reduce((a,c)=>a+t[c],0);
+  $('cgTotais').innerHTML = lst.length ? `<table class="cg-tot"><thead><tr><th>Gerente</th><th>Loja</th>${cods.map(c=>`<th class="n">${CG_COD[c]}</th>`).join('')}<th class="n">Total</th></tr></thead><tbody>${
+    lst.map(t=>`<tr class="lnk" data-cgloja="${esc(t.loja)}" title="Abrir a escala da ${esc(t.loja)}"><td>${esc(t.nome)}</td><td>${esc(t.loja)}</td>${cods.map(c=>`<td class="n">${t[c]||'—'}</td>`).join('')}<td class="n tot">${totL(t)}</td></tr>`).join('')
+  }</tbody><tfoot><tr><td colspan="2">${lst.length} ${lst.length===1?'gerente':'gerentes'}</td>${cods.map(c=>`<td class="n">${soma(c)}</td>`).join('')}<td class="n">${cods.reduce((a,c)=>a+soma(c),0)}</td></tr></tfoot></table>` : '<div class="vazio">Nenhuma folga de gerente nas escalas salvas deste mês.</div>';
+  const lojasCom = new Set(itens.map(i=>i.loja)), sem = (CG_DADOS.semEscala||[]).filter(l=>!filtro || l===filtro).filter(l=>!(S && S.mes===mes && l===S.loja && !SOMENTE_LEITURA));
+  $('tagCalGer').textContent = MESES[m-1] + ' de ' + y + ' · ' + itens.filter(i=>i.cod==='FO').length + ' folgas';
+  $('cgRodape').innerHTML = (sem.length ? `<b>Sem escala salva no portal (${sem.length}):</b> ${sem.map(esc).join(', ')}. ` : 'Todas as lojas já salvaram a escala do mês. ') + 'Clique em um nome para abrir a escala da loja.';
+}
+$('cgMes').addEventListener('change', ()=>carregarCalGer(true));
+$('cgAtualizar').addEventListener('click', ()=>carregarCalGer(true));
+$('cgLoja').addEventListener('change', renderCalGer);
+$('cgTotais').addEventListener('click', e=>{ const tr = e.target.closest('[data-cgloja]'); if(!tr) return; const loja = tr.dataset.cgloja; if(!LOJAS.includes(loja)) return; $('fLoja').value = loja; $('fMes').value = CG_MES; trocarLojaMes(loja, CG_MES); $('cardGrade').scrollIntoView({behavior:'smooth', block:'start'}); });
+$('calGerBox').addEventListener('click', e=>{
+  const b = e.target.closest('[data-cgloja]'); if(!b) return;
+  const loja = b.dataset.cgloja, mes = CG_MES;
+  if(!LOJAS.includes(loja)) return;
+  $('fLoja').value = loja; $('fMes').value = mes; trocarLojaMes(loja, mes);
+  $('cardGrade').scrollIntoView({behavior:'smooth', block:'start'});
+});
+
 /* ================= Indicador de salvamento ================= */
 let nuvemPend = false, ultSalvoHora = '';
+// supervisor: consulta escalas por loja e o calendário de folgas dos gerentes, sem editar nada
+// (SOU_SUP, SOMENTE_LEITURA e ESCALA_NO_PORTAL são declarados no começo do script)
+function aplicarLeitura(on){
+  SOMENTE_LEITURA = !!on; document.body.classList.toggle('leitura', SOMENTE_LEITURA);
+  if(SOMENTE_LEITURA) document.querySelectorAll('#cardLoja input, #cardLoja select, #cardLoja textarea').forEach(el=>{ if(el.id!=='fLoja' && el.id!=='fMes') el.disabled = true; });
+  const up = document.querySelector('label[for="fBase"]'); if(up && SOMENTE_LEITURA) up.closest('.campo').style.display = 'none';
+  notaLeitura();
+  if(SOMENTE_LEITURA){ const h = $('statusSalvo'); if(h) h.textContent = 'Somente consulta'; }
+}
+function notaLeitura(){
+  const n = $('notaLeitura'); if(!n) return;
+  n.hidden = !SOMENTE_LEITURA;
+  if(SOMENTE_LEITURA) n.textContent = 'Somente consulta: você vê a escala da loja como ela está salva no portal.' + (ESCALA_NO_PORTAL===false ? ' A loja ainda não salvou a escala deste mês.' : '');
+}
 // Estados: salvando (gravando no navegador) · local (só neste navegador, sem portal) · pendente (no navegador, enviando ao portal)
 //         ok (confirmado pelo portal) · erro (portal recusou ou sem conexão; continua salvo neste navegador)
 let ultPortalHora = '';
 function statusSalvo(estado, msg){
+  if(SOMENTE_LEITURA) return;
   const hora = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
   if(estado==='ok') ultPortalHora = hora; if(estado==='local') ultSalvoHora = hora;
   const T = {
@@ -3950,7 +4115,7 @@ $('beMenu').addEventListener('keydown', e=>{
   else if(e.key==='ArrowUp'){ e.preventDefault(); its[(i-1+its.length)%its.length].focus(); }
 });
 function pintar(td){
-  if(!td || !td.classList.contains('cel')) return;
+  if(SOMENTE_LEITURA || !td || !td.classList.contains('cel')) return;
   if(travada()){ pintando = false; return; }
   const id = td.dataset.id, d = +td.dataset.d;
   let cod = pincel;
@@ -3991,6 +4156,7 @@ wrap.addEventListener('click', e=>{
 $('diaAnt').addEventListener('click', ()=>{ if(diaSel>1){ diaSel--; render(); } });
 $('diaProx').addEventListener('click', ()=>{ const n = diasDoMes().length; if(diaSel<n){ diaSel++; render(); } });
 $('btnFeriado').addEventListener('click', ()=>{
+  if(SOMENTE_LEITURA) return;
   if(travada()) return;
   const i = S.feriadosLocais.indexOf(diaSel);
   origem('Feriado local'); if(i>=0) S.feriadosLocais.splice(i,1); else S.feriadosLocais.push(diaSel);
@@ -4024,7 +4190,7 @@ const ICS = {
 };
 const ic = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICS[n]||''}</svg>`;
 function pintarIcones(raiz){ (raiz||document).querySelectorAll('[data-ic]').forEach(el=>{ if(!el.firstChild || el.dataset.icFeito!==el.dataset.ic){ el.insertAdjacentHTML('afterbegin', ic(el.dataset.ic)); el.dataset.icFeito = el.dataset.ic; } }); }
-const CARD_IC = {cardContest:'alert', cardAvisos:'bell', cardSituacao:'clipboard', cardAlter:'chart', cardMovimento:'chart', cardIntel:'chart', cardSim:'users', cardLoja:'calendar', cardVG:'home', cardFluxo:'chart', cardAcessos:'userPlus', cardAnalise:'file', cardEquipe:'users', cardPedidos:'edit', cardGrade:'grid', cardDiag:'list', cardJornada:'hourglass', cardRegras:'settings', cardAlertas:'bell', cardAjuda:'help', cardHist:'clock'};
+const CARD_IC = {cardContest:'alert', cardAvisos:'bell', cardSituacao:'clipboard', cardAlter:'chart', cardMovimento:'chart', cardIntel:'chart', cardSim:'users', cardLoja:'calendar', cardVG:'home', cardFluxo:'chart', cardAcessos:'userPlus', cardAnalise:'file', cardEquipe:'users', cardPedidos:'edit', cardGrade:'grid', cardDiag:'list', cardJornada:'hourglass', cardRegras:'settings', cardAlertas:'bell', cardAjuda:'help', cardHist:'clock', cardCalGer:'calendar'};
 Object.entries(CARD_IC).forEach(([id,n])=>{ const h = document.querySelector('#'+id+' > h2'); if(h && !h.querySelector('.h2-ic')) h.insertAdjacentHTML('afterbegin', `<span class="h2-ic">${ic(n)}</span>`); });
 // Menu: cada grupo é uma tela; os itens da "Escala da loja" rolam dentro da mesma tela.
 // [id do alvo, ícone, rótulo, tela]. Itens cujo cartão não existe ou está escondido para o perfil somem sozinhos.
@@ -4032,14 +4198,14 @@ const NAV = [
   ['g:Escala da loja'],
   ['cardLoja','calendar','Escala do mês por loja','escala'],['cardSituacao','clipboard','Situação da escala','escala'],['cardPedidos','edit','Pedidos para sugestão','escala'],['cardEquipe','users','Equipe da loja','escala'],['cardAnalise','file','Análise da loja','escala'],['cardGrade','grid','Grade da escala','escala'],['cardDia','clock','Detalhe do dia','escala'],['cardDiag','list','O que não fechou','escala'],['cardContest','alert','Contestações','escala'],['cardAlertas','bell','Alertas da escala','escala'],['cardMovimento','chart','Fluxo e vendedores','fluxo'],
   ['g:Acompanhamento'],
-  ['cardVG','home','Visão geral','geral'],['heRH','clock','Horas extras (R$)','geral'],['cardIntel','chart','Inteligência de Escalas','intel'],['cardSim','users','Simulador de headcount','sim'],
+  ['cardVG','home','Visão geral','geral'],['cardCalGer','calendar','Folgas dos gerentes','folgasger'],['heRH','clock','Horas extras (R$)','geral'],['cardIntel','chart','Inteligência de Escalas','intel'],['cardSim','users','Simulador de headcount','sim'],
   ['g:Administração'],
   ['cardAvisos','bell','Alertas para as lojas','avisos'],['cardAcessos','userPlus','Acessos','acessos'],['cardHist','clock','Histórico de alterações','historico'],['cardRegras','settings','Configurações','config'],['cardAlter','chart','AlterVision','config'],
 ];
 const NAV_ITENS = NAV.filter(n=>n.length>1);
 // em que tela(s) fica cada bloco da página; o que não está aqui aparece em todas (bloqueio, avisos do topo)
-const VISTA_DE = {cardHist:'historico', cardAlter:'config', cardMovimento:'fluxo', cardLoja:'escala geral intel sim fluxo', cardSituacao:'escala', kpis:'escala', cardAnalise:'escala', cardEquipe:'escala', cardPedidos:'escala', cardGrade:'escala', cardContest:'escala', cardDia:'escala', cardDiag:'escala', cardFluxo:'escala', cardVG:'geral', cardIntel:'intel', cardSim:'sim', cardAcessos:'acessos', cardAvisos:'avisos', cardRegras:'config'};
-const NOME_VISTA = {escala:'Escala da loja', fluxo:'Fluxo e vendedores', geral:'Visão geral', intel:'Inteligência de Escalas', sim:'Simulador de headcount', avisos:'Alertas para as lojas', acessos:'Acessos', historico:'Histórico de alterações', config:'Configurações'};
+const VISTA_DE = {cardCalGer:'folgasger', cardHist:'historico', cardAlter:'config', cardMovimento:'fluxo', cardLoja:'escala geral intel sim fluxo', cardSituacao:'escala', kpis:'escala', cardAnalise:'escala', cardEquipe:'escala', cardPedidos:'escala', cardGrade:'escala', cardContest:'escala', cardDia:'escala', cardDiag:'escala', cardFluxo:'escala', cardVG:'geral', cardIntel:'intel', cardSim:'sim', cardAcessos:'acessos', cardAvisos:'avisos', cardRegras:'config'};
+const NOME_VISTA = {escala:'Escala da loja', fluxo:'Fluxo e vendedores', geral:'Visão geral', folgasger:'Folgas dos gerentes', intel:'Inteligência de Escalas', sim:'Simulador de headcount', avisos:'Alertas para as lojas', acessos:'Acessos', historico:'Histórico de alterações', config:'Configurações'};
 let VISTA = (()=>{ try{ return localStorage.getItem('xambre.escala5x2.vista') || 'escala'; }catch(e){ return 'escala'; } })();
 function marcarVistas(){
   document.querySelectorAll('main > *').forEach(el=>{
@@ -4058,6 +4224,7 @@ function setVista(v, rolarAte){
   document.querySelectorAll('main > [data-vista]').forEach(el=>el.classList.toggle('fora-vista', !el.dataset.vista.split(' ').includes(v)));
   const sel = $('vistaSel'); if(sel){ sel.innerHTML = Object.keys(NOME_VISTA).filter(vistaDisponivel).map(k=>`<option value="${k}" ${k===v?'selected':''}>${NOME_VISTA[k]}</option>`).join(''); }
   if(v==='fluxo') renderMovimento();
+  if(v==='folgasger') carregarCalGer();
   const alvo = rolarAte && $(rolarAte);
   if(alvo && !(rolarAte==='cardLoja' && v!=='escala')) alvo.scrollIntoView({behavior:'smooth', block:'start'}); else window.scrollTo({top:0});
   atualizarLateral();
@@ -4250,7 +4417,7 @@ S = carregar(LOJAS.includes(lojaIni) ? lojaIni : LOJAS[0], mesPadrao());
 renderConfig(); renderBaseStatus(); renderEquipe(); renderPinceis(); renderLegenda(); render(true);
 $('vistaSel').addEventListener('change', e=>setVista(e.target.value));
 setVista(VISTA);
-iniciarBanco().then(()=>{ renderConfig(); renderBaseStatus(); renderEquipe(); render(true); });
+iniciarBanco().then(()=>{ renderConfig(); renderBaseStatus(); renderEquipe(); render(true); carregarCalGer(); });
 })();
 </script>
 <div id="printFolha" aria-hidden="true"><img id="printImg" alt=""></div>
