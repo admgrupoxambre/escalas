@@ -72,6 +72,30 @@ table.eq input,table.eq select{height:32px;border:1px solid var(--gx-border);bor
 .pincel small{font-weight:500;font-size:10px;opacity:.85}
 .pincel.ativo{outline:3px solid var(--gx-text);outline-offset:2px}
 .sep{width:1px;height:34px;background:var(--gx-border);margin:0 4px}
+.barra-ed{position:sticky;top:86px;z-index:15;background:var(--gx-surface);margin:0 -20px 14px;padding:12px 20px;border-bottom:1px solid var(--gx-border)}
+.barra-ed.grudada{box-shadow:0 6px 14px -8px rgba(16,24,40,.25)}
+.be-top{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+.be-ativo{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--gx-muted)}
+.be-ativo .chip-at{border-radius:6px;padding:4px 10px;font-weight:700;font-size:12.5px}
+.be-hist{display:flex;gap:4px}
+.be-hist .btn[disabled]{opacity:.4;cursor:default}
+.be-salvo{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:12px;color:var(--gx-muted);background:none;border:0;padding:4px 6px;border-radius:6px;cursor:default}
+.be-salvo::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gx-success)}
+.be-salvo.salvando::before{background:var(--gx-warning);animation:bePulso 1s infinite}
+.be-salvo.erro{color:var(--gx-danger);cursor:pointer;text-decoration:underline}
+.be-salvo.erro::before{background:var(--gx-danger)}
+.be-salvo.local::before{background:#98A2B3}
+@keyframes bePulso{50%{opacity:.3}}
+.pinceis .pg{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.pinceis .pg-tit{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--gx-muted);font-weight:600;margin-right:2px}
+.pincel.pill{flex-direction:row;align-items:center;gap:6px;min-width:0;padding:5px 10px;border-radius:999px;font-size:11.5px}
+.pincel.pill small{font-size:10px}
+@media(max-width:767px){.barra-ed{top:74px;margin:0 -12px 12px;padding:8px 12px}.be-ativo .rot-at,.be-ativo>span:last-child,.pinceis .pg-tit,.pincel small,.be-hist .tx{display:none}
+ .be-top{gap:6px;margin-bottom:6px}.be-top .btn{height:32px;padding:0 10px;font-size:12px}.be-top>div[style]{display:none}
+ .be-salvo{order:9;width:100%;padding:0}
+ .pinceis .pg{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}.pinceis .pg>*{flex:0 0 auto}.pinceis .pg+.pg{margin-top:4px!important}
+ .pincel{min-width:0;padding:5px 9px}
+}
 
 /* cores dos códigos */
 .c-ABE{background:#FFF0E8;color:#7A2E08}
@@ -346,6 +370,8 @@ section.card,.kpis,#faixaVisao{scroll-margin-top:100px}
 .dd-leg .it i{width:26px;height:18px;border-radius:4px;display:inline-block}
 .dd-leg .it small{display:block;color:var(--gx-muted);font-size:11.5px}
 #cardFluxo{display:none!important}
+@media(max-width:767px){table.grade th.fixo,table.grade td.fixo{min-width:120px;max-width:120px;padding:0 6px}
+ table.grade th.fixo2,table.grade td.fixo2{left:120px;min-width:72px;max-width:72px;padding:0 4px}}
 /* ===== Fluxo e vendedores ===== */
 .mv-card{padding:22px}
 .mv-hero{border-radius:18px;padding:22px 24px;color:#fff;background:radial-gradient(700px 260px at 100% 0,rgba(255,100,28,.35),rgba(255,100,28,0) 60%),linear-gradient(135deg,#151820 0%,#232836 100%);box-shadow:0 10px 30px rgba(16,24,40,.18);margin-bottom:16px}
@@ -650,16 +676,24 @@ table.sim td.n,table.sim th.n{text-align:right}.sim-m{color:var(--gx-success);fo
   <section class="card" id="cardGrade">
     <h2>Escala do mês <span class="tag" id="tagMes"></span></h2>
     <div class="regime" id="regimeInfo"></div>
-    <div class="pinceis" id="pinceis"></div>
-    <div class="linha" style="margin:14px 0">
-      <button class="btn prim" id="btnGerar">⚡ Gerar sugestão</button>
-      <button class="btn" id="btnLimpar">Limpar escala</button>
-      <div style="flex:1"></div>
-      <button class="btn escuro" id="btnExportar">⤒ Exportar Excel</button>
+    <div class="barra-ed" id="barraEd">
+      <div class="be-top">
+        <div class="be-ativo" id="beAtivo" aria-live="polite"></div>
+        <div class="be-hist">
+          <button class="btn peq" id="btnDesfazer" title="Desfazer (Ctrl+Z)" aria-label="Desfazer" disabled>↶<span class="tx"> Desfazer</span></button>
+          <button class="btn peq" id="btnRefazer" title="Refazer (Ctrl+Y)" aria-label="Refazer" disabled>↷<span class="tx"> Refazer</span></button>
+        </div>
+        <div style="flex:1"></div>
+        <button class="be-salvo" id="beSalvo" type="button"></button>
+        <button class="btn prim" id="btnGerar">⚡ Gerar sugestão</button>
+        <button class="btn" id="btnLimpar">Limpar</button>
+        <button class="btn escuro" id="btnExportar">⤒ Exportar<span class="tx"> Excel</span></button>
+      </div>
+      <div class="pinceis" id="pinceis"></div>
     </div>
     <div class="grade-wrap" id="gradeWrap"></div>
     <div class="obs-conf" id="obsConf" style="display:none"></div>
-    <div class="dica">Escolha um código acima e clique (ou arraste) nas células. Clique no número do dia para ver os horários e almoços daquele dia. Cada vez que você clica em Gerar sugestão, ela refaz o que a sugestão anterior montou. O que você lançou à mão, os pedidos e as marcações do quadro ficam como estão.</div>
+    <div class="dica">Escolha um código na barra e clique (ou arraste) nas células. Errou? Use <b>Desfazer</b> (Ctrl+Z) e <b>Refazer</b> (Ctrl+Y). A barra acompanha a rolagem, e as colunas Colaborador e Cargo ficam paradas quando a grade rola para o lado. Clique no número do dia para ver os horários e almoços daquele dia. Cada vez que você clica em Gerar sugestão, ela refaz o que a sugestão anterior montou. O que você lançou à mão, os pedidos e as marcações do quadro ficam como estão.</div>
   </section>
 
   <section class="card" id="cardContest" style="display:none">
@@ -1238,17 +1272,17 @@ async function salvarBase(){
 }
 function salvarEscalaBanco(){
   if(!API_URL || !SESSAO) return;
-  clearTimeout(tNuvem);
+  clearTimeout(tNuvem); nuvemPend = true;
   tNuvem = setTimeout(()=>{
     const corpo = {loja:S.loja, mes:S.mes, salvoEm:S.salvoEm||Date.now(), resumo:resumoAtual, estado:JSON.parse(JSON.stringify(S))};
     gravandoEscala = gravandoEscala.then(()=>api('escala.set', corpo)).then(j=>{
-      $('statusSalvo').textContent = 'Salvo no portal · '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+      nuvemPend = false; statusSalvo('ok', 'Salvo no portal · '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}));
       if(j && j.situacao && corpo.loja===S.loja && corpo.mes===S.mes){ const mudou = !SITUACAO || SITUACAO.status!==j.situacao.status; SITUACAO = Object.assign({}, j.situacao, {_k:corpo.loja+'|'+corpo.mes}); if(mudou) renderSituacao(); }
       if(SOU_RH || SOU_SUP){ escalasMes[corpo.loja] = {loja:corpo.loja, salvoEm:corpo.salvoEm, resumo:corpo.resumo, situacao:SITUACAO}; renderVG(); }
     }).catch(e=>{
-      console.error(e);
+      console.error(e); nuvemPend = false;
       if(e.conflito || /está (enviada|aprovada)/.test(e.message)){ toast(e.conflito ? 'Outra pessoa alterou esta escala: carreguei a versão mais nova' : e.message); abrirDoBanco(corpo.loja, corpo.mes); }
-      else $('statusSalvo').textContent = 'Não salvou no portal: ' + e.message;
+      else statusSalvo('erro', 'Não salvou no portal: ' + e.message + ' · clique para tentar de novo');
     });
   }, 1500);
 }
@@ -1783,14 +1817,15 @@ function carregar(loja,mes){
 }
 let tSalvar = null;
 function salvar(semCarimbo){
-  if(!semCarimbo) S.salvoEm = Date.now();
+  if(!semCarimbo){ S.salvoEm = Date.now(); statusSalvo('salvando'); }
   clearTimeout(tSalvar);
   if(!semCarimbo) salvarEscalaBanco();
   tSalvar = setTimeout(()=>{
     const ok = storeSet(chave(S.loja,S.mes), JSON.stringify(S));
     storeSet('xambre.escala5x2.ultimaEquipe.'+S.loja, JSON.stringify(S.equipe));
     storeSet('xambre.escala5x2.ultimaLoja', S.loja);
-    $('statusSalvo').textContent = ok ? 'Rascunho salvo neste navegador · '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : 'Não foi possível salvar o rascunho neste navegador: exporte o Excel';
+    if(!ok) statusSalvo('erro', 'Falha ao salvar neste navegador: exporte o Excel');
+    else if(!nuvemPend && !semCarimbo) statusSalvo('local');
   }, 250);
 }
 
@@ -3215,18 +3250,34 @@ function renderEquipe(){
       <td><button class="btn fant peq" data-del="${p.id}" title="Remover" aria-label="Remover">✕</button></td></tr>`).join('')
   }</tbody></table>`;
 }
+function rotPincel(c){
+  if(c==='') return {cls:'c-LIMPAR', rot:'Apagar', nome:'limpa a célula'};
+  if(c==='HE') return {cls:'c-HE', rot:'HE', nome:'Hora extra na folga · '+({A:'Abertura',I:'Intermediário',F:'Fechamento'}[turnoHE])};
+  const x = COD[c]; if(!x) return {cls:'', rot:c, nome:''};
+  const t = TURNOS[c];
+  return {cls:x.cls, rot:x.rot, nome:(t?t.nome:(c==='DOM'?'Domingo':x.desc)) + (t?' · '+t.util.join('–'):(c==='DOM'?' · 13:00–20:00':''))};
+}
 function renderPinceis(){
-  const itens = CODIGOS.filter(x=>x.tipo!=='he').map(x=>{
+  const trab = CODIGOS.filter(x=>x.tipo==='trab').map(x=>{
     const t = TURNOS[x.c];
-    return `<button class="pincel ${x.cls} ${pincel===x.c?'ativo':''}" data-p="${x.c}" title="${esc(x.desc)}">${esc(x.rot)} · ${esc(t?t.nome:(x.c==='DOM'?'Domingo':x.desc))}<small>${t?esc(t.util.join('–')+' · sáb '+t.sab.join('–')):(x.c==='DOM'?'13:00–20:00':'')}</small></button>`;
-  });
-  itens.splice(4,0,'<span class="sep"></span>'); itens.splice(9,0,'<span class="sep"></span>');
-  itens.push('<span class="sep"></span>', `<button class="pincel c-HE ${pincel==='HE'?'ativo':''}" data-p="HE" title="Hora extra: o dia era folga e a pessoa vai trabalhar">HE · Hora extra<small>na folga · turno:
-      <select id="heTurno" style="font-size:10px;border:1px solid #FFD3BC;border-radius:4px;background:#fff;padding:0 2px">
+    return `<button class="pincel ${x.cls} ${pincel===x.c?'ativo':''}" data-p="${x.c}" title="${esc(x.desc)}" aria-pressed="${pincel===x.c}">${esc(x.rot)} · ${esc(t?t.nome:'Domingo')}<small>${t?esc(t.util.join('–')+' · sáb '+t.sab.join('–')):'13:00–20:00'}</small></button>`;
+  }).join('');
+  const nomeCurto = {FO:'Folga',FF:'Feriado',DAY:'Dayoff',CO:'Compensação',FER:'Férias',AF:'Afastamento',FQ:'Fora do quadro'};
+  const oc = CODIGOS.filter(x=>x.tipo==='folga'||x.tipo==='neutro').map(x=>
+    `<button class="pincel pill ${x.cls} ${pincel===x.c?'ativo':''}" data-p="${x.c}" title="${esc(x.desc)}" aria-pressed="${pincel===x.c}">${x.c==='DAY'?'🎉 Dayoff':esc(x.rot+' · '+(nomeCurto[x.c]||x.desc))}</button>`).join('');
+  const he = `<span class="pincel pill c-HE ${pincel==='HE'?'ativo':''}" data-p="HE" role="button" tabindex="0" title="Hora extra: o dia era folga e a pessoa vai trabalhar" aria-pressed="${pincel==='HE'}">HE · Hora extra
+      <select id="heTurno" aria-label="Turno da hora extra" style="font-size:10.5px;border:1px solid #FFD3BC;border-radius:4px;background:#fff;padding:0 2px">
         <option value="A" ${turnoHE==='A'?'selected':''}>Abertura</option><option value="I" ${turnoHE==='I'?'selected':''}>Intermediário</option><option value="F" ${turnoHE==='F'?'selected':''}>Fechamento</option>
-      </select></small></button>`);
-  itens.push('<span class="sep"></span>', `<button class="pincel c-LIMPAR ${pincel===''?'ativo':''}" data-p="">Apagar<small>limpa a célula</small></button>`);
-  $('pinceis').innerHTML = itens.join('');
+      </select></span>`;
+  const apagar = `<button class="pincel pill c-LIMPAR ${pincel===''?'ativo':''}" data-p="" aria-pressed="${pincel===''}">⌫ Apagar</button>`;
+  $('pinceis').innerHTML = `<div class="pg"><span class="pg-tit">Turnos</span>${trab}</div>
+    <div class="pg" style="margin-top:8px"><span class="pg-tit">Ausências e ocorrências</span>${oc}${he}<span class="sep" style="height:22px"></span>${apagar}</div>`;
+  marcarAtivo();
+}
+function marcarAtivo(){
+  document.querySelectorAll('#pinceis [data-p]').forEach(b=>{ const on = b.dataset.p===pincel; b.classList.toggle('ativo', on); b.setAttribute('aria-pressed', on); });
+  const r = rotPincel(pincel);
+  $('beAtivo').innerHTML = `<span class="rot-at">Código ativo</span><span class="chip-at ${r.cls}">${esc(r.rot)}</span><span>${esc(r.nome)}</span>`;
 }
 function renderLegenda(){
   $('legenda').innerHTML = '<tr><th>Código</th><th>Descrição</th><th>Seg–sex</th><th>Sábado</th></tr>' + CODIGOS.filter(x=>x.tipo!=='he' || x.c==='HEA').map(x=>{
@@ -3422,7 +3473,40 @@ function render(semCarimbo){
   resumoAtual = resumoEscala(V);
   if(VISTA==='fluxo') renderMovimento(V);
   salvar(semCarimbo);
+  registrarHist(!!semCarimbo && !HIST.aplicando);
   renderVG(); renderSim();
+}
+/* ================= Desfazer / refazer ================= */
+const HIST = {chave:'', ult:null, des:[], ref:[], aplicando:false};
+function fotoEstado(){ return JSON.stringify({equipe:S.equipe, grade:S.grade, pedidos:S.pedidos||[], feriadosLocais:S.feriadosLocais||[]}); }
+function atualizarHistBtns(){ const a=$('btnDesfazer'), b=$('btnRefazer'); if(a) a.disabled = !HIST.des.length; if(b) b.disabled = !HIST.ref.length; }
+function registrarHist(base){
+  if(!S) return;
+  const k = S.loja+'|'+S.mes, f = fotoEstado();
+  if(base && HIST.chave===k && f===HIST.ult) return;
+  if(HIST.chave!==k || base){ HIST.chave=k; HIST.ult=f; HIST.des=[]; HIST.ref=[]; atualizarHistBtns(); return; }
+  if(pintando || HIST.aplicando || f===HIST.ult) return;
+  const el = document.activeElement, digitando = el && el.tagName==='INPUT' && el.type!=='file' && el.closest && el.closest('#equipeBox');
+  if(!(digitando && HIST.digit===el && HIST.des.length)){ HIST.des.push(HIST.ult); if(HIST.des.length>80) HIST.des.shift(); }
+  HIST.digit = digitando ? el : null;
+  HIST.ref = []; HIST.ult = f; atualizarHistBtns();
+}
+function moverHist(de, para){
+  if(!de.length) return;
+  para.push(HIST.ult); const f = de.pop(); Object.assign(S, JSON.parse(f)); HIST.ult = f; HIST.digit = null;
+  HIST.aplicando = true; try{ renderEquipe(); render(); } finally { HIST.aplicando = false; }
+  atualizarHistBtns();
+}
+// escala enviada/aprovada (portal): desfazer e refazer também ficam bloqueados
+const desfazer = () => { if(!travada()) moverHist(HIST.des, HIST.ref); }, refazer = () => { if(!travada()) moverHist(HIST.ref, HIST.des); };
+/* ================= Indicador de salvamento ================= */
+let nuvemPend = false, ultSalvoHora = '';
+function statusSalvo(estado, msg){
+  const hora = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  if(estado==='ok' || estado==='local') ultSalvoHora = hora;
+  const txt = msg || ({salvando:'Salvando…', ok:'Todas as alterações salvas · '+hora, local:'Salvo neste navegador · '+hora, erro:'Falha ao salvar · tentar de novo'}[estado]);
+  const h = $('statusSalvo'); if(h) h.textContent = txt;
+  const b = $('beSalvo'); if(b){ b.className = 'be-salvo '+estado; b.textContent = txt; b.title = estado==='erro' ? 'Clique para tentar salvar de novo'+(ultSalvoHora?' (último salvamento às '+ultSalvoHora+')':'') : (ultSalvoHora?'Última sincronização às '+ultSalvoHora:''); }
 }
 // resumo da escala que está em S (o que a visão geral, o painel e o prazo usam); V = validar() da mesma escala
 function resumoEscala(V){
@@ -3571,7 +3655,8 @@ $('equipeBox').addEventListener('click', async e=>{
     S.equipe = S.equipe.filter(x=>x.id!==p.id); delete S.grade[p.id]; S.pedidos = (S.pedidos||[]).filter(x=>x.pid!==p.id); renderEquipe(); render();
   }
 });
-$('pinceis').addEventListener('click', e=>{ if(e.target.closest('#heTurno')) return; const b=e.target.closest('[data-p]'); if(!b) return; pincel=b.dataset.p; renderPinceis(); });
+$('pinceis').addEventListener('keydown', e=>{ const b=e.target.closest('[data-p]'); if(b && (e.key==='Enter'||e.key===' ') && e.target===b){ e.preventDefault(); pincel=b.dataset.p; renderPinceis(); } });
+$('pinceis').addEventListener('click', e=>{ if(e.target.closest('#heTurno')){ if(pincel!=='HE'){ pincel='HE'; marcarAtivo(); } return; } const b=e.target.closest('[data-p]'); if(!b) return; pincel=b.dataset.p; renderPinceis(); });
 $('pinceis').addEventListener('change', e=>{ if(e.target.id==='heTurno'){ turnoHE = e.target.value; pincel = 'HE'; renderPinceis(); } });
 function pintar(td){
   if(!td || !td.classList.contains('cel')) return;
@@ -3585,7 +3670,22 @@ function pintar(td){
 const wrap = $('gradeWrap');
 wrap.addEventListener('mousedown', e=>{ const td=e.target.closest('td.cel'); if(!td) return; e.preventDefault(); pintando=true; pintar(td); });
 wrap.addEventListener('mouseover', e=>{ if(pintando) pintar(e.target.closest('td.cel')); });
-window.addEventListener('mouseup', ()=>pintando=false);
+window.addEventListener('mouseup', ()=>{ if(pintando){ pintando=false; registrarHist(); } });
+$('btnDesfazer').addEventListener('click', desfazer);
+$('btnRefazer').addEventListener('click', refazer);
+$('beSalvo').addEventListener('click', ()=>{ if($('beSalvo').classList.contains('erro')) salvar(); });
+document.addEventListener('keydown', e=>{
+  if(!(e.ctrlKey||e.metaKey) || e.altKey) return;
+  const t = e.target; if(t && (t.tagName==='INPUT' || t.tagName==='TEXTAREA' || t.tagName==='SELECT' || t.isContentEditable)) return;
+  if(document.querySelector('.modal-bg.on')) return;
+  const k = e.key.toLowerCase();
+  if(k==='z' && !e.shiftKey){ e.preventDefault(); desfazer(); }
+  else if(k==='y' || (k==='z' && e.shiftKey)){ e.preventDefault(); refazer(); }
+});
+(function(){ const be = $('barraEd'); if(!be || !('IntersectionObserver' in window)) return;
+  const sent = document.createElement('div'); sent.style.height='1px'; be.parentNode.insertBefore(sent, be);
+  new IntersectionObserver(([en])=>be.classList.toggle('grudada', !en.isIntersecting && en.boundingClientRect.top<0), {rootMargin:'-90px 0px 0px 0px'}).observe(sent);
+})();
 wrap.addEventListener('touchstart', e=>{ const td=e.target.closest('td.cel'); if(td) pintar(td); }, {passive:true});
 wrap.addEventListener('click', e=>{
   const th = e.target.closest('th[data-dia]'); if(!th) return;
