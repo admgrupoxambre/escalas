@@ -441,9 +441,9 @@ table.cg-tot tr.lnk{cursor:pointer}table.cg-tot tr.lnk:hover td{background:var(-
 /* modo consulta (supervisor): só leitura */
 .nota-leitura{margin:-4px 0 12px;padding:8px 12px;border-radius:8px;background:#EEF4FF;color:#1D3A8A;font-size:12.5px}
 body.leitura .be-codigos,body.leitura .be-ferr,body.leitura #btnGerar,body.leitura #btnLimpar,body.leitura #beSalvo,body.leitura #btnFeriado,body.leitura #btnVisao,
-body.leitura #heRH,body.leitura #cardPedidos,body.leitura #cardEquipe,body.leitura #cardAnalise,body.leitura #cardDiag,body.leitura #cardAlertas,body.leitura #cardHist,body.leitura #cardAcessos,body.leitura #cardAvisos,body.leitura #cardRegras,body.leitura #cardContest,body.leitura #cardJornada,body.leitura .grid2{display:none!important}
+body.leitura:not(.so-consulta) #heRH,body.leitura:not(.so-consulta) #cardPedidos,body.leitura:not(.so-consulta) #cardEquipe,body.leitura:not(.so-consulta) #cardAnalise,body.leitura:not(.so-consulta) #cardDiag,body.leitura:not(.so-consulta) #cardAlertas,body.leitura:not(.so-consulta) #cardHist,body.leitura:not(.so-consulta) #cardAcessos,body.leitura:not(.so-consulta) #cardAvisos,body.leitura:not(.so-consulta) #cardRegras,body.leitura:not(.so-consulta) #cardContest,body.leitura:not(.so-consulta) #cardJornada,body.leitura:not(.so-consulta) .grid2{display:none!important}
 body.leitura .be-acoes{border-top:0;margin-top:0;padding-top:0}
-body.leitura .sino-w,body.leitura #faixaAvisos{display:none!important}
+body.leitura:not(.so-consulta) .sino-w,body.leitura:not(.so-consulta) #faixaAvisos{display:none!important}
 body.leitura table.grade td.cel{cursor:default}
 #cardAlertas{grid-column:1/-1}
 #cardAjuda{position:fixed;top:86px;right:0;bottom:0;width:min(560px,100%);z-index:45;overflow:auto;border-radius:0;transform:translateX(105%);visibility:hidden;transition:transform .2s ease,visibility .2s;box-shadow:-12px 0 30px -12px rgba(16,24,40,.35)}
@@ -553,6 +553,12 @@ table.hist tr.grupo td{background:var(--gx-head);font-weight:600}
 .intel-cad{margin-top:14px;border:1px solid var(--gx-border);border-radius:10px;padding:10px 14px}.intel-cad summary{cursor:pointer;font-weight:600}
 .intel-cad input{height:32px;border:1px solid var(--gx-border);border-radius:6px;padding:0 8px;width:100%}
 table.sim td.n,table.sim th.n{text-align:right}.sim-m{color:var(--gx-success);font-weight:700}.sim-p{color:var(--gx-danger);font-weight:700}
+/* 4.9.0: "Ver como o gerente" e "Carregar base do quadro" ficam só no topo (olho e 📊) */
+.campo:has(> #btnVisao),.campo:has(> label[for="fBase"]){display:none!important}
+/* nível "somente consulta": sem os botões que gravam (o navegador e o banco também recusam) */
+body.so-consulta #cardAcessos .linha:has(#acSalvar),body.so-consulta #acLojasSup,body.so-consulta #acSalvar,body.so-consulta #acPadrao,body.so-consulta [data-resetar],body.so-consulta [data-bloquear],body.so-consulta [data-tirar],body.so-consulta [data-lojassup],body.so-consulta #btnBaseTopo,body.so-consulta #avEnviar,body.so-consulta [data-av-rem]{display:none!important}
+.sit-pedido{flex:1 1 100%;border:1px solid rgba(255,100,28,.35);background:var(--gx-pr-bg);color:var(--gx-text);border-radius:14px;padding:10px 14px;font-size:14px;line-height:1.5}
+.sit-pedido.rep{border-color:rgba(220,38,38,.35);background:var(--gx-er-bg)}
 .sino-w{position:relative}
 #btnSino{position:relative;display:inline-flex;align-items:center;gap:4px}
 #btnSino svg{width:18px;height:18px}
@@ -1117,7 +1123,8 @@ body.abertura-on .topo,body.abertura-on .lateral,body.abertura-on .rodape,body.a
     <div class="ped-form">
       <div class="campo" style="width:150px"><label for="acUsuario">Usuário</label><input id="acUsuario" placeholder="ex.: awk13" autocomplete="off"></div>
       <div class="campo" style="flex:1;min-width:180px"><label for="acNome">Nome</label><input id="acNome" placeholder="Nome do gerente"></div>
-      <div class="campo" style="width:210px"><label for="acPerfil">Acesso</label><select id="acPerfil"><option value="GERENTE">Gerente (1 loja)</option><option value="SUPERVISOR">Supervisor (lojas dele)</option><option value="OPERACOES">Gerente de Operações (todas)</option><option value="RH">RH (todas)</option></select></div>
+      <div class="campo" style="width:210px"><label for="acPerfil">Perfil (o que vê)</label><select id="acPerfil"><option value="GERENTE">Gerente (1 loja)</option><option value="SUPERVISOR">Supervisor (lojas dele)</option><option value="OPERACOES">Gerente de Operações (todas)</option><option value="RH">RH (todas, tudo)</option></select></div>
+      <div class="campo" style="width:200px"><label for="acNivel">Nível (o que pode fazer)</label><select id="acNivel"><option value="total">Total (vê e altera)</option><option value="consulta">Somente consulta</option></select></div>
       <div class="campo" style="width:140px"><label for="acLoja">Loja</label><select id="acLoja"></select></div>
       <div class="campo" style="width:170px"><label for="acSenha">Senha inicial</label><div style="display:flex;gap:6px"><input id="acSenha" style="width:110px" autocomplete="off"><button class="btn peq" id="acGerar" type="button" title="Gerar senha">↻</button></div></div>
       <button class="btn prim" id="acSalvar">Salvar acesso</button>
@@ -1674,8 +1681,8 @@ async function api(acao, dados){
   if(!/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?\b/.test(API_URL) && !/^https:\/\/script\.google\.com\/(a\/macros\/[^/]+\/s|a\/[^/]+\/macros\/s|macros\/s)\/[\w-]+\/exec\/?(\?.*)?$/.test(API_URL))
     throw new Error('O endereço no config.js não é o de uma implantação do Apps Script. Ele precisa ser assim: https://script.google.com/macros/s/.../exec (não use o endereço do editor nem o que termina em /dev).');
   // "Ver como" (RH simulando supervisor ou Gerente de Operações): só leitura. Qualquer gravação é recusada aqui, antes de sair do navegador.
-  if(window.__VER_COMO && !/^(base\.get|escala\.get|escalas\.listar|acessos\.listar|fluxo\.get|vendas\.get|fluxo\.atualizar|alter\.status|escala\.historico|escala\.versao|alteracoes\.buscar|folgas\.gerentes|lojas\.get|regras\.get|salarios\.get|notif\.get)$/.test(acao))
-    throw new Error('Modo "Ver como": só consulta, nada é gravado. Volte à visão do RH para alterar.');
+  if((window.__VER_COMO || window.__SO_CONSULTA) && !/^(base\.get|escala\.get|escalas\.listar|acessos\.listar|fluxo\.get|vendas\.get|fluxo\.atualizar|alter\.status|escala\.historico|escala\.versao|alteracoes\.buscar|folgas\.gerentes|lojas\.get|regras\.get|salarios\.get|notif\.get)$/.test(acao))
+    throw new Error(window.__VER_COMO ? 'Modo "Ver como": só consulta, nada é gravado. Volte à visão do RH para alterar.' : 'Seu acesso é só de consulta: nada é gravado. Fale com o RH se precisar alterar.');
   // limite de tempo: nenhuma tela fica esperando para sempre. As rotinas que leem pastas ou a AlterVision levam minutos.
   const LONGAS = ['fluxo.atualizar','vendas.atualizar','manad.atualizar','alter.diag','alter.config','acessos.importar','base.set','folgas.gerentes','alteracoes.buscar'];
   const limite = window.__API_TIMEOUT_MS || (LONGAS.includes(acao) ? 6*60*1000 : (acao==='login' ? 30*1000 : 45*1000));   // login: 30 s, com uma nova tentativa
@@ -1701,7 +1708,7 @@ function lerSessao(){ try{ return JSON.parse(localStorage.getItem(CHAVE_SESSAO)|
 function gravarSessao(s){ try{ localStorage.setItem(CHAVE_SESSAO, JSON.stringify(s)); }catch(e){} }
 function sair(msg){
   try{ localStorage.removeItem(CHAVE_SESSAO); localStorage.removeItem('xambre.escala5x2.headcount'); }catch(e){}
-  SESSAO = null; SITUACAO = null; clearInterval(timerVG); clearInterval(timerNotif); NOTIF = {contestacoes:[], avisos:[], eventos:[], prazo:null}; renderNotif();
+  SESSAO = null; SITUACAO = null; window.__SO_CONSULTA = false; document.body.classList.remove('so-consulta'); clearInterval(timerVG); clearInterval(timerNotif); NOTIF = {contestacoes:[], avisos:[], eventos:[], prazo:null}; renderNotif();
   mostrarLogin(msg || '');
 }
 function mostrarLogin(msg){
@@ -1719,6 +1726,7 @@ function mostrarTroca(){
 }
 // sai do modo consulta (outro perfil entrou nesta mesma página)
 function sairLeitura(){
+  if(window.__SO_CONSULTA) return;   // nível consulta: continua só consulta (também na volta do "Ver como")
   if(SOMENTE_LEITURA) document.querySelectorAll('#cardLoja input, #cardLoja select').forEach(el=>{ el.disabled = false; });
   aplicarLeitura(false);
 }
@@ -1778,7 +1786,10 @@ async function entrar(){
     // supervisor: as lojas que o banco devolveu no login (escolhidas ou do cadastro) ou as que vieram na base dele
     const ljs = Array.isArray(SESSAO.lojas) && SESSAO.lojas.length ? SESSAO.lojas : (HC ? calcLojas() : String(SESSAO.loja||'').split(',').map(x=>x.trim()).filter(Boolean));
     LOJAS = (SOU_RH || SESSAO.perfil==='OPERACOES') ? calcLojas() : (SOU_SUP ? ljs.slice().sort() : [MINHA_LOJA]);
+    // nível "somente consulta": vê o mesmo que o perfil, sem gravar nada (o banco também recusa)
+    window.__SO_CONSULTA = SESSAO.nivel==='consulta'; document.body.classList.remove('so-consulta');
     if(SOU_RH) modoRH(); else if(SOU_SUP) modoSupervisor(); else modoGerente();
+    if(window.__SO_CONSULTA){ aplicarLeitura(true); papel($('papel').textContent + ' · consulta'); if(SOU_RH) document.body.classList.add('so-consulta'); }   // RH consulta: vê as telas do RH (gerente consulta fica como o supervisor)
     const loja = (SOU_RH || SOU_SUP) ? (LOJAS.includes(S.loja) ? S.loja : LOJAS[0]) : MINHA_LOJA;
     S = carregar(loja, S.mes); diaSel = 1;
     renderConfig(); renderBaseStatus(); renderEquipe(); render(true);
@@ -1855,7 +1866,7 @@ function salvarEscalaBanco(){
       if(SOU_RH || SOU_SUP){ escalasMes[corpo.loja] = {loja:corpo.loja, salvoEm:corpo.salvoEm, resumo:corpo.resumo, situacao:SITUACAO}; renderVG(); }
     }).catch(e=>{
       console.error(e); nuvemPend = false;
-      if(e.conflito || /está (enviada|aprovada)/.test(e.message)){ toast(e.conflito ? 'Outra pessoa alterou esta escala: carreguei a versão mais nova' : e.message); abrirDoBanco(corpo.loja, corpo.mes); }
+      if(e.conflito || /está (enviada|aprovada|publicada)|enviada ao RH/.test(e.message)){ toast(e.conflito ? 'Outra pessoa alterou esta escala: carreguei a versão mais nova' : e.message); abrirDoBanco(corpo.loja, corpo.mes); }
       else statusSalvo('erro', e.message);
     });
   }, 1500);
@@ -1902,7 +1913,7 @@ function faixaVerComo(){
 function verComoAcesso(a){
   if(VISAO_GERENTE) alternarVisao();
   VER_COMO = {usuario:a.usuario, nome:a.nome || a.usuario, perfil:a.perfil, lojas: lojasDoAcesso(a)};
-  SOU_RH = false; SOU_SUP = true; LOJAS = VER_COMO.lojas.slice(); window.__VER_COMO = true;
+  SOU_RH = false; SOU_SUP = true; LOJAS = VER_COMO.lojas.slice(); window.__VER_COMO = true; document.body.classList.remove('so-consulta');
   CG_DADOS = null; CG_MES = '';
   modoSupervisor(); faixaVerComo();
   if(!LOJAS.length){ toast('Esse supervisor ainda não tem lojas: configure em Acessos > Lojas'); renderConfig(); render(true); setVista('escala'); return; }
@@ -1918,7 +1929,7 @@ function verComoLoja(loja){
 function sairVerComo(semTrocar){
   if(VISAO_GERENTE) alternarVisao();
   if(!VER_COMO) return;
-  VER_COMO = null; window.__VER_COMO = false; SOU_RH = true; SOU_SUP = false; LOJAS = calcLojas(); CG_DADOS = null; CG_MES = '';
+  VER_COMO = null; window.__VER_COMO = false; SOU_RH = true; SOU_SUP = false; LOJAS = calcLojas(); if(window.__SO_CONSULTA) document.body.classList.add('so-consulta'); CG_DADOS = null; CG_MES = '';
   modoRH(); faixaVerComo();
   if(!semTrocar){ trocarLojaMes(LOJAS.includes(S.loja) ? S.loja : LOJAS[0], S.mes); setVista('escala'); }
 }
@@ -1992,7 +2003,7 @@ function renderAcessos(){
   const lojasTxt = a => a.perfil==='GERENTE' ? esc(a.loja) : a.perfil==='SUPERVISOR' ? (a.loja ? esc(a.loja) : (a.lojasCadastro && a.lojasCadastro.length ? esc(a.lojasCadastro.join(', ')) + ' <small style="color:var(--gx-muted)">(cadastro)</small>' : '<small style="color:var(--gx-warning)">nenhuma loja no cadastro</small>')) : '';
   const senhaTxt = a => a.senhaProvisoria ? `<span class="ac-senha"><code data-sv="${esc(a.usuario)}">••••••••</code> <button class="btn peq" data-ver="${esc(a.usuario)}" type="button">Mostrar</button> <button class="btn peq" data-copiar="${esc(a.usuario)}" type="button" title="Copiar usuário e senha">Copiar</button></span>` : (a.trocarSenha ? '<small style="color:var(--gx-muted)">use "Nova senha"</small>' : '<small style="color:var(--gx-muted)">definida pela pessoa</small>');
   box.innerHTML = lista.length ? `<div class="tabela-rolar"><table class="ped tab-acessos"><thead><tr><th>Usuário</th><th>Nome</th><th>Acesso</th><th>Situação</th><th>Senha provisória</th><th>Último acesso</th><th style="width:250px"></th></tr></thead><tbody>${
-    lista.map(a=>`<tr class="${a.bloqueado?'ac-bloq':''}"><td><b>${esc(a.usuario)}</b></td><td>${esc(a.nome)}</td><td>${chip(PERFIL[a.perfil][0], PERFIL[a.perfil][1])} ${lojasTxt(a)}</td><td>${a.bloqueado ? chip('er','bloqueado') : a.trocarSenha ? chip('at','1º acesso pendente') : chip('ok','ativo')}</td><td>${senhaTxt(a)}</td><td class="nuvem">${a.ultimo ? new Date(a.ultimo).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—'}</td>
+    lista.map(a=>`<tr class="${a.bloqueado?'ac-bloq':''}"><td><b>${esc(a.usuario)}</b></td><td>${esc(a.nome)}</td><td>${chip(PERFIL[a.perfil][0], PERFIL[a.perfil][1])}${a.nivel==='consulta' ? ' ' + chip('ne','somente consulta') : ''} ${lojasTxt(a)}</td><td>${a.bloqueado ? chip('er','bloqueado') : a.trocarSenha ? chip('at','1º acesso pendente') : chip('ok','ativo')}</td><td>${senhaTxt(a)}</td><td class="nuvem">${a.ultimo ? new Date(a.ultimo).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—'}</td>
       <td style="text-align:right;white-space:nowrap">${a.perfil==='SUPERVISOR' ? `<button class="btn peq" data-lojassup="${esc(a.usuario)}">Lojas</button> ` : ''}<button class="btn peq" data-resetar="${esc(a.usuario)}">Nova senha</button> ${a.usuario===SESSAO.usuario ? '' : `<button class="btn peq" data-bloquear="${esc(a.usuario)}" data-b="${a.bloqueado?0:1}">${a.bloqueado?'Desbloquear':'Bloquear'}</button> <button class="btn fant peq" data-tirar="${esc(a.usuario)}" aria-label="Excluir acesso" title="Excluir acesso">✕</button>`}</td></tr>`).join('')
   }</tbody></table></div>` : (busca ? '<div class="vazio">Nenhum acesso com esse filtro.</div>' : '<div class="vazio">Nenhum acesso cadastrado ainda.</div>');
   if(SUP_EDITANDO) abrirLojasSup(SUP_EDITANDO);
@@ -2119,15 +2130,15 @@ async function salvarLojasInfoRemoto(info){ await api('lojas.set', {info}); awai
 
 /* ---------- fluxo de aprovação: Rascunho → Enviada → Aprovada → Publicada ---------- */
 const ST_TXT = {rascunho:'Rascunho', enviada:'Enviada para aprovação', devolvida:'Devolvida para ajuste', aprovada:'Aprovada', publicada:'Publicada'};
-const ACAO_TXT = {editou:'editou', enviar:'enviou', retirar:'retirou o envio', aprovar:'aprovou', devolver:'devolveu', publicar:'publicou', 'alterou depois de publicada':'alterou depois de publicada'};
+const ACAO_TXT = {editou:'editou', enviar:'enviou', retirar:'retirou o envio', aprovar:'aprovou', devolver:'devolveu', publicar:'publicou', 'alterou depois de publicada':'alterou depois de publicada', 'alterou depois de aprovada':'alterou (alteração liberada pelo RH)', 'pediu alteração':'pediu alteração', 'cancelou o pedido de alteração':'cancelou o pedido de alteração', 'reprovou o pedido de alteração':'reprovou o pedido de alteração', aceitarPedido:'aprovou o pedido de alteração'};
 function bloqueioEdicao(){
   if(!API_URL || !SESSAO || !SITUACAO || SOU_RH || SOU_SUP) return '';
   if(SITUACAO.status==='carregando') return 'Carregando a escala do portal… tente de novo em instantes.';
-  if(SITUACAO.status==='enviada') return 'A escala foi enviada para aprovação: para mudar, clique em "Retirar envio" no quadro Situação da escala.';
-  if(SITUACAO.status==='aprovada') return 'A escala está aprovada: para mudar, peça a devolução ao supervisor ou ao RH.';
-  if(SITUACAO.status==='publicada' && okPublicada!==S.loja+S.mes){
-    confirmar('Alterar a escala publicada?', 'A escala já foi publicada. Se você alterar, ela volta para rascunho, o RH é avisado e você precisa enviar de novo para aprovação.', 'Quero alterar').then(ok=>{ if(ok){ okPublicada = S.loja+S.mes; toast('Pode alterar: a escala volta para rascunho ao salvar'); } });
-    return 'Confirme para alterar a escala publicada';
+  if(SITUACAO.status==='enviada') return 'A escala foi enviada ao RH: para mudar, clique em "Retirar envio" no quadro Situação da escala.';
+  if(SITUACAO.status==='aprovada' || SITUACAO.status==='publicada'){
+    const pd = SITUACAO.pedido && SITUACAO.pedido.status==='pendente';
+    return pd ? 'O seu pedido de alteração está com o RH. Assim que for aprovado, a escala libera para alterar.'
+      : 'A escala está ' + SITUACAO.status + ': para mudar, escreva o motivo e clique em "Pedir alteração ao RH" no quadro Situação da escala.';
   }
   return '';
 }
@@ -2136,20 +2147,40 @@ function renderSituacao(){
   if(!API_URL || !SESSAO){ card.style.display = 'none'; return; }
   card.style.display = '';
   if(SITUACAO && SITUACAO.status==='carregando'){ $('sitTopo').innerHTML = '<span class="nuvem">Carregando a situação da escala…</span>'; $('sitAcoes').innerHTML = ''; $('sitPassos').innerHTML = ''; $('sitDica').textContent = ''; return; }
-  const st = (SITUACAO && SITUACAO.status) || 'rascunho', gestor = SOU_RH || SOU_SUP;
+  const st = (SITUACAO && SITUACAO.status) || 'rascunho', gestor = SOU_RH;
+  const ped = SITUACAO && SITUACAO.pedido, pedPend = ped && ped.status==='pendente';
+  const qd = t => new Date(t).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
   const cls = {rascunho:'ne', enviada:'at', devolvida:'er', aprovada:'ok', publicada:'ok'}[st];
   const passos = ['rascunho','enviada','aprovada','publicada'], idx = st==='devolvida' ? 0 : passos.indexOf(st);
   $('sitPassos').innerHTML = passos.map((p,i)=>`<span class="sit-p ${i<idx?'feito':i===idx?'atual':''}">${i+1}. ${ST_TXT[p].split(' ')[0]}</span>`).join('<span class="sit-s">›</span>');
-  $('sitTopo').innerHTML = `${chip(cls, ST_TXT[st])}${SITUACAO && SITUACAO.alterada ? ' ' + chip('at','alterada depois de publicada') : ''}${SITUACAO && SITUACAO.motivo ? `<span class="nuvem">Motivo: ${esc(SITUACAO.motivo)}</span>` : ''}${SITUACAO && SITUACAO.atualizadoEm ? `<span class="nuvem">${esc(SITUACAO.usuario||'')} · ${new Date(SITUACAO.atualizadoEm).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</span>` : ''}`;
-  const b = [];
-  if(['rascunho','devolvida'].includes(st)) b.push(`<button class="btn prim" data-sit="enviar" type="button">Enviar para aprovação</button>`);
-  if(st==='enviada') b.push(`<button class="btn" data-sit="retirar" type="button">Retirar envio</button>`);
-  if(gestor && st==='enviada') b.push(`<button class="btn prim" data-sit="aprovar" type="button">Aprovar</button>`);
-  if(SOU_RH && ['enviada','aprovada'].includes(st)) b.push(`<button class="btn escuro" data-sit="publicar" type="button">Publicar</button>`);
-  if(gestor && ['enviada','aprovada','publicada'].includes(st)) b.push(`<input id="sitMotivo" placeholder="Motivo da devolução" style="height:40px;border:1px solid var(--gx-border);border-radius:8px;padding:0 10px;min-width:240px;flex:1"><button class="btn" data-sit="devolver" type="button">Devolver para ajuste</button>`);
-  $('sitAcoes').innerHTML = b.join('');
-  $('sitDica').textContent = st==='enviada' && !gestor ? 'Enquanto a escala está com o supervisor/RH, a grade fica só para consulta.' : st==='aprovada' && !gestor ? 'Escala aprovada: falta o RH publicar. Para mudar, peça a devolução.' : st==='publicada' && !gestor ? 'Escala publicada. Se precisar mudar, ela volta para rascunho e o RH é avisado.' : st==='devolvida' ? 'Ajuste o que foi pedido e envie de novo.' : 'O gerente monta e envia; o supervisor (ou o RH) aprova ou devolve; o RH publica. Cada envio, aprovação, devolução e publicação guarda uma versão.';
-  if($('sitHist').open) carregarHistorico();
+  $('sitTopo').innerHTML = `${chip(cls, ST_TXT[st])}${SITUACAO && SITUACAO.alterada ? ' ' + chip('at','alteração liberada pelo RH') : ''}${pedPend ? ' ' + chip('at','pedido de alteração') : ''}${SITUACAO && SITUACAO.motivo ? `<span class="nuvem">Motivo: ${esc(SITUACAO.motivo)}</span>` : ''}${SITUACAO && SITUACAO.atualizadoEm ? `<span class="nuvem">${esc(SITUACAO.usuario||'')} · ${new Date(SITUACAO.atualizadoEm).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</span>` : ''}`;
+  const b = [], loja = !SOU_RH && !SOU_SUP && !window.__SO_CONSULTA;
+  const campo = (id, ph) => `<input id="${id}" placeholder="${ph}" maxlength="500" style="height:40px;border:1px solid var(--gx-border);border-radius:12px;padding:0 12px;min-width:240px;flex:1;background:var(--gx-input);color:var(--gx-text)">`;
+  // pedido de alteração (escala aprovada/publicada): o gerente pede com o motivo; o RH aprova ou reprova
+  let pedHtml = '';
+  if(pedPend){
+    pedHtml = `<div class="sit-pedido"><b>Pedido de alteração</b> de ${esc(ped.usuario)} · ${qd(ped.quando)}<div>Motivo: ${esc(ped.motivo)}</div></div>`;
+    if(SOU_RH && !window.__SO_CONSULTA) b.push(`<button class="btn prim" data-sit="aceitarPedido" type="button">Aprovar alteração</button>${campo('sitResposta', 'Motivo da reprovação (a loja vai ler)')}<button class="btn" data-sit="reprovarPedido" type="button">Reprovar alteração</button>`);
+    else if(loja) b.push(`<button class="btn" data-sit="cancelarPedido" type="button">Cancelar pedido</button>`);
+  } else if(ped && ped.status==='reprovado' && ['aprovada','publicada'].includes(st)){
+    pedHtml = `<div class="sit-pedido rep"><b>Pedido de alteração reprovado pelo RH</b> · ${qd(ped.respondidoEm)}<div>Motivo do RH: ${esc(ped.resposta||'')}</div><div class="nuvem">Seu pedido: ${esc(ped.motivo)}</div></div>`;
+  }
+  const rhAge = SOU_RH && !window.__SO_CONSULTA;
+  if((loja || rhAge) && ['rascunho','devolvida'].includes(st)) b.push(`<button class="btn prim" data-sit="enviar" type="button">Enviar para o RH aprovar</button>`);
+  if(loja && st==='enviada') b.push(`<button class="btn" data-sit="retirar" type="button">Retirar envio</button>`);
+  if(loja && ['aprovada','publicada'].includes(st) && !pedPend) b.push(`${campo('sitPedido', 'Motivo da alteração (observação para o RH)')}<button class="btn prim" data-sit="pedir" type="button">Pedir alteração ao RH</button>`);
+  if(rhAge && st==='enviada') b.push(`<button class="btn prim" data-sit="aprovar" type="button">Aprovar</button>`);
+  if(rhAge && ['enviada','aprovada'].includes(st)) b.push(`<button class="btn escuro" data-sit="publicar" type="button">Publicar</button>`);
+  if(rhAge && ['enviada','aprovada','publicada'].includes(st) && !pedPend) b.push(`${campo('sitMotivo', 'Motivo da devolução')}<button class="btn" data-sit="devolver" type="button">Devolver para ajuste</button>`);
+  $('sitAcoes').innerHTML = pedHtml + b.join('');
+  // pedido do RH (27/11/2026): os demais veem só o status; histórico, versões e "Restaurar" ficam para o RH
+  const hist = $('sitHist'); if(hist){ hist.style.display = SOU_RH ? '' : 'none'; if(!SOU_RH) hist.open = false; }
+  $('sitDica').textContent = pedPend ? (SOU_RH ? 'Aprovando, a escala volta para rascunho e a loja altera e envia de novo (cada mudança chega aqui, com onde mudou). Reprovando, nada muda e a loja lê o motivo.' : 'O pedido está com o RH: enquanto isso, a escala fica só para consulta.')
+    : st==='enviada' && !gestor ? 'A escala está com o RH para aprovar: enquanto isso, a grade fica só para consulta.'
+    : (st==='aprovada' || st==='publicada') && loja ? 'Escala ' + st + ' pelo RH. Para mudar, escreva o motivo e peça a alteração: o RH aprova ou reprova.'
+    : st==='devolvida' ? 'Ajuste o que foi pedido e envie de novo.'
+    : 'O gerente monta e envia; o RH aprova ou devolve e publica. Depois de aprovada, a loja só altera com pedido aprovado pelo RH. Cada envio, aprovação, devolução e publicação guarda uma versão.';
+  if(SOU_RH && $('sitHist').open) carregarHistorico();
 }
 async function carregarHistorico(){
   try{
@@ -2169,8 +2200,20 @@ document.addEventListener('click', async e=>{
     return;
   }
   const b = e.target.closest('[data-sit]'); if(!b) return;
-  const acao = b.dataset.sit, motivo = $('sitMotivo') ? $('sitMotivo').value.trim() : '';
+  const acao = b.dataset.sit, val = id => $(id) ? $(id).value.trim() : '';
+  const motivo = acao==='pedir' ? val('sitPedido') : acao==='reprovarPedido' ? val('sitResposta') : val('sitMotivo');
   if(acao==='devolver' && !motivo){ toast('Escreva o motivo da devolução'); $('sitMotivo').focus(); return; }
+  if(acao==='pedir' && motivo.length < 5){ toast('Escreva o motivo da alteração (observação para o RH)'); $('sitPedido').focus(); return; }
+  if(acao==='reprovarPedido' && !motivo){ toast('Escreva o motivo da reprovação'); $('sitResposta').focus(); return; }
+  if(acao==='aceitarPedido' && !await confirmar('Aprovar a alteração', `A escala da ${S.loja} volta para rascunho: a loja altera e envia de novo para o RH aprovar. Cada mudança chega aqui, com onde mudou.`, 'Aprovar alteração')) return;
+  if(['pedir','cancelarPedido','aceitarPedido','reprovarPedido'].includes(acao)){
+    try{
+      const j = await api('escala.acao', {loja:S.loja, mes:S.mes, passo:acao, motivo});
+      SITUACAO = Object.assign({}, j.situacao, {_k:S.loja+'|'+S.mes}); renderSituacao(); renderVG(); puxarNotif();
+      toast({pedir:'Pedido de alteração enviado ao RH', cancelarPedido:'Pedido de alteração cancelado', aceitarPedido:'Alteração aprovada: a escala voltou para rascunho da loja', reprovarPedido:'Pedido de alteração reprovado'}[acao]);
+    }catch(err){ toast(err.message); }
+    return;
+  }
   if(acao==='enviar'){
     const V = validar(), falhas = V.an.abeBaixo + V.an.fecBaixo + V.an.lidFalta + V.an.domBaixo, aj = Object.values(V.porPessoa).filter(r=>r.status==='AJUSTAR').length;
     if((falhas || aj) && !await confirmar('Enviar com pendências?', `A escala tem ${falhas} dia(s) com falha de cobertura e ${aj} pessoa(s) para ajustar. Veja "O que não fechou e alternativas". Enviar mesmo assim?`, 'Enviar assim')) return;
@@ -2181,7 +2224,7 @@ document.addEventListener('click', async e=>{
     await api('escala.set', {loja:S.loja, mes:S.mes, salvoEm:S.salvoEm||Date.now(), resumo:resumoAtual, estado:JSON.parse(JSON.stringify(S))}).catch(()=>{});
     const j = await api('escala.acao', {loja:S.loja, mes:S.mes, passo:acao, motivo});
     SITUACAO = Object.assign({}, j.situacao, {_k:S.loja+'|'+S.mes}); okPublicada = ''; renderSituacao(); renderVG(); puxarNotif();
-    toast({enviar:'Escala enviada para aprovação', retirar:'Envio retirado: a escala voltou para rascunho', aprovar:'Escala aprovada', devolver:'Escala devolvida para a loja', publicar:'Escala publicada'}[acao]);
+    toast({enviar:'Escala enviada para o RH aprovar', retirar:'Envio retirado: a escala voltou para rascunho', aprovar:'Escala aprovada', devolver:'Escala devolvida para a loja', publicar:'Escala publicada'}[acao]);
   }catch(err){ toast(err.message); }
 });
 
@@ -2289,12 +2332,15 @@ const mesTxt = mes => { const [y,m] = String(mes).split('-').map(Number); return
 const TIPO_AV = {prazo:['Prazo','at'], informativo:['Informativo','ne'], urgente:['Urgente','er']};
 function iniciarNotif(){
   clearInterval(timerNotif); notifPrimeira = true;
-  puxarNotif(); timerNotif = setInterval(puxarNotif, 20000);
+  // RH e supervisores: a cada 10 segundos (as mudanças dos gerentes aparecem na hora); lojas: a cada 20
+  puxarNotif(); timerNotif = setInterval(puxarNotif, (SOU_RH || SOU_SUP) ? 10000 : 20000);
 }
 async function puxarNotif(){
   if(!API_URL || !SESSAO || document.hidden && !notifPrimeira) return;
   try{
-    NOTIF = await api('notif.get', {mes:S.mes}); NOTIF.eventos = NOTIF.eventos || [];
+    const mesPedido = S.mes;
+    NOTIF = await api('notif.get', {mes:mesPedido}); NOTIF.eventos = NOTIF.eventos || [];
+    aplicarMudancas(NOTIF.mudancas || {}, mesPedido);
     const novos = itensNotif().filter(i=>!VISTOS.has(i.chave) && !i.auto);
     if(!notifPrimeira && novos.length) avisarNovo(novos);
     // evento da escala aberta (enviada, aprovada, devolvida, publicada, alterada): recarrega a situação e a escala
@@ -2307,6 +2353,26 @@ async function puxarNotif(){
   }catch(e){ console.error(e); }
 }
 document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && SESSAO) puxarNotif(); });
+// "Ao vivo": o banco devolve, por loja, a hora da última gravação/mudança de situação no mês. O que mudou por outra
+// pessoa é recarregado na hora: a escala aberta (grade e situação), a visão geral e o histórico de alterações aberto.
+let MUD_VISTAS = null, MUD_MES = '';
+function aplicarMudancas(m, mes){
+  if(mes!==S.mes) return;
+  if(MUD_MES!==mes || !MUD_VISTAS){ MUD_VISTAS = m; MUD_MES = mes; return; }
+  const outras = Object.keys(m).filter(l=>(!MUD_VISTAS[l] || MUD_VISTAS[l].t!==m[l].t) && m[l].u!==(SESSAO && SESSAO.usuario));
+  MUD_VISTAS = m;
+  if(!outras.length) return;
+  if(outras.includes(S.loja) && !window.nuvemPend) abrirDoBanco(S.loja, S.mes);
+  if(SOU_RH || SOU_SUP){
+    escalasMesRecarregar();
+    if(SOU_RH && $('cardHist') && $('cardHist').offsetParent && $('histBox') && $('histBox').querySelector('table') && $('hsBuscar')) $('hsBuscar').click();
+    if(SOU_RH && $('sitHist') && $('sitHist').open && outras.includes(S.loja)) carregarHistorico();
+  }
+}
+async function escalasMesRecarregar(){
+  const mes = S.mes;
+  try{ const j = await api('escalas.listar', {mes}); if(mes!==S.mes) return; escalasMes = {}; j.escalas.forEach(x=>{ escalasMes[x.loja] = x; }); renderVG(); }catch(e){ console.error(e); }
+}
 function contestStatus(loja){
   const cs = NOTIF.contestacoes.filter(c=>c.loja===loja && c.mes===S.mes && c.status!=='resolvida');
   return cs.some(c=>c.status==='aberta') ? 'aberta' : (cs.length ? 'respondida' : '');
@@ -2468,7 +2534,7 @@ function renderVG(){
     }
     if(typeof contestStatus==='function'){ const cs = contestStatus(l.loja); if(cs) st = chip(cs==='aberta'?'er':'at', cs==='aberta'?'contestada':'contestação respondida') + ' ' + st; }
     const quando = l.salvoEm ? new Date(l.salvoEm).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
-    const fx = l.situacao && l.situacao.status && l.situacao.status!=='rascunho' ? ' ' + chip(...(ST_FLUXO[l.situacao.status]||ST_FLUXO.rascunho)) : '';
+    const fx = (l.situacao && l.situacao.status && l.situacao.status!=='rascunho' ? ' ' + chip(...(ST_FLUXO[l.situacao.status]||ST_FLUXO.rascunho)) : '') + (l.situacao && l.situacao.pedido && l.situacao.pedido.status==='pendente' ? ' ' + chip('at','pedido de alteração') : '');
     const heCols = rh ? `<td class="n">${HE_LOJA[l.loja] && HE_LOJA[l.loja].horas ? fmtH(HE_LOJA[l.loja].horas) : '—'}</td><td class="n">${HE_LOJA[l.loja] && HE_LOJA[l.loja].horas ? (HE_LOJA[l.loja].semSal===HE_LOJA[l.loja].n ? 'sem salário' : brl(HE_LOJA[l.loja].total)) : '—'}</td>` : '';
     return `<tr class="abrir" data-loja="${esc(l.loja)}" style="${l.loja===S.loja?'background:var(--gx-primary-soft)':''}"><td><b>${esc(l.loja)}</b><div class="nuvem">${esc(l.shopping)}</div></td><td class="n">${l.equipe}</td><td class="n">${l.vagas||'—'}</td><td><div class="barra"><i style="width:${pct}%"></i></div><div class="nuvem">${pct}%</div></td><td class="n">${r?r.ok:'—'}</td><td>${st}${fx}</td>${heCols}<td class="nuvem">${quando}</td></tr>`;
   }).join('');
@@ -3873,7 +3939,7 @@ const CHAVE_LOJAS_INFO = 'xambre.escala5x2.lojasInfo';
 let LOJAS_INFO = (()=>{ try{ return JSON.parse(localStorage.getItem(CHAVE_LOJAS_INFO)||'{}'); }catch(e){ return {}; } })();
 const INTEL_F = {marca:'', regiao:'', sup:'', crit:''};
 const marcaDe = l => /^AFEET/.test(l) ? 'Authentic Feet' : /^AWK/.test(l) ? 'Artwalk' : /^MAGIC/.test(l) ? 'Magic Feet' : 'Outra';
-const ST_FLUXO = {rascunho:['ne','rascunho'], enviada:['at','enviada'], devolvida:['er','devolvida'], aprovada:['ok','aprovada'], publicada:['ok','publicada']};
+const ST_FLUXO = {rascunho:['ne','rascunho'], enviada:['at','enviada'], devolvida:['er','devolvida'], aprovada:['ok','aprovada'], publicada:['ok','publicada'], pedido:['er','pedido de alteração'], reprovado:['er','alteração reprovada'], alterada:['at','alterada']};
 function podeVerIntel(){ return !VISAO_GERENTE && (rhReal() || (typeof SOU_SUP!=='undefined' && SOU_SUP)); }
 function criticidade(r){
   if(!r || !r.pct) return {n:'media', t:'média', m:'não iniciada'};
@@ -4566,7 +4632,8 @@ let rafPend = false;
 function agendarRender(){ if(rafPend) return; rafPend = true; requestAnimationFrame(()=>{ rafPend=false; render(); }); }
 
 /* ================= Trava de edição (fluxo de aprovação do portal) ================= */
-// No Portal Xambre, o gerente não altera a escala enviada ou aprovada; a publicada volta a rascunho (o RH é avisado).
+// No Portal Xambre, o gerente não altera a escala enviada, aprovada ou publicada: depois da aprovação, só com pedido
+// de alteração (com motivo) aprovado pelo RH.
 function travada(){ const m = typeof bloqueioEdicao==='function' ? bloqueioEdicao() : ''; if(m){ toast(m); return true; } return false; }
 
 /* ================= Modal / toast ================= */
@@ -4659,7 +4726,7 @@ $('acPadrao').addEventListener('click', async ()=>{
   }catch(e){ toast(e.message); }
 });
 $('acSalvar').addEventListener('click', async ()=>{
-  const dados = {usuario:$('acUsuario').value.trim(), nome:$('acNome').value.trim(), perfil:$('acPerfil').value, loja:$('acLoja').value, senha:$('acSenha').value};
+  const dados = {usuario:$('acUsuario').value.trim(), nome:$('acNome').value.trim(), perfil:$('acPerfil').value, nivel:$('acNivel').value, loja:$('acLoja').value, senha:$('acSenha').value};
   if(!dados.usuario){ toast('Informe o usuário'); return; }
   if(dados.perfil==='SUPERVISOR') dados.lojas = [...document.querySelectorAll('#acLojasSup input:checked')].map(i=>i.value);
   const existe = ACESSOS_LISTA.some(a=>a.usuario===dados.usuario.toLowerCase());
@@ -4668,7 +4735,7 @@ $('acSalvar').addEventListener('click', async ()=>{
     await carregarAcessos();
     if(existe) toast('Acesso atualizado');
     else await confirmar('Acesso criado', `Usuário: ${dados.usuario.toLowerCase()}  ·  Senha provisória: ${j.senha || dados.senha}\n\nPasse esses dados para a pessoa. No primeiro acesso ela vai trocar a senha. A provisória também fica na lista (Mostrar) até a troca.`, 'Ok');
-    ['acUsuario','acNome','acSenha'].forEach(id=>{ $(id).value=''; }); delete $('acUsuario').dataset.manual;
+    ['acUsuario','acNome','acSenha'].forEach(id=>{ $(id).value=''; }); $('acNivel').value = 'total'; delete $('acUsuario').dataset.manual;
   }catch(e){ toast(e.message); }
 });
 $('acessosBox').addEventListener('click', async e=>{
@@ -5065,7 +5132,7 @@ $('formLogin').addEventListener('submit', async e=>{
     let j;
     try{ j = await api('login', dados); }
     catch(err){ if(!err.semResposta) throw err; info.textContent = 'O banco não respondeu. Tentando de novo…'; info.style.display = ''; j = await api('login', dados); }
-    SESSAO = {token:j.token, usuario:j.usuario, nome:j.nome, perfil:j.perfil, loja:j.loja, lojas:j.lojas, trocarSenha:j.trocarSenha};
+    SESSAO = {token:j.token, usuario:j.usuario, nome:j.nome, perfil:j.perfil, nivel:j.nivel || "total", loja:j.loja, lojas:j.lojas, trocarSenha:j.trocarSenha};
     gravarSessao(SESSAO); $('lgSenha').value = '';
     await entrar();
   }catch(err){ $('loginMsg').textContent = err.message; }
