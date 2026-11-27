@@ -553,6 +553,10 @@ table.hist tr.grupo td{background:var(--gx-head);font-weight:600}
 .intel-cad{margin-top:14px;border:1px solid var(--gx-border);border-radius:10px;padding:10px 14px}.intel-cad summary{cursor:pointer;font-weight:600}
 .intel-cad input{height:32px;border:1px solid var(--gx-border);border-radius:6px;padding:0 8px;width:100%}
 table.sim td.n,table.sim th.n{text-align:right}.sim-m{color:var(--gx-success);font-weight:700}.sim-p{color:var(--gx-danger);font-weight:700}
+.qd-auto{margin-top:22px;padding-top:18px;border-top:1px solid var(--gx-linha)}
+.qd-auto h3{margin:0 0 8px;font-size:16px;display:flex;gap:8px;align-items:center}
+.qd-auto h3 .tag{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--gx-pr-bg);color:var(--gx-pr-tx)}
+.qd-status{font-size:14px;line-height:1.6}.qd-status .nuvem{font-size:13px}
 /* 4.9.0: "Ver como o gerente" e "Carregar base do quadro" ficam só no topo (olho e 📊) */
 .campo:has(> #btnVisao),.campo:has(> label[for="fBase"]){display:none!important}
 /* nível "somente consulta": sem os botões que gravam (o navegador e o banco também recusam) */
@@ -977,7 +981,7 @@ body.abertura-on .topo,body.abertura-on .lateral,body.abertura-on .rodape,body.a
   <span class="avatar" data-ic="user" aria-hidden="true"></span>
   <div class="topo-acoes">
     <a class="ico-bt raio" id="btnAtualizarApp" href="escalagx://atualizar" hidden title="Atualizar a Escala GX (roda o ATUALIZAR ESCALA.bat neste computador)" aria-label="Atualizar a Escala GX"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z"/></svg></a>
-    <button class="ico-bt base" id="btnBaseTopo" type="button" style="display:none" title="Carregar base do quadro (planilha do quadro de funcionários)" aria-label="Carregar base do quadro"><span aria-hidden="true">📊</span></button>
+    <button class="ico-bt base" id="btnBaseTopo" type="button" style="display:none" title="Carregar o quadro à mão (normalmente o banco lê sozinho a cada 15 min: Configurações > Quadro de colaboradores)" aria-label="Carregar o quadro à mão"><span aria-hidden="true">📊</span></button>
     <div class="vc-w"><button class="ico-bt" id="btnVerComo" type="button" style="display:none" aria-haspopup="true" aria-expanded="false" title="Ver como (Gerente de Operações, supervisor ou loja)" aria-label="Ver como"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
       <div class="vc-menu" id="verComoMenu" role="menu" hidden></div></div>
     <button class="ico-bt" type="button" data-tema-bt title="Tema" aria-label="Tema"></button>
@@ -1295,6 +1299,17 @@ body.abertura-on .topo,body.abertura-on .lateral,body.abertura-on .rodape,body.a
     <div class="dica" style="margin:-8px 0 12px">Valem para todas as lojas. Só o RH vê e altera este quadro.</div>
     <div class="linha" id="regrasBox"></div>
     <div class="linha" style="margin-top:10px"><button class="btn" id="rgPadrao">Voltar ao padrão</button></div>
+    <div class="qd-auto" id="qdAuto">
+      <h3>Quadro de colaboradores <span class="tag">automático</span></h3>
+      <div class="dica" style="margin:0 0 10px">O banco lê o quadro sozinho a cada 15 minutos. Quando o arquivo muda, a base é atualizada e quem foi admitido, desligado, transferido, mudou de cargo, entrou de férias ou foi afastado vira aviso para o RH, o supervisor e o gerente da loja (com o que acertar na escala). Cole o link da <b>pasta</b> onde o quadro do mês é salvo (recomendado: o quadro do mês seguinte é achado sozinho) ou do arquivo.</div>
+      <div id="qdStatus" class="qd-status">Carregando a situação do quadro…</div>
+      <div class="linha" style="margin-top:10px;align-items:flex-end">
+        <div class="campo" style="flex:1 1 320px"><label for="qdLink">Link da pasta (ou do arquivo) do quadro</label><input id="qdLink" placeholder="https://drive.google.com/drive/folders/..." autocomplete="off"></div>
+        <button class="btn prim" id="qdSalvar" type="button">Salvar e ler</button>
+        <button class="btn" id="qdLer" type="button">Ler agora</button>
+      </div>
+      <div id="qdMud" style="margin-top:12px"></div>
+    </div>
   </section>
 
   <div class="grid2">
@@ -1661,7 +1676,7 @@ async function carregarBase(files){
 }
 function renderBaseStatus(){
   const el = $('baseStatus'); if(!el) return;
-  if(!HC){ el.innerHTML = 'Nenhuma base carregada. Clique em <b>Carregar base do quadro</b> e escolha o QUADRO do mês (.xlsx): ele já traz o mês seguinte (ex.: o quadro de novembro tem a aba DEZEMBRO, usada na escala de dezembro). Os salários vêm da folha (MANAD). A base fica guardada no banco do portal (Planilha Google) e cada gerente recebe só a equipe da loja dele.'; return; }
+  if(!HC){ el.innerHTML = 'Nenhuma base carregada. Clique em <b>Carregar base do quadro</b> e escolha o QUADRO do mês (.xlsx): ele já traz o mês seguinte (ex.: o quadro de novembro tem a aba DEZEMBRO, usada na escala de dezembro). Os salários vêm da folha (MANAD). A base fica guardada no banco do portal (Planilha Google) e cada gerente recebe só a equipe da loja dele.'; if(typeof API_URL!=='undefined' && API_URL) el.innerHTML += ' <b>No portal, o quadro é lido sozinho a cada 15 min</b> (Configurações > Quadro de colaboradores).'; return; }
   const ms = Object.keys(HC.meses).sort().map(NOME_MES).join(', ');
   el.innerHTML = `Base: <b>${esc(HC.fonte)}</b> · meses ${esc(ms)} · carregada em ${esc(HC.gerado_em)}${HC.comSexo===false?' · regra de domingo pelo primeiro nome (o export da Sólides é opcional e só confirma o sexo)':''}.`;
 }
@@ -1684,7 +1699,7 @@ async function api(acao, dados){
   if((window.__VER_COMO || window.__SO_CONSULTA) && !/^(base\.get|escala\.get|escalas\.listar|acessos\.listar|fluxo\.get|vendas\.get|fluxo\.atualizar|alter\.status|escala\.historico|escala\.versao|alteracoes\.buscar|folgas\.gerentes|lojas\.get|regras\.get|salarios\.get|notif\.get)$/.test(acao))
     throw new Error(window.__VER_COMO ? 'Modo "Ver como": só consulta, nada é gravado. Volte à visão do RH para alterar.' : 'Seu acesso é só de consulta: nada é gravado. Fale com o RH se precisar alterar.');
   // limite de tempo: nenhuma tela fica esperando para sempre. As rotinas que leem pastas ou a AlterVision levam minutos.
-  const LONGAS = ['fluxo.atualizar','vendas.atualizar','manad.atualizar','alter.diag','alter.config','acessos.importar','base.set','folgas.gerentes','alteracoes.buscar'];
+  const LONGAS = ['quadro.ler','quadro.config','fluxo.atualizar','vendas.atualizar','manad.atualizar','alter.diag','alter.config','acessos.importar','base.set','folgas.gerentes','alteracoes.buscar'];
   const limite = window.__API_TIMEOUT_MS || (LONGAS.includes(acao) ? 6*60*1000 : (acao==='login' ? 30*1000 : 45*1000));   // login: 30 s, com uma nova tentativa
   const ctl = typeof AbortController==='function' ? new AbortController() : null, tm = ctl ? setTimeout(()=>ctl.abort(), limite) : null;
   let r;
@@ -1795,7 +1810,7 @@ async function entrar(){
     renderConfig(); renderBaseStatus(); renderEquipe(); render(true);
     await abrirDoBanco(S.loja, S.mes, true);
     carregarFluxo(S.loja, S.mes); carregarVendas(S.loja, S.mes);
-    if(SOU_RH){ await carregarSalariosRemoto(); await carregarAcessos(); carregarAlter(); autoAtualizarRH(); }
+    if(SOU_RH){ await carregarSalariosRemoto(); await carregarAcessos(); carregarAlter(); autoAtualizarRH(); carregarQuadroAuto(); }
     if(SOU_RH || SOU_SUP){ await carregarLojasInfo(); assinarVG(); }
     iniciarNotif(); checarMesAtual(); setVista(VISTA);
     nuvem('✓ Conectado: as escalas salvas aqui ficam disponíveis em qualquer computador.');
@@ -2341,6 +2356,7 @@ async function puxarNotif(){
     const mesPedido = S.mes;
     NOTIF = await api('notif.get', {mes:mesPedido}); NOTIF.eventos = NOTIF.eventos || [];
     aplicarMudancas(NOTIF.mudancas || {}, mesPedido);
+    if(NOTIF.baseEm){ if(BASE_EM_VISTA && NOTIF.baseEm !== BASE_EM_VISTA) recarregarBase(); BASE_EM_VISTA = NOTIF.baseEm; }
     const novos = itensNotif().filter(i=>!VISTOS.has(i.chave) && !i.auto);
     if(!notifPrimeira && novos.length) avisarNovo(novos);
     // evento da escala aberta (enviada, aprovada, devolvida, publicada, alterada): recarrega a situação e a escala
@@ -2353,6 +2369,49 @@ async function puxarNotif(){
   }catch(e){ console.error(e); }
 }
 document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && SESSAO) puxarNotif(); });
+/* ---------- quadro de colaboradores automático (5.0.0) ---------- */
+// O banco relê o quadro a cada 15 min; quando a base muda, o portal aberto busca a base nova na hora (o aviso do que
+// mudou chega pelo sino) e o gerente vê na faixa o que acertar na escala.
+let BASE_EM_VISTA = 0;
+async function recarregarBase(){
+  try{
+    const b = await api('base.get'); if(!b.base) return;
+    HC = b.base;
+    if(SOU_RH && !VER_COMO){ try{ localStorage.setItem('xambre.escala5x2.headcount', JSON.stringify(HC)); }catch(e){} }
+    if(!VER_COMO && (SOU_RH || (SESSAO && SESSAO.perfil==='OPERACOES'))) LOJAS = calcLojas();
+    renderBaseStatus(); renderEquipe(); render(true); if(SOU_RH || SOU_SUP) renderVG(); renderNotif();
+    if(SOU_RH) carregarQuadroAuto();
+    toast('Quadro de colaboradores atualizado');
+  }catch(e){ console.error(e); }
+}
+const TIPO_QD = {admitido:['ok','admitido(a)'], desligado:['er','desligado(a)'], aviso:['at','aviso'], transferencia:['at','transferido(a)'], cargo:['ne','cargo'], ferias:['ne','férias'], afastamento:['at','afastamento']};
+async function carregarQuadroAuto(){
+  const box = $('qdStatus'); if(!box || !SOU_RH) return;
+  let st; try{ st = await api('quadro.status'); }catch(e){ box.textContent = e.message; return; }
+  const qd = t => t ? new Date(t).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
+  const u = st.ultimo, link = u ? `https://drive.google.com/file/d/${encodeURIComponent(u.id)}/view` : '';
+  const origem = !u ? '' : u.origem==='pasta' ? ` (mais recente da pasta <b>${esc(u.pasta)}</b>)` : u.origem==='busca' ? ' (achado na busca do Drive: para não depender da busca, cole o link da pasta abaixo)' : ' (arquivo configurado)';
+  box.innerHTML = (u ? `${chip('ok','lido')} <b><a href="${link}" target="_blank" rel="noopener">${esc(u.nome)}</a></b>${origem}<br><span class="nuvem">Arquivo alterado em ${qd(u.modificado)} · lido em ${qd(st.lidoEm)} · conferido em ${qd(st.checadoEm)} (a cada 15 min) · ${u.mudancas} mudança(s) na última leitura</span>`
+      : `${chip('at','ainda não lido')} <span class="nuvem">Cole o link da pasta do quadro e clique em "Salvar e ler".</span>`)
+    + (st.erro ? `<br>${chip('er','erro')} ${esc(st.erro)}` : '');
+  $('qdMud').innerHTML = st.mudancas.length ? `<div class="tabela-rolar"><table class="ped"><thead><tr><th>Quando</th><th>Mês</th><th>Loja</th><th>Mudança</th><th>Colaborador</th><th>Detalhe</th></tr></thead><tbody>${st.mudancas.map(m=>`<tr><td class="nuvem">${qd(m.quando)}</td><td>${esc(m.mes)}</td><td><b>${esc(m.loja)}</b></td><td>${chip(...(TIPO_QD[m.tipo]||['ne',m.tipo]))}</td><td>${esc(m.nome)}</td><td>${esc(m.detalhe)}</td></tr>`).join('')}</tbody></table></div>` : '<div class="dica" style="margin:0">Nenhuma mudança registrada ainda.</div>';
+}
+async function lerQuadroAgora(link){
+  const bs = [$('qdSalvar'), $('qdLer')]; bs.forEach(b=>{ if(b) b.disabled = true; });
+  $('qdStatus').textContent = 'Lendo o quadro… (pode levar 1 minuto)';
+  try{
+    const r = link===undefined ? await api('quadro.ler') : await api('quadro.config', {link});
+    const n = r.leitura && r.leitura.mudancas ? r.leitura.mudancas.length : 0;
+    toast(r.leitura && r.leitura.lido ? `Quadro lido: ${n} mudança(s)` : 'Quadro conferido');
+    if(link!==undefined) $('qdLink').value = '';
+  }catch(e){ toast(e.message); }
+  finally{ bs.forEach(b=>{ if(b) b.disabled = false; }); carregarQuadroAuto(); }
+}
+document.addEventListener('click', e=>{
+  if(e.target.closest('#qdLer')) lerQuadroAgora();
+  else if(e.target.closest('#qdSalvar')){ const l = $('qdLink').value.trim(); if(!l){ toast('Cole o link da pasta ou do arquivo do quadro'); return; } lerQuadroAgora(l); }
+});
+
 // "Ao vivo": o banco devolve, por loja, a hora da última gravação/mudança de situação no mês. O que mudou por outra
 // pessoa é recarregado na hora: a escala aberta (grade e situação), a visão geral e o histórico de alterações aberto.
 let MUD_VISTAS = null, MUD_MES = '';
@@ -2413,7 +2472,7 @@ function renderNotif(){
   if(p) p.innerHTML = itens.length ? itens.map(i=>`<div class="nt-i ${VISTOS.has(i.chave)&&!i.pendente?'':'novo'}"><div class="nt-t">${etq(i)} <b>${esc(i.titulo)}</b></div>${i.texto?`<div class="nt-x">${esc(i.texto)}</div>`:''}<div class="nt-a"><span class="nuvem">${new Date(i.quando).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}</span>${i.aviso && i.aviso.exigeCiencia && !i.aviso.ciente ? `<button class="btn prim peq" data-ciente="${esc(i.aviso.id)}">Ciente</button>` : ''}${irBtn(i)}</div></div>`).join('') : '<div class="vazio">Nenhum alerta por enquanto.</div>';
   // faixa no topo para o que precisa de ação da loja
   const f = $('faixaAvisos'); if(!f) return;
-  const pend = (SOU_RH || SOU_SUP) ? itens.filter(i=>i.auto) : itens.filter(i=>i.pendente || i.tipo==='urgente' || i.auto || (i.tipo==='evento' && i.st==='devolvida' && !VISTOS.has(i.chave)));
+  const pend = (SOU_RH || SOU_SUP) ? itens.filter(i=>i.auto) : itens.filter(i=>i.pendente || i.tipo==='urgente' || i.auto || (i.tipo==='evento' && (i.st==='devolvida' || i.st==='quadro' || i.st==='reprovado') && !VISTOS.has(i.chave)));
   f.style.display = pend.length ? '' : 'none';
   f.innerHTML = pend.slice(0,5).map(i=>`<div class="fa-i ${i.tipo==='evento'?'urgente':i.tipo}"><span class="fa-ic">${ic(i.tipo==='contest'?'alert':i.tipo==='prazo'?'clock':i.sync?'users':'bell')}</span><div class="fa-t"><b>${esc(i.titulo)}</b>${i.texto?`<span>${esc(i.texto)}</span>`:''}</div>${i.aviso && i.aviso.exigeCiencia && !i.aviso.ciente ? `<button class="btn prim peq" data-ciente="${esc(i.aviso.id)}">Ciente</button>` : ''}${i.contest ? `<button class="btn peq" data-ir="${esc(i.contest.loja)}|${esc(i.contest.mes)}">Responder</button>` : (i.irEv || i.ir) ? `<button class="btn peq" data-ir="${esc(i.irEv || i.ir)}">Abrir a escala</button>` : i.sync ? `<button class="btn peq" data-syncq="1">Atualizar pelo quadro</button>` : ''}</div>`).join('');
 }
@@ -3939,7 +3998,7 @@ const CHAVE_LOJAS_INFO = 'xambre.escala5x2.lojasInfo';
 let LOJAS_INFO = (()=>{ try{ return JSON.parse(localStorage.getItem(CHAVE_LOJAS_INFO)||'{}'); }catch(e){ return {}; } })();
 const INTEL_F = {marca:'', regiao:'', sup:'', crit:''};
 const marcaDe = l => /^AFEET/.test(l) ? 'Authentic Feet' : /^AWK/.test(l) ? 'Artwalk' : /^MAGIC/.test(l) ? 'Magic Feet' : 'Outra';
-const ST_FLUXO = {rascunho:['ne','rascunho'], enviada:['at','enviada'], devolvida:['er','devolvida'], aprovada:['ok','aprovada'], publicada:['ok','publicada'], pedido:['er','pedido de alteração'], reprovado:['er','alteração reprovada'], alterada:['at','alterada']};
+const ST_FLUXO = {rascunho:['ne','rascunho'], enviada:['at','enviada'], devolvida:['er','devolvida'], aprovada:['ok','aprovada'], publicada:['ok','publicada'], pedido:['er','pedido de alteração'], reprovado:['er','alteração reprovada'], alterada:['at','alterada'], quadro:['at','quadro']};
 function podeVerIntel(){ return !VISAO_GERENTE && (rhReal() || (typeof SOU_SUP!=='undefined' && SOU_SUP)); }
 function criticidade(r){
   if(!r || !r.pct) return {n:'media', t:'média', m:'não iniciada'};
