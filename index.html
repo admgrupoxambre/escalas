@@ -25,10 +25,14 @@
 html,body{margin:0;background:var(--gx-bg);color:var(--gx-text);font-family:var(--gx-font);font-size:14px}
 button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--gx-primary);outline-offset:2px}
-.topo{background:var(--gx-surface);min-height:84px;padding:12px 32px;display:flex;align-items:center;gap:16px;border-bottom:2px solid var(--gx-primary);position:sticky;top:0;z-index:30}
-.logo{height:56px;width:auto;display:block}
-.divisor{width:2px;height:44px;background:var(--gx-primary);border-radius:2px}
-.plataforma{font-size:20px;font-weight:700;line-height:1.2}
+.topo{background:var(--gx-surface);box-sizing:border-box;height:var(--topo-h);padding:14px 32px 12px 24px;display:flex;align-items:center;gap:16px;border-bottom:2px solid var(--gx-primary);position:sticky;top:0;z-index:30}
+:root{--topo-h:148px}
+.marca{display:flex;flex-direction:column;gap:10px;min-width:0}
+.marca-l{display:flex;align-items:center;gap:0}
+.marca-sub{font-size:13.5px;color:#475467;padding-left:8px}
+.logo{height:80px;width:auto;display:block}
+.divisor{width:2px;height:64px;background:var(--gx-primary);border-radius:2px;margin:0 20px 0 10px}
+.plataforma{font-size:34px;font-weight:700;line-height:1.1;color:var(--gx-primary);letter-spacing:-.3px;white-space:nowrap}
 .plataforma small{display:block;font-size:13px;font-weight:400;color:var(--gx-muted)}
 .topo .esp{flex:1}
 .status-salvo{font-size:12px;color:var(--gx-muted);text-align:right}
@@ -56,7 +60,7 @@ main{max-width:1600px;margin:0 auto;padding:24px 32px 32px;display:flex;flex-dir
 .btn.fant:hover{color:var(--gx-danger)}
 .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
 @media(max-width:1199px){.grid2{grid-template-columns:minmax(0,1fr)}}
-@media(max-width:767px){.topo{padding:10px 16px;min-height:72px}.logo{height:40px}.plataforma{font-size:16px}main{padding:16px}.status-salvo{display:none}}
+@media(max-width:767px){:root{--topo-h:76px}.topo{padding:8px 16px}.logo{height:40px}.plataforma{font-size:19px}.marca-sub{display:none}.divisor{height:32px;margin:0 12px 0 6px}main{padding:16px}.status-salvo{display:none}}
 /* KPIs */
 .kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 @media(max-width:900px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -79,7 +83,7 @@ table.eq input,table.eq select{height:32px;border:1px solid var(--gx-border);bor
 .pincel small{font-weight:500;font-size:10px;opacity:.85}
 .pincel.ativo{outline:3px solid var(--gx-text);outline-offset:2px}
 .sep{width:1px;height:34px;background:var(--gx-border);margin:0 4px}
-.barra-ed{position:sticky;top:86px;z-index:15;background:var(--gx-surface);margin:0 -20px 12px;padding:12px 20px 10px;border-bottom:1px solid var(--gx-border)}
+.barra-ed{position:sticky;top:var(--topo-h);z-index:15;background:var(--gx-surface);margin:0 -20px 12px;padding:12px 20px 10px;border-bottom:1px solid var(--gx-border)}
 .barra-ed.grudada{box-shadow:0 6px 14px -8px rgba(16,24,40,.25)}
 .be-ic{display:inline-flex;width:16px;height:16px;flex:0 0 16px}.be-ic svg{width:100%;height:100%}
 .be-codigos{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
@@ -131,7 +135,7 @@ table.eq input,table.eq select{height:32px;border:1px solid var(--gx-border);bor
 /* notebooks: tudo em duas linhas compactas */
 @media(max-width:1439px){.cod-bt{min-width:100px;padding:0 10px 0 8px;gap:7px}.cod-bt .be-ic{display:none}.be-sel{min-width:180px}.be-princ-acoes .btn{padding:0 12px}}
 @media(max-width:1199px){.be-sel{display:none}}
-@media(max-width:767px){.barra-ed{top:74px;margin:0 -12px 12px;padding:8px 12px}
+@media(max-width:767px){.barra-ed{margin:0 -12px 12px;padding:8px 12px}
  .be-codigos{flex-wrap:nowrap;gap:6px}.be-princ{flex:1;flex-wrap:nowrap;gap:6px;min-width:0}.cod-bt{flex:1;min-width:0;height:42px;padding:0 4px;justify-content:center}.cod-bt span.nm{display:none}.be-mais-btn{height:42px;padding:0 8px;font-size:0;gap:2px}.be-mais-btn .mini{font-size:11.5px}.be-mais-btn .seta{display:none}.be-menu{left:auto;right:0}
  .be-acoes{gap:6px}.be-ferr .tx{display:none}.be-salvo{order:9;width:100%}.be-princ-acoes{margin-left:0}.be-princ-acoes .btn{height:32px;padding:0 10px;font-size:12px}}
 @media print{body>*:not(#printFolha){display:none!important}#printFolha{display:block!important}#printFolha img{width:100%;height:auto}@page{size:landscape;margin:8mm}}
@@ -325,7 +329,7 @@ table.an td.reg{color:var(--gx-muted);font-size:13px}
 .legenda-tl i{display:inline-block;width:14px;height:10px;border-radius:2px;vertical-align:middle;margin-right:4px}
 
 /* ===== Layout com barra lateral ===== */
-.lateral{position:fixed;top:86px;left:0;bottom:0;width:250px;background:var(--gx-surface);border-right:1px solid var(--gx-border);padding:20px 12px;display:flex;flex-direction:column;gap:4px;overflow:auto;z-index:20}
+.lateral{position:fixed;top:var(--topo-h);left:0;bottom:0;width:250px;background:var(--gx-surface);border-right:1px solid var(--gx-border);padding:20px 12px;display:flex;flex-direction:column;gap:4px;overflow:auto;z-index:20}
 body:has(main[style*="display: none"]) .lateral{display:none}
 body:has(main[style*="display: none"]) .rodape{margin-left:auto;max-width:1600px;padding-left:32px}
 main{margin-left:250px;max-width:none;padding:24px 28px 40px;background:radial-gradient(900px 260px at 100% 0,#FFF0E8 0,rgba(255,240,232,0) 70%)}
@@ -446,12 +450,12 @@ body.leitura .be-acoes{border-top:0;margin-top:0;padding-top:0}
 body.leitura:not(.so-consulta) .sino-w,body.leitura:not(.so-consulta) #faixaAvisos{display:none!important}
 body.leitura table.grade td.cel{cursor:default}
 #cardAlertas{grid-column:1/-1}
-#cardAjuda{position:fixed;top:86px;right:0;bottom:0;width:min(560px,100%);z-index:45;overflow:auto;border-radius:0;transform:translateX(105%);visibility:hidden;transition:transform .2s ease,visibility .2s;box-shadow:-12px 0 30px -12px rgba(16,24,40,.35)}
+#cardAjuda{position:fixed;top:var(--topo-h);right:0;bottom:0;width:min(560px,100%);z-index:45;overflow:auto;border-radius:0;transform:translateX(105%);visibility:hidden;transition:transform .2s ease,visibility .2s;box-shadow:-12px 0 30px -12px rgba(16,24,40,.35)}
 #cardAjuda.aberta{transform:none;visibility:visible}
 #cardAjuda .gav-fechar{position:absolute;top:14px;right:14px}
-.gav-fundo{position:fixed;inset:86px 0 0 0;background:rgba(16,24,40,.25);z-index:44;display:none}
+.gav-fundo{position:fixed;inset:var(--topo-h) 0 0 0;background:rgba(16,24,40,.25);z-index:44;display:none}
 .gav-fundo.on{display:block}
-@media(max-width:767px){#cardAjuda{top:74px}.gav-fundo{inset:74px 0 0 0}}
+
 table.hist{width:100%;border-collapse:collapse;font-size:12.5px}
 table.hist th{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--gx-muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--gx-border);position:sticky;top:0;background:var(--gx-surface)}
 table.hist td{padding:6px 8px;border-bottom:1px solid var(--gx-border);vertical-align:top}
@@ -671,6 +675,7 @@ a{color:inherit}
 @media (prefers-color-scheme:dark){:root[data-tema="auto"] .logo-placa{background:#fff;padding:6px 10px;box-shadow:0 4px 14px -6px rgba(0,0,0,.6)}}
 .topo .divisor{height:32px;width:1px;background:var(--gx-linha);border-radius:0}
 .plataforma{font-size:19px;font-weight:800;letter-spacing:-.2px;line-height:1.1}
+.topo .plataforma{color:var(--gx-text)}.topo .divisor{margin:0}
 .plataforma .gx{background:linear-gradient(135deg,#FF7A35,#E9540D);-webkit-background-clip:text;background-clip:text;color:transparent}
 .plataforma small{font-size:12px;font-weight:500;color:var(--gx-muted);margin-top:2px;letter-spacing:0}
 .avatar{display:none!important}
@@ -973,7 +978,7 @@ body.abertura-on .topo,body.abertura-on .lateral,body.abertura-on .rodape,body.a
 <header class="topo">
   <span class="logo-placa"><span class="logo-gx" role="img" aria-label="Grupo Xambre"></span></span>
   <span class="divisor" aria-hidden="true"></span>
-  <div class="plataforma">Escala <span class="gx">GX</span><small>Grupo Xambre · Escala de trabalho</small></div>
+  <div class="plataforma">Escala <span class="gx">GX</span><small>Inteligência em Gestão de Pessoas | Grupo Xambre</small></div>
   <div class="esp"></div>
   <select id="vistaSel" aria-label="Tela do portal"></select>
   <span class="st-chip ne" id="papel" style="display:none"></span>
@@ -2742,6 +2747,11 @@ function janela(code, x){
   return null;
 }
 function horario(code, x){ const j = janela(code,x); if(j) return fmtHM(j[0])+'–'+fmtHM(j[1]); return ''; }
+// Pedido do RH (27/11/2026): a grade não mostra horários (dezembro tem um horário de 1 a 15 e outro a partir de 16,
+// e outras mudanças ainda não definidas). Vale para as células, a dica ao passar o mouse, o Print da escala e o código
+// escolhido na barra. Para voltar a mostrar, troque para true.
+const HORARIO_NA_GRADE = false;
+const horarioGrade = (code, x) => HORARIO_NA_GRADE ? horario(code, x) : '';
 function horas(code, x){
   if(TURNOS[code]) return x.reg==='6x1' ? H_6X1 : (x.dow===6 ? H_SAB : H_UTIL);
   if(code==='DOM') return H_DOM;
@@ -4157,11 +4167,11 @@ const MAIS = [['FF','Feriado'],['DAY','Dayoff'],['CO','Compensação'],['FER','F
 const NOME_TURNO_HE = {A:'Abertura', I:'Intermediário', F:'Fechamento'};
 function rotPincel(c){
   if(c==='') return {cls:'c-LIMPAR', rot:'⌫', nome:'Apagar', det:'Clique nas células para limpar'};
-  if(c==='HE'){ const t = TURNOS[{A:'ABE',I:'INT',F:'FEC'}[turnoHE]]; return {cls:'c-HE', rot:'HE', nome:'Hora extra', det:'Na folga · '+NOME_TURNO_HE[turnoHE]+(t?' '+t.util.join('–'):'')}; }
+  if(c==='HE'){ const t = TURNOS[{A:'ABE',I:'INT',F:'FEC'}[turnoHE]]; return {cls:'c-HE', rot:'HE', nome:'Hora extra', det:'Na folga · '+NOME_TURNO_HE[turnoHE]+(t && HORARIO_NA_GRADE?' '+t.util.join('–'):'')}; }
   const x = COD[c]; if(!x) return {cls:'', rot:c, nome:'', det:''};
   const t = TURNOS[c], mais = MAIS.find(k=>k[0]===c);
   const nome = (PRINC.find(k=>k[0]===c)||[])[2] || (mais && mais[1]) || x.desc;
-  const det = t ? t.util.join('–') + (t.sab.join()!==t.util.join() ? ' · sáb ' + t.sab.join('–') : ' · seg a sáb · 8h24') : (c==='DOM' ? '13:00–20:00' : (x.desc!==nome ? x.desc : ''));
+  const det = !HORARIO_NA_GRADE ? (t ? 'seg a sáb' : (x.desc!==nome && !/\d:\d/.test(x.desc) ? x.desc : '')) : t ? t.util.join('–') + (t.sab.join()!==t.util.join() ? ' · sáb ' + t.sab.join('–') : ' · seg a sáb · 8h24') : (c==='DOM' ? '13:00–20:00' : (x.desc!==nome ? x.desc : ''));
   return {cls:x.cls, rot:c==='DAY'?'🎉':x.rot, nome, det};
 }
 function renderPinceis(){
@@ -4322,8 +4332,8 @@ function render(semCarimbo){
     const sub = [p.turno&&p.turno!=='ROT'?'fixo '+TURNOS[p.turno].nome.toLowerCase():'rotativo'].filter(Boolean).join(' · ');
     h += `<tr><td class="fixo nome-cel" title="${esc(p.nome)}${confianca(p)?' · '+esc(OBS_CONF):''}">${esc(p.nome||'Sem nome')}<span class="cg">${confianca(p) ? '<span class="selo-conf">Cargo de confiança</span>' : esc(sub)}</span></td><td class="fixo2">${esc(p.cargo)}</td>`;
     for(const x of dias){
-      const c = g(p.id,x.d), k = COD[c], hr = confianca(p) ? '' : horario(c,x), pdx = pedDia[p.id] && pedDia[p.id][x.d];
-      h += `<td class="cel ${k?k.cls:'vaz'} ${x.dow===0?'domcol':''} ${iniSem(x)?'ini-sem':''} ${ini5(x)?'ini-5x2':''} ${pdx?'ped':''}" data-id="${p.id}" data-d="${x.d}" title="${esc(p.nome)} · ${x.d}/${m} (${DIAS_SEM[x.dow]}, ${x.reg})${k?' · '+esc(k.desc)+(hr?' '+hr:''):''}${pdx?' · pedido: '+esc(pdx):''}">${k?esc(k.rot):''}${hr?`<span class="h">${hr.split('–')[0]}</span>`:''}</td>`;
+      const c = g(p.id,x.d), k = COD[c], hr = confianca(p) ? '' : horarioGrade(c,x), pdx = pedDia[p.id] && pedDia[p.id][x.d];
+      h += `<td class="cel ${k?k.cls:'vaz'} ${x.dow===0?'domcol':''} ${iniSem(x)?'ini-sem':''} ${ini5(x)?'ini-5x2':''} ${pdx?'ped':''}" data-id="${p.id}" data-d="${x.d}" title="${esc(p.nome)} · ${x.d}/${m} (${DIAS_SEM[x.dow]}, ${x.reg})${k?' · '+esc(HORARIO_NA_GRADE ? k.desc : k.desc.replace(/\s*\d{1,2}:\d{2}\s*[–-]\s*\d{1,2}:\d{2}/,''))+(hr?' '+hr:''):''}${pdx?' · pedido: '+esc(pdx):''}">${k?esc(k.rot):''}${hr?`<span class="h">${hr.split('–')[0]}</span>`:''}</td>`;
     }
     const st = r.status==='OK'?'ok':(r.status==='AJUSTAR'?'er':'inc');
     const foT = r.cont.FO;
@@ -4524,7 +4534,7 @@ async function imagemEscala(){
       c.fillStyle = bg; c.fillRect(xx+1, yy+1, wD-2, hR-2);
       if(cod==='FER' || cod==='AF'){ c.strokeStyle = '#C9C9C9'; c.lineWidth = 1; c.strokeRect(xx+1.5, yy+1.5, wD-3, hR-3); }
       if(/^HE/.test(cod)){ c.strokeStyle = '#FF641C'; c.lineWidth = 2; c.strokeRect(xx+2, yy+2, wD-4, hR-4); }
-      const hr = cf ? '' : horario(cod, x);
+      const hr = cf ? '' : horarioGrade(cod, x);
       c.fillStyle = fg; c.font = F(700,11.5); centro(k.rot, xx, wD, hr ? yy+15 : yy+21);
       if(hr){ c.font = F(500,9); centro(hr.split('–')[0], xx, wD, yy+27); }
     });
@@ -4897,7 +4907,7 @@ document.addEventListener('keydown', e=>{
 });
 (function(){ const be = $('barraEd'); if(!be || !('IntersectionObserver' in window)) return;
   const sent = document.createElement('div'); sent.style.height='1px'; be.parentNode.insertBefore(sent, be);
-  new IntersectionObserver(([en])=>be.classList.toggle('grudada', !en.isIntersecting && en.boundingClientRect.top<0), {rootMargin:'-90px 0px 0px 0px'}).observe(sent);
+  new IntersectionObserver(([en])=>be.classList.toggle('grudada', !en.isIntersecting && en.boundingClientRect.top<0), {rootMargin:'-' + ((document.querySelector('.topo')||{}).offsetHeight + 4 || 76) + 'px 0px 0px 0px'}).observe(sent);
 })();
 wrap.addEventListener('touchstart', e=>{ const td=e.target.closest('td.cel'); if(td) pintar(td); }, {passive:true});
 wrap.addEventListener('click', e=>{
