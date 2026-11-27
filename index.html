@@ -546,6 +546,7 @@ table.hist tr.grupo td{background:var(--gx-head);font-weight:600}
 .mv-vazio b{color:var(--gx-text);font-size:16px}.mv-vazio-ic svg{width:34px;height:34px;stroke:var(--gx-primary)}
 .mv-rodape{font-size:12px;color:var(--gx-muted);margin-top:12px;text-align:center}
 .fora-vista{display:none!important}
+.oculto-perfil{display:none!important}
 .lat-grupo{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--gx-muted);padding:14px 12px 4px}
 .lat-grupo:first-child{padding-top:0}
 #vistaSel{display:none;height:36px;border:1px solid var(--gx-border);border-radius:8px;padding:0 8px;background:#fff;max-width:200px}
@@ -557,6 +558,57 @@ table.hist tr.grupo td{background:var(--gx-head);font-weight:600}
 .intel-cad{margin-top:14px;border:1px solid var(--gx-border);border-radius:10px;padding:10px 14px}.intel-cad summary{cursor:pointer;font-weight:600}
 .intel-cad input{height:32px;border:1px solid var(--gx-border);border-radius:6px;padding:0 8px;width:100%}
 table.sim td.n,table.sim th.n{text-align:right}.sim-m{color:var(--gx-success);font-weight:700}.sim-p{color:var(--gx-danger);font-weight:700}
+/* engrenagem: painel de Configurações (5.1.0) */
+.cfg-fundo{position:fixed;inset:0;background:rgba(10,12,16,.42);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);z-index:70;display:none}
+.cfg-fundo.on{display:block}
+.cfg-painel{position:fixed;top:0;right:0;bottom:0;width:min(1040px,100%);z-index:71;display:flex;flex-direction:column;background:var(--gx-surface);color:var(--gx-text);
+  box-shadow:-20px 0 60px -20px rgba(0,0,0,.45);transform:translateX(104%);visibility:hidden;transition:transform .22s ease,visibility .22s}
+.cfg-painel.aberto{transform:none;visibility:visible}
+.cfg-topo{display:flex;align-items:flex-start;gap:12px;padding:22px 26px 10px}.cfg-topo>div{flex:1}
+.cfg-topo h2{margin:0;font-size:24px;letter-spacing:-.4px}.cfg-topo p{margin:4px 0 0;color:var(--gx-text-2);font-size:13px}
+.cfg-abas{display:flex;gap:6px;padding:4px 26px 12px;overflow-x:auto;border-bottom:1px solid var(--gx-linha);scrollbar-width:none}
+.cfg-aba{flex:none;border:0;border-radius:999px;padding:8px 14px;font:600 13.5px/1 var(--gx-font,inherit);background:rgba(118,118,128,.12);color:var(--gx-text);cursor:pointer;white-space:nowrap}
+.cfg-aba.on{background:#FF641C;color:#151820}
+.cfg-corpo{flex:1;overflow:auto;padding:16px 26px 24px}
+.cfg-corpo h3{font-size:15px;margin:18px 0 8px}.cfg-corpo h3:first-child{margin-top:4px}
+.cfg-ck{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--gx-border);border-radius:14px;margin-bottom:8px;cursor:pointer}
+.cfg-ck input{margin-top:3px;width:18px;height:18px;flex:none}.cfg-ck small{display:block;color:var(--gx-text-2);font-size:12.5px;margin-top:2px;line-height:1.4}
+.cfg-tab td,.cfg-tab th{vertical-align:middle}.cfg-tab input:not([type=checkbox]),.cfg-tab select,.cfg-padrao input:not([type=checkbox]),.cfg-corpo .campo input,.cfg-corpo .campo select{height:36px;border:1px solid var(--gx-border);border-radius:10px;padding:0 10px;background:var(--gx-input);color:var(--gx-text);font:inherit;max-width:100%}
+.cfg-tab input[type=checkbox]{width:18px;height:18px}
+.cfg-tab tr.cfg-inativa td{opacity:.55}
+.cfg-padrao{border:1px solid var(--gx-border);border-radius:16px;padding:12px 14px;margin-bottom:10px}
+.cfg-pad-topo{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:8px;font-size:13px}.cfg-pad-topo>b{background:var(--gx-pr-bg);color:var(--gx-pr-tx);border-radius:999px;padding:3px 10px}
+.cfg-pad-topo label{display:flex;gap:6px;align-items:center;color:var(--gx-text-2)}
+.cfg-faixas{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(400px,100%),1fr));gap:8px 18px}
+.cfg-faixa{display:flex;gap:6px;align-items:center;font-size:13px;min-width:0}.cfg-faixa>span{width:92px;flex:none;color:var(--gx-text-2)}.cfg-faixa input{width:112px;min-width:0;flex:0 1 112px}.cfg-faixa small{color:var(--gx-text-2);margin-left:4px;min-width:40px;flex:none}
+.cfg-paletas{display:flex;gap:10px;flex-wrap:wrap}
+.cfg-pal{display:flex;gap:8px;align-items:center;border:1px solid var(--gx-border);border-radius:999px;padding:8px 14px;cursor:pointer;font-weight:600;font-size:13.5px}
+.cfg-pal.on{border-color:#FF641C;box-shadow:0 0 0 2px rgba(255,100,28,.25)}.cfg-pal input{width:16px;height:16px}
+.cfg-amostra{width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.cfg-atalhos{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.cfg-atalho{text-align:left;border:1px solid var(--gx-border);border-radius:16px;padding:14px 16px;background:var(--gx-surface);color:var(--gx-text);cursor:pointer;font:inherit}
+.cfg-atalho:hover{border-color:rgba(255,100,28,.45)}.cfg-atalho b{display:block;font-size:14.5px}.cfg-atalho small{display:block;color:var(--gx-text-2);margin-top:3px;font-size:12.5px}
+.cfg-rodape{display:flex;gap:10px;justify-content:flex-end;padding:12px 26px calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--gx-linha)}
+@media(max-width:700px){.cfg-topo,.cfg-abas,.cfg-corpo,.cfg-rodape{padding-left:14px;padding-right:14px}.cfg-faixa>span{width:80px}}
+body.so-consulta #btnEngrenagem{display:none!important}
+/* celular estreito: com a engrenagem, os botões do topo precisam caber na largura (senão a página alarga e a barra de baixo sai da tela) */
+@media(max-width:430px){
+  .topo{gap:6px;padding:0 8px}
+  .topo .divisor{display:none}
+  .topo .logo-gx{height:16px}
+  .topo .plataforma{font-size:13px}
+  .topo .topo-acoes{gap:2px}
+  .topo .ico-bt{width:32px;height:32px}
+  .topo .ico-bt svg{width:16px;height:16px}
+}
+/* até 400 px (iPhone SE, Androids menores): "Escala GX" vai para baixo do logo */
+@media(max-width:400px){
+  .topo{gap:4px}
+  .topo .logo-placa{margin-top:-16px}
+  :root[data-tema="escuro"] .topo .logo-placa{padding:5px 7px}
+  .topo .plataforma{position:absolute;left:12px;top:calc(50% + 6px);font-size:12.5px;line-height:1}
+}
+@media(max-width:400px) and (prefers-color-scheme:dark){:root[data-tema="auto"] .topo .logo-placa{padding:5px 7px}}
 .qd-auto{margin-top:22px;padding-top:18px;border-top:1px solid var(--gx-linha)}
 .qd-auto h3{margin:0 0 8px;font-size:16px;display:flex;gap:8px;align-items:center}
 .qd-auto h3 .tag{font-size:12px;font-weight:600;padding:2px 10px;border-radius:999px;background:var(--gx-pr-bg);color:var(--gx-pr-tx)}
@@ -987,6 +1039,7 @@ body.abertura-on .topo,body.abertura-on .lateral,body.abertura-on .rodape,body.a
   <div class="topo-acoes">
     <a class="ico-bt raio" id="btnAtualizarApp" href="escalagx://atualizar" hidden title="Atualizar a Escala GX (roda o ATUALIZAR ESCALA.bat neste computador)" aria-label="Atualizar a Escala GX"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2.5 4.5 13.5H11l-1 8 8.5-11H12z"/></svg></a>
     <button class="ico-bt base" id="btnBaseTopo" type="button" style="display:none" title="Carregar o quadro à mão (normalmente o banco lê sozinho a cada 15 min: Configurações > Quadro de colaboradores)" aria-label="Carregar o quadro à mão"><span aria-hidden="true">📊</span></button>
+    <button class="ico-bt" id="btnEngrenagem" type="button" style="display:none" title="Configurações (o que aparece, horários, tipos de escala, lojas, tema)" aria-label="Configurações" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
     <div class="vc-w"><button class="ico-bt" id="btnVerComo" type="button" style="display:none" aria-haspopup="true" aria-expanded="false" title="Ver como (Gerente de Operações, supervisor ou loja)" aria-label="Ver como"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
       <div class="vc-menu" id="verComoMenu" role="menu" hidden></div></div>
     <button class="ico-bt" type="button" data-tema-bt title="Tema" aria-label="Tema"></button>
@@ -1329,11 +1382,11 @@ body.abertura-on .topo,body.abertura-on .lateral,body.abertura-on .rodape,body.a
         <li>Escala <b>5x2</b>: 2 folgas (FO) em cada semana de <b>domingo a sábado</b>. No período <b>6x1</b> (antes do início da 5x2): 1 folga por semana, até 6 dias seguidos e 44h.</li>
         <li>Folgas no mês: <b>dias 5x2 × 2 ÷ 7</b> (+ dias 6x1 × 1 ÷ 7), sempre arredondando para cima (<span id="regraFolgas"></span>). Contam só as FO: Dayoff, FF e CO ficam fora da conta.</li>
         <li id="regrasVigentes"></li>
-        <li>Domingo das 13h às 20h. Todos os turnos têm 1h de intervalo, que não entra nas horas.</li>
+        <li id="regraDomingo">Todos os turnos têm 1h de intervalo, que não entra nas horas.</li>
         <li>Domingo: <b>mulheres</b> folgam um domingo sim e outro não; <b>homens</b> folgam pelo menos 1 domingo a cada 3 semanas.</li>
         <li>Domingos: usar apenas <b>DOM</b> ou <b>FO</b>, com no mínimo <b>50% da equipe</b> trabalhando.</li>
         <li>Abertura: o ideal são <b>3 pessoas</b> e <b>nunca menos de 2</b>. Fechamento: <b>no mínimo 3</b>.</li>
-        <li><b>25/12 e 01/01</b>: shopping fechado em todos os anos. Todo mundo fica de folga, e essa folga conta como a folga da semana.</li>
+        <li id="regraFechados"><b>25/12 e 01/01</b>: shopping fechado em todos os anos. Todo mundo fica de folga, e essa folga conta como a folga da semana.</li>
         <li><b>Sábado ninguém folga</b>: a sugestão não coloca folga, dayoff ou compensação no sábado.</li>
         <li>Sempre um <b>responsável</b> (habilitado para abertura e fechamento: gerente, subgerente, assistente, auxiliar ou trainee) na abertura, no fechamento e no salão durante os almoços.</li>
         <li>Segunda-feira o <b>gerente</b> trabalha no turno da manhã (abertura).</li>
@@ -1353,6 +1406,13 @@ body.abertura-on .topo,body.abertura-on .lateral,body.abertura-on .rodape,body.a
 <footer class="rodape"><b>ACESSO RESTRITO — GRUPO XAMBRE.</b> Plataforma de uso exclusivo do Grupo Xambre. As informações são confidenciais e devem ser tratadas conforme a Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018). É proibido compartilhar acessos ou informações com terceiros não autorizados.<br>© 2026 Grupo Xambre. Todos os direitos reservados.</footer>
 <div class="modal-bg" id="modal"><div class="modal"><h3 id="mTitulo"></h3><p id="mTexto"></p><div class="acoes"><button class="btn" id="mNao">Cancelar</button><button class="btn prim" id="mSim">Confirmar</button></div></div></div>
 <div class="toast" id="toast"></div>
+<div class="cfg-fundo" id="cfgFundo"></div>
+<section class="cfg-painel" id="cfgPainel" role="dialog" aria-modal="true" aria-label="Configurações" aria-hidden="true">
+  <header class="cfg-topo"><div><h2>Configurações</h2><p>Valem para todos os acessos. Só o RH (nível total) altera.</p></div><button class="ico-bt" id="cfgFechar" type="button" aria-label="Fechar">✕</button></header>
+  <nav class="cfg-abas" id="cfgAbas" role="tablist"></nav>
+  <div class="cfg-corpo" id="cfgCorpo"></div>
+  <footer class="cfg-rodape"><button class="btn" type="button" id="cfgCancelar">Cancelar</button><button class="btn prim" type="button" id="cfgSalvar">Salvar</button></footer>
+</section>
 
 <script src="config.js" onerror="window.ESCALA_API=''"></script>
 <script>
@@ -1365,7 +1425,14 @@ let SOMENTE_LEITURA = false, ESCALA_NO_PORTAL = null;   // SOU_SUP vem do api_mo
 function hcSalvo(){ try{ const r = localStorage.getItem('xambre.escala5x2.headcount'); return r ? JSON.parse(r) : null; }catch(e){ return null; } }
 let HC = (window.HEADCOUNT && window.HEADCOUNT.meses) ? window.HEADCOUNT : hcSalvo();
 const LOJAS_PADRAO = ['AFEET 008','AFEET 009','AFEET 027','AFEET 043','AFEET 049','AFEET 076','AFEET 090','AFEET 093','AFEET 106','AFEET 126','AFEET 163','AFEET 166','AFEET 169','AFEET 188','AFEET 203','AFEET 204','AWK 03','AWK 12','AWK 13','AWK 16','AWK 18','AWK 25','AWK 36','AWK 40','AWK 48','AWK 53','AWK 57','AWK 63','AWK 64','AWK 65','AWK 69','AWK 89'];
-function calcLojas(){ if(!HC) return LOJAS_PADRAO; const set = new Set(); Object.values(HC.meses).forEach(m=>Object.keys(m).forEach(l=>set.add(l))); return [...set].sort(); }
+// lojas do quadro + as incluídas à mão na engrenagem − as desativadas lá (cadastro das lojas)
+function calcLojas(){
+  const set = new Set(HC ? [] : LOJAS_PADRAO);
+  if(HC) Object.values(HC.meses).forEach(m=>Object.keys(m).forEach(l=>set.add(l)));
+  let info = {}; try{ info = LOJAS_INFO || {}; }catch(e){ info = {}; }      // ainda não carregado no início da página
+  Object.keys(info).forEach(l=>{ const i = info[l] || {}; if(i.manual && i.ativa!==false) set.add(l); if(i.ativa===false) set.delete(l); });
+  return [...set].sort();
+}
 let LOJAS = calcLojas();
 const CARGOS = ['Gerente','Subgerente','Assistente','Auxiliar','Trainee','Vendedor','Estoquista','Outros'];
 const CHAVE = ['Gerente','Subgerente'];                 // não folgam juntos
@@ -1406,13 +1473,58 @@ const TURNOS = {
 };
 const H_UTIL = 8 + 24/60, H_SAB = 8 + 24/60, H_DOM = 6;   // domingo 13h–20h com 1h de intervalo
 const DOM_JANELA = ['13:00','20:00'];
+
+/* ================= Configurações do RH (engrenagem) ================= */
+// O que o RH escolhe na engrenagem: o que aparece para cada perfil, padrões de horário (com "vale a partir de"),
+// tipos de escala por período, dias de shopping fechado e tema. No portal vem do banco (painel.get) e vale para
+// todos; fora do portal fica neste navegador. Os valores padrão são os de sempre (os cálculos não mudam).
+const PAINEL_PADRAO = {
+  exibir: {horarios:false, vendedores:true, telas:{GERENTE:[], SUPERVISOR:[], OPERACOES:[]}},
+  // antes da 1ª data vale a 6x1
+  regimes: [{desde: INICIO_5X2, regime:'5x2'}],
+  // "desde" vazio = desde sempre; o mais recente que já começou vale para o dia
+  horarios: [
+    {desde:'', regime:'5x2', ABE:TURNOS.ABE.util.slice(), INT:TURNOS.INT.util.slice(), FEC:TURNOS.FEC.util.slice(), sab:null, DOM:DOM_JANELA.slice(), intervalo:60},
+    {desde:'', regime:'6x1', ABE:TURNOS_6X1.ABE.slice(), INT:TURNOS_6X1.INT.slice(), FEC:TURNOS_6X1.FEC.slice(), sab:null, DOM:DOM_JANELA.slice(), intervalo:60},
+  ],
+  fechados: [{dm:'12-25', nome:'Natal'}, {dm:'01-01', nome:'Confraternização Universal'}],
+  tema: {paleta:'laranja', modo:''}
+};
+const CHAVE_PAINEL = 'xambre.escala5x2.painel';
+const clonar = o => JSON.parse(JSON.stringify(o));
+let PAINEL = clonar(PAINEL_PADRAO);
+const HORA_OK = t => /^([01]\d|2[0-3]):[0-5]\d$/.test(String(t||''));
+const FAIXA_OK = f => Array.isArray(f) && f.length===2 && HORA_OK(f[0]) && HORA_OK(f[1]) && f[0] < f[1];
+function normalizarPainel(p){
+  const r = Object.assign(clonar(PAINEL_PADRAO), p && typeof p==='object' ? clonar(p) : {});
+  r.exibir = Object.assign(clonar(PAINEL_PADRAO.exibir), r.exibir || {});
+  r.exibir.telas = Object.assign({GERENTE:[], SUPERVISOR:[], OPERACOES:[]}, r.exibir.telas || {});
+  Object.keys(r.exibir.telas).forEach(k=>{ if(!Array.isArray(r.exibir.telas[k])) r.exibir.telas[k] = []; });
+  r.regimes = (Array.isArray(r.regimes) ? r.regimes : []).filter(x=>x && /^\d{4}-\d{2}-\d{2}$/.test(x.desde) && REG[x.regime]).sort((a,b)=>a.desde.localeCompare(b.desde));
+  r.horarios = (Array.isArray(r.horarios) ? r.horarios : []).filter(h=>h && REG[h.regime] && ['ABE','INT','FEC','DOM'].every(c=>FAIXA_OK(h[c])))
+    .map(h=>Object.assign(h, {desde: /^\d{4}-\d{2}-\d{2}$/.test(h.desde||'') ? h.desde : '', intervalo: Math.max(0, Math.min(240, +h.intervalo||0)),
+      sab: h.sab && ['ABE','INT','FEC'].every(c=>FAIXA_OK(h.sab[c])) ? h.sab : null}))
+    .sort((a,b)=>String(a.desde).localeCompare(String(b.desde)));
+  ['5x2','6x1'].forEach(rg=>{ if(!r.horarios.some(h=>h.regime===rg && !h.desde)) r.horarios.unshift(clonar(PAINEL_PADRAO.horarios.find(h=>h.regime===rg))); });
+  r.fechados = (Array.isArray(r.fechados) ? r.fechados : []).filter(f=>f && /^\d{2}-\d{2}$/.test(f.dm));
+  r.tema = Object.assign({paleta:'laranja', modo:''}, r.tema || {});
+  return r;
+}
+function regDoDia(iso){ let r = '6x1'; for(const x of PAINEL.regimes) if(x.desde <= iso) r = x.regime; return r; }
+// padrão de horário que vale no dia (tipo de escala do dia + o mais recente que já começou)
+function padraoDe(x){
+  let p = null;
+  for(const h of PAINEL.horarios) if(h.regime===x.reg && (!h.desde || (x.iso && h.desde <= x.iso))) p = h;
+  return p || PAINEL_PADRAO.horarios.find(h=>h.regime===x.reg) || PAINEL_PADRAO.horarios[0];
+}
+const faixaTurno = (p, code, x) => (x.dow===6 && p.sab && p.sab[code]) || p[code];
 const LOJA_ABRE = 9*60+50, LOJA_FECHA = 22*60, SLOT = 2;   // passo de 2 min: os horários 19:14, 20:24 e 12:36 caem exatos na grade
 
 const CODIGOS = [
   {c:'ABE', cls:'c-ABE', rot:'ABE', desc:'Abertura', tipo:'trab'},
   {c:'INT', cls:'c-INT', rot:'INT', desc:'Intermediário', tipo:'trab'},
   {c:'FEC', cls:'c-FEC', rot:'FEC', desc:'Fechamento', tipo:'trab'},
-  {c:'DOM', cls:'c-DOM', rot:'DOM', desc:'Domingo 13:00–20:00', tipo:'trab'},
+  {c:'DOM', cls:'c-DOM', rot:'DOM', desc:'Domingo', tipo:'trab'},
   {c:'FO',  cls:'c-FO',  rot:'FO',  desc:'Folga', tipo:'folga'},
   {c:'FF',  cls:'c-FF',  rot:'FF',  desc:'Folga feriado', tipo:'folga'},
   {c:'DAY', cls:'c-DAY', rot:'🎉',  desc:'Folga aniversário (Dayoff)', tipo:'folga'},
@@ -1756,6 +1868,7 @@ function modoGerente(){
   const up = document.querySelector('label[for="fBase"]'); if(up) up.closest('.campo').style.display='none';
   $('fLoja').disabled = true; $('fInicio').disabled = true;
   papel('Gerente · ' + MINHA_LOJA); if(window.sincBaseTopo) sincBaseTopo();
+  if($('btnEngrenagem')) $('btnEngrenagem').style.display = 'none'; aplicarTelasPerfil();
 }
 function modoSupervisor(){
   ['cardAcessos','cardAvisos','cardSim','cardRegras','imEscalasW','cardAlter','cardHist'].forEach(id=>{ const el=$(id); if(el) el.style.display='none'; });
@@ -1767,6 +1880,7 @@ function modoSupervisor(){
   // supervisor só consulta (decisão do RH na versão do claude.ai): vê a escala como está salva, aprova e devolve, não edita
   aplicarLeitura(true); if($('btnAtualizarApp')) $('btnAtualizarApp').hidden = true; if($('btnVerComo') && !VER_COMO) $('btnVerComo').style.display = 'none';
   $('fLoja').disabled = false; $('fMes').disabled = false; if(window.sincBaseTopo) sincBaseTopo();
+  if($('btnEngrenagem')) $('btnEngrenagem').style.display = 'none'; aplicarTelasPerfil();
 }
 function modoRH(){
   sairLeitura(); if($('btnVerComo')) $('btnVerComo').style.display = '';
@@ -1778,6 +1892,7 @@ function modoRH(){
   // raio do topo: roda o ATUALIZAR ESCALA.bat neste computador (só Windows; o .bat registra o endereço escalagx://)
   const ra = $('btnAtualizarApp'); if(ra) ra.hidden = !/Win/i.test(navigator.platform || navigator.userAgent || '');
   if(window.sincBaseTopo) sincBaseTopo();
+  if($('btnEngrenagem')) $('btnEngrenagem').style.display = ''; aplicarTelasPerfil();
 }
 
 async function iniciarBanco(){
@@ -1802,6 +1917,7 @@ async function entrar(){
     const b = await api('base.get');
     HC = b.base || null;
     await carregarRegrasRemoto();
+    await carregarPainelRemoto();
     if(HC && SOU_RH){ try{ localStorage.setItem('xambre.escala5x2.headcount', JSON.stringify(HC)); }catch(e){} }
     // supervisor: as lojas que o banco devolveu no login (escolhidas ou do cadastro) ou as que vieram na base dele
     const ljs = Array.isArray(SESSAO.lojas) && SESSAO.lojas.length ? SESSAO.lojas : (HC ? calcLojas() : String(SESSAO.loja||'').split(',').map(x=>x.trim()).filter(Boolean));
@@ -2145,7 +2261,12 @@ document.addEventListener('click', async e=>{
 });
 
 /* ---------- cadastro das lojas (região e supervisor) ---------- */
-async function carregarLojasInfo(){ try{ const j = await api('lojas.get'); LOJAS_INFO = j.lojas || {}; renderIntel(); }catch(e){ console.error(e); } }
+async function carregarLojasInfo(){
+  try{
+    const j = await api('lojas.get'); LOJAS_INFO = j.lojas || {}; renderIntel();
+    if(!VER_COMO && SESSAO && (SOU_RH || SESSAO.perfil==='OPERACOES')){ const novas = calcLojas(); if(novas.join()!==LOJAS.join()){ LOJAS = novas; renderConfig(); } }
+  }catch(e){ console.error(e); }
+}
 async function salvarLojasInfoRemoto(info){ await api('lojas.set', {info}); await carregarLojasInfo(); }
 
 /* ---------- fluxo de aprovação: Rascunho → Enviada → Aprovada → Publicada ---------- */
@@ -2362,6 +2483,8 @@ async function puxarNotif(){
     NOTIF = await api('notif.get', {mes:mesPedido}); NOTIF.eventos = NOTIF.eventos || [];
     aplicarMudancas(NOTIF.mudancas || {}, mesPedido);
     if(NOTIF.baseEm){ if(BASE_EM_VISTA && NOTIF.baseEm !== BASE_EM_VISTA) recarregarBase(); BASE_EM_VISTA = NOTIF.baseEm; }
+    // configurações da engrenagem mudaram (inclusive a primeira gravação): recarrega na hora; com o painel aberto, espera fechar
+    if(!CFG_RASC){ const pe = NOTIF.painelEm || ''; if(PAINEL_EM_VISTO !== null && pe !== PAINEL_EM_VISTO){ await carregarPainelRemoto(); aplicarTelasPerfil(); render(true); renderPinceis(); } PAINEL_EM_VISTO = pe; }
     const novos = itensNotif().filter(i=>!VISTOS.has(i.chave) && !i.auto);
     if(!notifPrimeira && novos.length) avisarNovo(novos);
     // evento da escala aberta (enviada, aprovada, devolvida, publicada, alterada): recarrega a situação e a escala
@@ -2576,6 +2699,226 @@ document.addEventListener('click', async e=>{
   if(rm && await confirmar('Encerrar alerta', 'O alerta some para as lojas.', 'Encerrar')){ try{ await api('avisos.remover', {id:rm.dataset.avRem}); await puxarNotif(); }catch(err){ toast(err.message); } }
 });
 
+
+/* ================= Engrenagem: Configurações do RH (5.1.0) ================= */
+// Painel único com o que o RH configura para todos: exibição por perfil, padrões de horário, tipos de escala por
+// período, dias de shopping fechado, lojas e supervisores, tema. Trabalha num rascunho; só grava ao clicar em Salvar
+// (o banco valida de novo) e o portal aberto de todos recarrega na hora.
+// hora sempre em 24 h, digitada como texto (o campo "time" do navegador mostra AM/PM conforme o idioma do Windows)
+function normHora(v){ v = String(v||'').trim().replace(/[hH.]/, ':'); let m = v.match(/^(\d{1,2}):(\d{2})$/) || v.match(/^(\d{1,2})(\d{2})$/); return m ? String(m[1]).padStart(2,'0') + ':' + m[2] : v; }
+function campoHora(i, k, sab, p, f, rotulo){ return `<input type="text" inputmode="numeric" maxlength="5" placeholder="hh:mm" autocomplete="off" class="cfg-hora" aria-label="${esc(rotulo)}" data-hr="${i}" data-c="${k}" data-sab="${sab?1:''}" data-p="${p}" value="${esc(f?f[p]:'')}">`; }
+document.addEventListener('focusout', e=>{ const t = e.target; if(t && t.classList && t.classList.contains('cfg-hora')){ const v = normHora(t.value); if(v !== t.value) t.value = v; } });
+let CFG_RASC = null, CFG_LOJAS = null, CFG_ABA = 'exibir', PAINEL_EM_VISTO = null; // null = ainda não consultou o banco nesta sessão
+const PERFIS_TELA = [['GERENTE','Gerente'], ['SUPERVISOR','Supervisor'], ['OPERACOES','Gerente de Operações']];
+// telas que cada perfil pode ter (a Escala do mês e a Grade são o essencial e ficam sempre)
+const TELAS_PERFIL = [
+  ['cardSituacao','Situação da escala',['GERENTE','SUPERVISOR','OPERACOES']], ['cardPedidos','Pedidos para sugestão',['GERENTE']],
+  ['cardEquipe','Equipe da loja',['GERENTE']], ['cardAnalise','Análise da loja',['GERENTE']], ['cardDia','Detalhe do dia',['GERENTE','SUPERVISOR','OPERACOES']],
+  ['cardDiag','O que não fechou',['GERENTE']], ['cardContest','Contestações',['GERENTE']], ['cardAlertas','Alertas da escala',['GERENTE']],
+  ['cardMovimento','Fluxo e vendedores',['GERENTE','SUPERVISOR','OPERACOES']], ['cardVG','Visão geral',['SUPERVISOR','OPERACOES']],
+  ['cardCalGer','Folgas dos gerentes',['SUPERVISOR','OPERACOES']], ['cardIntel','Inteligência de Escalas',['SUPERVISOR','OPERACOES']]];
+const ABAS_CFG = [['exibir','Exibição'], ['horarios','Horários'], ['regimes','Tipos de escala'], ['fechados','Shopping fechado'], ['lojas','Lojas e supervisores'], ['tema','Tema'], ['mais','Mais']];
+
+// perfil de quem está vendo agora (inclusive "Ver como" e a prévia do gerente)
+function perfilVisto(){
+  if(typeof VISAO_GERENTE!=='undefined' && VISAO_GERENTE) return 'GERENTE';
+  if(VER_COMO) return VER_COMO.perfil;
+  return SESSAO ? SESSAO.perfil : 'RH';
+}
+function aplicarTelasPerfil(){
+  const pf = perfilVisto(), ocultas = pf==='RH' ? [] : ((PAINEL.exibir.telas || {})[pf] || []);
+  TELAS_PERFIL.forEach(([id])=>{ const el = $(id); if(el) el.classList.toggle('oculto-perfil', ocultas.includes(id)); });
+  if(typeof setVista==='function' && SESSAO) setVista(VISTA);
+}
+async function carregarPainelRemoto(){
+  if(!API_URL || !SESSAO) return;
+  try{ const j = await api('painel.get'); if(j.painel){ aplicarPainel(j.painel); salvarPainelLocal(); } }catch(e){ console.error(e); }
+}
+async function salvarPainelRemoto(p){
+  const j = await api('painel.set', {painel:p});
+  aplicarPainel(j.painel); salvarPainelLocal(); aplicarTelasPerfil(); render(true); renderPinceis();
+  return j;
+}
+
+/* ---------- abrir / fechar ---------- */
+function abrirCfg(aba){
+  if(!SOU_RH || window.__SO_CONSULTA) return;
+  CFG_RASC = clonar(PAINEL); CFG_LOJAS = clonar(LOJAS_INFO || {}); CFG_ABA = aba || CFG_ABA;
+  $('cfgFundo').classList.add('on'); $('cfgPainel').classList.add('aberto'); $('cfgPainel').setAttribute('aria-hidden', 'false');
+  renderCfg();
+}
+function fecharCfg(salvo){
+  if(!salvo && CFG_RASC && CFG_RASC.tema.paleta !== PAINEL.tema.paleta) aplicarPaleta(PAINEL.tema.paleta);   // desfaz a prévia
+  $('cfgFundo').classList.remove('on'); $('cfgPainel').classList.remove('aberto'); $('cfgPainel').setAttribute('aria-hidden', 'true');
+  CFG_RASC = null; CFG_LOJAS = null;
+}
+const hmTxt = min => Math.floor(min/60) + 'h' + String(min%60).padStart(2,'0');
+const duracao = (f, int) => { const m = hm(f[1]) - hm(f[0]) - (+int||0); return m > 0 ? hmTxt(m) : '—'; };
+const dataBR = d => d ? d.split('-').reverse().join('/') : '';
+
+/* ---------- desenho de cada aba ---------- */
+function renderCfg(){
+  $('cfgAbas').innerHTML = ABAS_CFG.map(([k,n])=>`<button type="button" role="tab" class="cfg-aba ${k===CFG_ABA?'on':''}" data-cfgaba="${k}" aria-selected="${k===CFG_ABA}">${n}</button>`).join('');
+  const P = CFG_RASC, c = $('cfgCorpo');
+  if(CFG_ABA==='exibir'){
+    const ex = P.exibir;
+    c.innerHTML = `<h3>O que aparece</h3>
+      <label class="cfg-ck"><input type="checkbox" data-cfg="horarios" ${ex.horarios?'checked':''}><span><b>Mostrar horários na escala</b><small>Grade, dica ao passar o mouse, Print da escala (inclusive a legenda), barra de códigos e "Regras e códigos". Desligado, aparece só o código (ABE, INT, FEC...).</small></span></label>
+      <label class="cfg-ck"><input type="checkbox" data-cfg="vendedores" ${ex.vendedores?'checked':''}><span><b>Ranking de vendedores para gerente, supervisor e Gerente de Operações</b><small>Em "Fluxo e vendedores". O RH sempre vê.</small></span></label>
+      <h3>Telas de cada perfil</h3><div class="dica" style="margin:0 0 8px">Desmarque para esconder a tela (e o item do menu) daquele perfil. "Escala do mês" e "Grade da escala" ficam sempre. O "Ver como" mostra o resultado.</div>
+      <div class="tabela-rolar"><table class="ped cfg-tab"><thead><tr><th>Tela</th>${PERFIS_TELA.map(([,n])=>`<th>${n}</th>`).join('')}</tr></thead><tbody>${
+        TELAS_PERFIL.map(([id,n,pfs])=>`<tr><td>${esc(n)}</td>${PERFIS_TELA.map(([pf])=>`<td>${pfs.includes(pf) ? `<input type="checkbox" aria-label="${esc(n)} para ${pf}" data-tela="${id}" data-pf="${pf}" ${(ex.telas[pf]||[]).includes(id)?'':'checked'}>` : '<span class="nuvem">—</span>'}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  } else if(CFG_ABA==='horarios'){
+    c.innerHTML = `<h3>Padrões de horário</h3><div class="dica" style="margin:0 0 10px">Cada tipo de escala tem um padrão "desde sempre" e pode ter outros que valem a partir de uma data (ex.: um horário de 01 a 15/12 e outro a partir de 16/12). As horas da escala (meta da semana, horas extras) seguem o horário menos o intervalo: confira a Análise da loja depois de mudar.</div>
+      ${P.horarios.map((h,i)=>cfgPadrao(h,i)).join('')}
+      <div class="linha" style="margin-top:12px"><button class="btn" type="button" data-cfgnovo="5x2">Novo padrão da 5x2</button><button class="btn" type="button" data-cfgnovo="6x1">Novo padrão da 6x1</button></div>`;
+  } else if(CFG_ABA==='regimes'){
+    c.innerHTML = `<h3>Tipos de escala por período</h3><div class="dica" style="margin:0 0 10px">Antes da primeira data vale a <b>6x1</b>. Cada linha troca o tipo de escala a partir da data. Horas semanais e dias seguidos de cada tipo ficam em Regras de jornada (aba Mais).</div>
+      <div class="tabela-rolar"><table class="ped cfg-tab"><thead><tr><th>A partir de</th><th>Tipo de escala</th><th></th></tr></thead><tbody>${
+        P.regimes.map((r,i)=>`<tr><td><input type="date" data-rg="${i}" data-k="desde" value="${esc(r.desde)}"></td><td><select data-rg="${i}" data-k="regime">${['5x2','6x1'].map(x=>`<option ${x===r.regime?'selected':''}>${x}</option>`).join('')}</select></td><td style="text-align:right"><button class="btn peq fant" type="button" data-rgdel="${i}">Remover</button></td></tr>`).join('')
+        || '<tr><td colspan="3" class="nuvem">Nenhuma troca: vale a 6x1 em todos os dias.</td></tr>'}</tbody></table></div>
+      <div class="linha" style="margin-top:12px"><button class="btn" type="button" data-rgnovo>Nova troca de tipo de escala</button></div>`;
+  } else if(CFG_ABA==='fechados'){
+    c.innerHTML = `<h3>Dias de shopping fechado</h3><div class="dica" style="margin:0 0 10px">Todos os anos. Todo mundo fica de folga nesses dias e a folga conta como a da semana. Aparece também em "Regras e códigos".</div>
+      <div class="tabela-rolar"><table class="ped cfg-tab"><thead><tr><th>Dia (DD/MM)</th><th>Nome</th><th></th></tr></thead><tbody>${
+        P.fechados.map((f,i)=>`<tr><td><input data-fc="${i}" data-k="dm" value="${esc(f.dm.slice(3)+'/'+f.dm.slice(0,2))}" placeholder="25/12" maxlength="5" style="width:90px"></td><td><input data-fc="${i}" data-k="nome" value="${esc(f.nome)}" maxlength="60"></td><td style="text-align:right"><button class="btn peq fant" type="button" data-fcdel="${i}">Remover</button></td></tr>`).join('')
+        || '<tr><td colspan="3" class="nuvem">Nenhum dia.</td></tr>'}</tbody></table></div>
+      <div class="linha" style="margin-top:12px"><button class="btn" type="button" data-fcnovo>Novo dia</button></div>`;
+  } else if(CFG_ABA==='lojas'){
+    const lojas = cfgListaLojas(), sups = cfgSupervisores();
+    c.innerHTML = `<h3>Lojas</h3><div class="dica" style="margin:0 0 10px">As lojas vêm do quadro de colaboradores. Aqui você inclui uma loja que ainda não está no quadro, desativa uma loja (some das listas, não apaga nada) e ajusta shopping, região e supervisor. O supervisor que tem acesso com lojas marcadas em Acessos prevalece sobre este campo.</div>
+      <datalist id="cfgSups">${sups.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
+      <div class="tabela-rolar"><table class="ped cfg-tab"><thead><tr><th>Loja</th><th>Shopping</th><th>Região</th><th>Supervisor</th><th>Ativa</th><th></th></tr></thead><tbody>${
+        lojas.map(l=>{ const i = CFG_LOJAS[l.cod] || {}; return `<tr class="${i.ativa===false?'cfg-inativa':''}"><td><b>${esc(l.cod)}</b>${i.manual?' <span class="nuvem">(incluída)</span>':''}</td>
+          <td>${i.manual ? `<input data-lj="${esc(l.cod)}" data-k="shopping" value="${esc(i.shopping||'')}" maxlength="80">` : `<span class="nuvem">${esc(l.shopping||'—')}</span>`}</td>
+          <td><input data-lj="${esc(l.cod)}" data-k="regiao" value="${esc(i.regiao||'')}" maxlength="60"></td>
+          <td><input data-lj="${esc(l.cod)}" data-k="supervisor" list="cfgSups" value="${esc(i.supervisorCadastro!=null ? i.supervisorCadastro : (i.supervisor||''))}" maxlength="80">${l.supAcesso ? `<small class="nuvem">acesso: ${esc(l.supAcesso)}</small>` : ''}</td>
+          <td><input type="checkbox" aria-label="Loja ${esc(l.cod)} ativa" data-lj="${esc(l.cod)}" data-k="ativa" ${i.ativa===false?'':'checked'}></td>
+          <td style="text-align:right">${i.manual ? `<button class="btn peq fant" type="button" data-ljdel="${esc(l.cod)}">Remover</button>` : ''}</td></tr>`; }).join('')}</tbody></table></div>
+      <h3>Incluir loja</h3><div class="linha">
+        <div class="campo" style="width:130px"><label for="cfgNovaCod">Código</label><input id="cfgNovaCod" placeholder="AWK 70" maxlength="20"></div>
+        <div class="campo" style="flex:1;min-width:180px"><label for="cfgNovaShop">Shopping</label><input id="cfgNovaShop" maxlength="80"></div>
+        <div class="campo" style="width:150px"><label for="cfgNovaReg">Região</label><input id="cfgNovaReg" maxlength="60"></div>
+        <div class="campo" style="width:200px"><label for="cfgNovaSup">Supervisor</label><input id="cfgNovaSup" list="cfgSups" maxlength="80"></div>
+        <button class="btn" type="button" id="cfgIncluir">Incluir</button></div>
+      <h3>Trocar o nome de um supervisor em todas as lojas</h3><div class="linha">
+        <div class="campo" style="width:220px"><label for="cfgSupDe">De</label><select id="cfgSupDe">${sups.map(n=>`<option>${esc(n)}</option>`).join('')}</select></div>
+        <div class="campo" style="width:220px"><label for="cfgSupPara">Para</label><input id="cfgSupPara" list="cfgSups" maxlength="80"></div>
+        <button class="btn" type="button" id="cfgTrocarSup">Trocar</button></div>
+      <div class="dica">Nomes e acessos do Gerente de Operações e dos supervisores: aba Mais &gt; Acessos.</div>`;
+  } else if(CFG_ABA==='tema'){
+    c.innerHTML = `<h3>Cor de destaque</h3><div class="dica" style="margin:0 0 10px">Vale para todos. A prévia aparece na hora; só fica se você salvar. Todas as cores mantêm o contraste de leitura (AA).</div>
+      <div class="cfg-paletas">${Object.keys(NOME_PALETA).map(k=>`<label class="cfg-pal ${CFG_RASC.tema.paleta===k?'on':''}"><input type="radio" name="cfgPal" value="${k}" ${CFG_RASC.tema.paleta===k?'checked':''}><span class="cfg-amostra" style="background:${k==='laranja'?'#FF641C':(PALETAS[k]['#FF641C'])}"></span>${esc(NOME_PALETA[k])}</label>`).join('')}</div>
+      <h3>Tema padrão</h3><div class="dica" style="margin:0 0 10px">Para quem ainda não escolheu no botão de tema do topo (cada pessoa pode trocar no próprio aparelho).</div>
+      <div class="cfg-paletas">${[['','Automático (segue o aparelho)'],['claro','Claro'],['escuro','Escuro']].map(([k,n])=>`<label class="cfg-pal ${(CFG_RASC.tema.modo||'')===k?'on':''}"><input type="radio" name="cfgModo" value="${k}" ${(CFG_RASC.tema.modo||'')===k?'checked':''}>${n}</label>`).join('')}</div>`;
+  } else {
+    c.innerHTML = `<h3>Outras configurações</h3><div class="cfg-atalhos">${[['cardRegras','Regras de jornada','horas semanais, dias seguidos, tolerâncias, hora extra, pesos do fluxo'],['qdAuto','Quadro de colaboradores','leitura automática do quadro e mudanças'],['cardAlter','AlterVision','conexão, de-para e diagnóstico'],['cardAcessos','Acessos','usuários, níveis, supervisores e Gerente de Operações'],['cardAvisos','Alertas para as lojas','avisos com ou sem ciência'],['cardHist','Histórico de alterações','quem mudou o quê na escala']].map(([id,n,t])=>`<button type="button" class="cfg-atalho" data-cfgir="${id}"><b>${n}</b><small>${t}</small></button>`).join('')}</div>`;
+  }
+}
+function cfgPadrao(h, i){
+  const fx = (k, nome, sab) => { const f = sab ? (h.sab||{})[k] : h[k]; return `<div class="cfg-faixa"><span>${nome}</span>${campoHora(i, k, sab, 0, f, nome + ' — entrada')} – ${campoHora(i, k, sab, 1, f, nome + ' — saída')}<small>${FAIXA_OK(f) ? duracao(f, h.intervalo) : ''}</small></div>`; };
+  const base = !h.desde && CFG_RASC.horarios.filter(x=>x.regime===h.regime && !x.desde).indexOf(h)===0;
+  return `<div class="cfg-padrao"><div class="cfg-pad-topo"><b>${h.regime}</b>
+      <label>Vale a partir de <input type="date" data-hr="${i}" data-k="desde" value="${esc(h.desde||'')}" ${base?'disabled title="O padrão de sempre não tem data"':''}></label>${base ? '<span class="nuvem">padrão de sempre</span>' : ''}
+      <label>Nome <input data-hr="${i}" data-k="nome" value="${esc(h.nome||'')}" maxlength="60" placeholder="opcional"></label>
+      <label>Intervalo <input type="number" min="0" max="240" step="5" data-hr="${i}" data-k="intervalo" value="${esc(h.intervalo)}" style="width:70px"> min</label>
+      ${base ? '' : `<button class="btn peq fant" type="button" data-hrdel="${i}">Remover</button>`}</div>
+    <div class="cfg-faixas">${fx('ABE','Abertura')}${fx('INT','Intermediário')}${fx('FEC','Fechamento')}${fx('DOM','Domingo')}</div>
+    <label class="cfg-ck" style="margin-top:8px"><input type="checkbox" data-hrsab="${i}" ${h.sab?'checked':''}><span><b>Sábado com horário diferente</b></span></label>
+    ${h.sab ? `<div class="cfg-faixas">${fx('ABE','Abertura (sáb)',1)}${fx('INT','Intermediário (sáb)',1)}${fx('FEC','Fechamento (sáb)',1)}</div>` : ''}</div>`;
+}
+function cfgListaLojas(){
+  const sh = {};
+  if(HC) Object.values(HC.meses).forEach(m=>Object.keys(m).forEach(l=>{ if(!sh[l]) sh[l] = m[l].shopping || ''; }));
+  const cods = new Set(Object.keys(sh).concat(Object.keys(CFG_LOJAS)));
+  return [...cods].sort().map(cod=>({cod, shopping: sh[cod] || (CFG_LOJAS[cod]||{}).shopping || '', supAcesso: (ACESSOS_LISTA||[]).filter(a=>a.perfil==='SUPERVISOR' && String(a.loja||'').split(',').map(x=>x.trim()).includes(cod)).map(a=>a.nome||a.usuario).join(', ')}));
+}
+function cfgSupervisores(){
+  const set = new Set();
+  (ACESSOS_LISTA||[]).filter(a=>a.perfil==='SUPERVISOR' || a.perfil==='OPERACOES').forEach(a=>set.add(a.nome || a.usuario));
+  Object.values(CFG_LOJAS||{}).forEach(i=>{ const n = String((i && (i.supervisorCadastro!=null ? i.supervisorCadastro : i.supervisor)) || '').trim(); if(n) n.split(',').forEach(x=>{ if(x.trim()) set.add(x.trim()); }); });
+  return [...set].sort((a,b)=>a.localeCompare(b));
+}
+
+/* ---------- edição (no rascunho) ---------- */
+document.addEventListener('input', e=>{
+  const t = e.target; if(!CFG_RASC || !t.closest || !t.closest('#cfgPainel')) return;
+  if(t.dataset.hr!=null){
+    const h = CFG_RASC.horarios[+t.dataset.hr];
+    if(t.dataset.c){ const alvo = t.dataset.sab ? (h.sab = h.sab || {}) : h; const f = (alvo[t.dataset.c] || ['','']).slice(); f[+t.dataset.p] = normHora(t.value); alvo[t.dataset.c] = f;
+      const sm = t.parentElement.querySelector('small'); if(sm) sm.textContent = FAIXA_OK(f) ? duracao(f, h.intervalo) : ''; }
+    else if(t.dataset.k==='intervalo') h.intervalo = +t.value || 0;
+    else h[t.dataset.k] = t.value;
+  } else if(t.dataset.rg!=null) CFG_RASC.regimes[+t.dataset.rg][t.dataset.k] = t.value;
+  else if(t.dataset.fc!=null){ const f = CFG_RASC.fechados[+t.dataset.fc];
+    if(t.dataset.k==='dm'){ const m = t.value.match(/^(\d{1,2})\/(\d{1,2})$/); f.dm = m ? String(+m[2]).padStart(2,'0') + '-' + String(+m[1]).padStart(2,'0') : 'x'; } else f.nome = t.value; }
+  else if(t.dataset.lj!=null && t.type!=='checkbox'){ const o = CFG_LOJAS[t.dataset.lj] = CFG_LOJAS[t.dataset.lj] || {}; if(t.dataset.k==='supervisor'){ o.supervisor = t.value; o.supervisorCadastro = t.value; } else o[t.dataset.k] = t.value; }
+});
+document.addEventListener('change', e=>{
+  const t = e.target; if(!CFG_RASC || !t.closest || !t.closest('#cfgPainel')) return;
+  if(t.dataset.cfg){ CFG_RASC.exibir[t.dataset.cfg] = t.checked; }
+  else if(t.dataset.tela){ const l = CFG_RASC.exibir.telas[t.dataset.pf] = (CFG_RASC.exibir.telas[t.dataset.pf] || []).filter(x=>x!==t.dataset.tela); if(!t.checked) l.push(t.dataset.tela); }
+  else if(t.dataset.hrsab!=null){ const h = CFG_RASC.horarios[+t.dataset.hrsab]; h.sab = t.checked ? {ABE:h.ABE.slice(), INT:h.INT.slice(), FEC:h.FEC.slice()} : null; renderCfg(); }
+  else if(t.dataset.lj!=null && t.type==='checkbox'){ const o = CFG_LOJAS[t.dataset.lj] = CFG_LOJAS[t.dataset.lj] || {}; o.ativa = t.checked; t.closest('tr').classList.toggle('cfg-inativa', !t.checked); }
+  else if(t.name==='cfgPal'){ CFG_RASC.tema.paleta = t.value; aplicarPaleta(t.value); renderCfg(); }
+  else if(t.name==='cfgModo'){ CFG_RASC.tema.modo = t.value; renderCfg(); }
+});
+document.addEventListener('click', async e=>{
+  if(e.target.closest('#btnEngrenagem')){ abrirCfg(); return; }
+  if(!e.target.closest('#cfgPainel') && !e.target.closest('#cfgFundo')) return;
+  if(e.target.closest('#cfgFundo') || e.target.closest('#cfgFechar') || e.target.closest('#cfgCancelar')){ fecharCfg(false); return; }
+  const b = e.target.closest('button'); if(!b || !CFG_RASC) return;
+  if(b.dataset.cfgaba){ CFG_ABA = b.dataset.cfgaba; renderCfg(); return; }
+  if(b.dataset.cfgnovo){ const rg = b.dataset.cfgnovo, base = [...CFG_RASC.horarios].reverse().find(h=>h.regime===rg) || PAINEL_PADRAO.horarios.find(h=>h.regime===rg);
+    const novo = Object.assign(clonar(base), {desde: (S && S.mes ? S.mes : new Date().toISOString().slice(0,7)) + '-16', nome:''}); CFG_RASC.horarios.push(novo); renderCfg(); return; }
+  if(b.dataset.hrdel!=null){ CFG_RASC.horarios.splice(+b.dataset.hrdel, 1); renderCfg(); return; }
+  if(b.dataset.rgnovo!=null){ CFG_RASC.regimes.push({desde:(S && S.mes ? S.mes : '2026-12') + '-01', regime:'5x2'}); renderCfg(); return; }
+  if(b.dataset.rgdel!=null){ CFG_RASC.regimes.splice(+b.dataset.rgdel, 1); renderCfg(); return; }
+  if(b.dataset.fcnovo!=null){ CFG_RASC.fechados.push({dm:'x', nome:''}); renderCfg(); return; }
+  if(b.dataset.fcdel!=null){ CFG_RASC.fechados.splice(+b.dataset.fcdel, 1); renderCfg(); return; }
+  if(b.dataset.ljdel){ delete CFG_LOJAS[b.dataset.ljdel]; renderCfg(); return; }
+  if(b.id==='cfgIncluir'){
+    const cod = $('cfgNovaCod').value.trim().toUpperCase().replace(/\s+/g, ' ');
+    if(!/^[A-Z]{2,10} \d{1,4}$/.test(cod)){ toast('Código da loja como no quadro: letras, espaço e número (ex.: AWK 70, AFEET 210)'); return; }
+    if(cfgListaLojas().some(l=>l.cod===cod)){ toast('Essa loja já existe'); return; }
+    CFG_LOJAS[cod] = {manual:true, ativa:true, shopping:$('cfgNovaShop').value.trim(), regiao:$('cfgNovaReg').value.trim(), supervisor:$('cfgNovaSup').value.trim(), supervisorCadastro:$('cfgNovaSup').value.trim()};
+    renderCfg(); toast('Loja ' + cod + ' incluída no rascunho: clique em Salvar'); return;
+  }
+  if(b.id==='cfgTrocarSup'){
+    const de = $('cfgSupDe').value, para = $('cfgSupPara').value.trim(); if(!de || !para){ toast('Escolha o supervisor e escreva o novo nome'); return; }
+    let n = 0; Object.keys(CFG_LOJAS).forEach(l=>{ const i = CFG_LOJAS[l]; const atual = String(i.supervisorCadastro!=null ? i.supervisorCadastro : (i.supervisor||'')); if(atual.trim()===de){ i.supervisor = para; i.supervisorCadastro = para; n++; } });
+    renderCfg(); toast(n ? `${n} loja(s) trocadas para ${para} no rascunho: clique em Salvar` : 'Nenhuma loja com esse nome no cadastro (o supervisor pode vir de Acessos)'); return;
+  }
+  if(b.dataset.cfgir){ const id = b.dataset.cfgir; fecharCfg(false);
+    const alvo = id==='qdAuto' ? 'cardRegras' : id; const it = document.querySelector(`.lat-item[data-alvo="${alvo}"]`); if(it) it.click();
+    if(id==='qdAuto') setTimeout(()=>{ const q = $('qdAuto'); if(q) q.scrollIntoView({behavior:'smooth', block:'start'}); }, 300);
+    return; }
+  if(b.id==='cfgSalvar') salvarCfg();
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && CFG_RASC) fecharCfg(false); });
+
+async function salvarCfg(){
+  const bt = $('cfgSalvar'); bt.disabled = true;
+  try{
+    // conferências que o banco também faz, com mensagem clara aqui
+    for(const h of CFG_RASC.horarios){
+      for(const k of ['ABE','INT','FEC','DOM']) if(!FAIXA_OK(h[k])) throw new Error(`Horário de ${k==='DOM'?'domingo':TURNOS[k].nome.toLowerCase()} da ${h.regime}${h.desde?' (a partir de '+dataBR(h.desde)+')':''}: preencha entrada e saída, com a saída depois da entrada`);
+      if(h.sab) for(const k of ['ABE','INT','FEC']) if(!FAIXA_OK(h.sab[k])) throw new Error(`Sábado (${TURNOS[k].nome.toLowerCase()}) da ${h.regime}: preencha entrada e saída`);
+    }
+    if(CFG_RASC.regimes.some(r=>!/^\d{4}-\d{2}-\d{2}$/.test(r.desde))) throw new Error('Tipos de escala: preencha a data de cada troca');
+    if(CFG_RASC.fechados.some(f=>!/^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(f.dm))) throw new Error('Shopping fechado: use o dia no formato DD/MM (ex.: 25/12)');
+    const mudouLojas = JSON.stringify(CFG_LOJAS) !== JSON.stringify(LOJAS_INFO || {});
+    await salvarPainelRemoto(CFG_RASC);
+    if(mudouLojas){
+      const info = {}; Object.keys(CFG_LOJAS).forEach(l=>{ const i = CFG_LOJAS[l]; info[l] = {regiao:i.regiao||'', supervisor: i.supervisorCadastro!=null ? i.supervisorCadastro : (i.supervisor||''), shopping:i.shopping||'', ativa: i.ativa!==false, manual: !!i.manual}; });
+      await salvarLojasInfoRemoto(info);
+      if(!VER_COMO){ LOJAS = calcLojas(); renderConfig(); }
+    }
+    fecharCfg(true); toast('Configurações salvas: valem para todos');
+  }catch(err){ toast(err.message); }
+  finally{ bt.disabled = false; }
+}
+
 function renderVG(){
   const tb = $('visaoGeral'); if(!tb) return;
   const [y,m] = S.mes.split('-').map(Number);
@@ -2716,7 +3059,7 @@ function feriadosNacionais(y){
   return f;
 }
 // shopping fechado em todos os anos: vira folga automática (conta como a folga da semana)
-const SHOPPING_FECHADO = {'12-25':'Natal', '01-01':'Confraternização Universal'};
+const SHOPPING_FECHADO = {'12-25':'Natal', '01-01':'Confraternização Universal'};   // refeito pela engrenagem (Fechamentos)
 function diasDoMes(){
   const [y,m] = S.mes.split('-').map(Number);
   const n = new Date(y,m,0).getDate(), fn = feriadosNacionais(y), arr = [];
@@ -2725,7 +3068,7 @@ function diasDoMes(){
     const k = String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
     const iso = y+'-'+k;
     const fechado = SHOPPING_FECHADO[k] || null;
-    arr.push({d, dow, iso, reg: iso >= INICIO_5X2 ? '5x2' : '6x1', fechado, fer: fechado ? fechado+' · shopping fechado' : (fn[k] || (S.feriadosLocais.includes(d) ? 'Feriado local' : null))});
+    arr.push({d, dow, iso, reg: regDoDia(iso), fechado, fer: fechado ? fechado+' · shopping fechado' : (fn[k] || (S.feriadosLocais.includes(d) ? 'Feriado local' : null))});
   }
   return arr;
 }
@@ -2739,22 +3082,48 @@ const hm = t => { const [h,m] = t.split(':').map(Number); return h*60+m; };
 const fmtHM = min => String(Math.floor(min/60)).padStart(2,'0')+':'+String(min%60).padStart(2,'0');
 function janela(code, x){
   if(isHE(code)) code = TURNO_DE[code];
-  if(TURNOS[code]){
-    const t = x.reg==='6x1' ? TURNOS_6X1[code] : (x.dow===6 ? TURNOS[code].sab : TURNOS[code].util);
-    return [hm(t[0]), hm(t[1])];
-  }
-  if(code==='DOM' && x.dow===0) return [hm(DOM_JANELA[0]), hm(DOM_JANELA[1])];
+  if(TURNOS[code]){ const t = faixaTurno(padraoDe(x), code, x); return [hm(t[0]), hm(t[1])]; }
+  if(code==='DOM' && x.dow===0){ const t = padraoDe(x).DOM; return [hm(t[0]), hm(t[1])]; }
   return null;
 }
 function horario(code, x){ const j = janela(code,x); if(j) return fmtHM(j[0])+'–'+fmtHM(j[1]); return ''; }
 // Pedido do RH (27/11/2026): a grade não mostra horários (dezembro tem um horário de 1 a 15 e outro a partir de 16,
 // e outras mudanças ainda não definidas). Vale para as células, a dica ao passar o mouse, o Print da escala e o código
 // escolhido na barra. Para voltar a mostrar, troque para true.
-const HORARIO_NA_GRADE = false;
+let HORARIO_NA_GRADE = false;          // vem da engrenagem (Exibição > Horários)
 const horarioGrade = (code, x) => HORARIO_NA_GRADE ? horario(code, x) : '';
+function aplicarPainel(p){
+  PAINEL = normalizarPainel(p);
+  HORARIO_NA_GRADE = !!PAINEL.exibir.horarios;
+  Object.keys(SHOPPING_FECHADO).forEach(k=>delete SHOPPING_FECHADO[k]);
+  PAINEL.fechados.forEach(f=>{ SHOPPING_FECHADO[f.dm] = String(f.nome||'').trim() || 'Shopping fechado'; });
+  const r5 = PAINEL.regimes.find(x=>x.regime==='5x2'); INICIO_5X2 = r5 ? r5.desde : '9999-12-31';
+  // a tela só é redesenhada depois que a página terminou de montar (no início, quem chama é o fim do script)
+  if(window.__painelUI){
+    aplicarPaleta(PAINEL.tema.paleta);
+    if(PAINEL.tema.modo && !temaEscolhido()) aplicarTema(PAINEL.tema.modo, false);
+    renderRegrasDinamicas(); renderLegenda();
+  }
+}
+function salvarPainelLocal(){ try{ localStorage.setItem(CHAVE_PAINEL, JSON.stringify(PAINEL)); }catch(e){} }
+try{ aplicarPainel(JSON.parse(localStorage.getItem(CHAVE_PAINEL) || 'null')); }catch(e){ aplicarPainel(null); }
+// texto do horário de um código no mês aberto (com as mudanças dentro do mês: "a partir de 16/12 ...")
+function horarioNoMes(code){
+  if(!S || !S.mes) return '';
+  const dias = diasDoMes(), out = []; let ult = '';
+  for(const x of dias){
+    if(code==='DOM' ? x.dow!==0 : x.dow===0) continue;
+    const t = code==='DOM' ? padraoDe(x).DOM : faixaTurno(padraoDe(x), code, x), txt = t.join('–') + (x.dow===6 && code!=='DOM' && padraoDe(x).sab ? ' (sáb)' : '');
+    if(txt!==ult){ out.push((out.length ? 'a partir de ' + x.d + '/' + S.mes.slice(5) + ': ' : '') + txt); ult = txt; }
+  }
+  return out.join(' · ');
+}
+const descSemHora = d => String(d||'').replace(/\s*\d{1,2}:\d{2}\s*[–-]\s*\d{1,2}:\d{2}/g, '');
+// horas efetivas = horário do padrão − intervalo (com os padrões de sempre: 8h24 na 5x2, 7h20 na 6x1, 6h no domingo)
+function horasFaixa(t, p){ return Math.round(hm(t[1]) - hm(t[0]) - (+p.intervalo||0)) / 60; }
 function horas(code, x){
-  if(TURNOS[code]) return x.reg==='6x1' ? H_6X1 : (x.dow===6 ? H_SAB : H_UTIL);
-  if(code==='DOM') return H_DOM;
+  if(TURNOS[code]){ const p = padraoDe(x); return horasFaixa(faixaTurno(p, code, x), p); }
+  if(code==='DOM'){ const p = padraoDe(x); return horasFaixa(p.DOM, p); }
   return 0;
 }
 const fmtH = h => { const t = Math.round(h*60); return Math.floor(t/60)+'h'+String(t%60).padStart(2,'0'); };
@@ -3197,7 +3566,7 @@ function renderMovimento(V){
     <section class="mv-p mv-w2"><h4>${ic('grid')}Horas quentes <span>dia da semana × hora</span></h4>${hq}</section>
     <section class="mv-p"><h4>${ic('list')}Semanas do mês <span>projeção × ano anterior</span></h4>${semanas}</section>
     <section class="mv-p"><h4>${ic('chart')}Histórico <span>últimos meses</span></h4>${historico}</section>
-    <section class="mv-p mv-w2"><h4>${ic('users')}Melhores vendedores por dia <span>índice de vendas do PREMIER</span></h4>${vend}</section>
+    ${PAINEL.exibir.vendedores || ehRH() ? `<section class="mv-p mv-w2"><h4>${ic('users')}Melhores vendedores por dia <span>índice de vendas do PREMIER</span></h4>${vend}</section>` : ''}
     <section class="mv-p mv-w2"><h4>${ic('userCheck')}Conversão, vendas e público</h4>${cv}</section>
   </div><div class="mv-rodape">Tudo nesta tela é sugestão para montar a escala. A escala só muda quando você lança na grade ou aplica uma alternativa.</div>`;
   box.innerHTML = h;
@@ -3346,7 +3715,7 @@ function isoMais(iso, n){ const [y,m,d] = iso.split('-').map(Number); const dt =
 function infoDia(iso){
   const [y,m,d] = iso.split('-').map(Number);
   const k = String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-  return {d, dow:new Date(y,m-1,d).getDay(), iso, reg: iso >= INICIO_5X2 ? '5x2' : '6x1', fechado: SHOPPING_FECHADO[k]||null};
+  return {d, dow:new Date(y,m-1,d).getDay(), iso, reg: regDoDia(iso), fechado: SHOPPING_FECHADO[k]||null};
 }
 const dm = x => { const [,m,d] = x.iso.split('-'); return +d+'/'+m; };
 function idNoVizinho(est, p){ if(!est || !est.equipe) return null; const q = est.equipe.find(q=>q.id===p.id) || est.equipe.find(q=>mesmaPessoa(q.nome, p.nome)); return q ? q.id : null; }
@@ -3719,6 +4088,7 @@ function aplicarVisao(){
   const pc = $('papel');
   if(pc){ if(VISAO_GERENTE){ if(pc.dataset.rh==null) pc.dataset.rh = pc.textContent; pc.textContent = 'Prévia · Gerente ' + S.loja; } else if(pc.dataset.rh!=null){ pc.textContent = pc.dataset.rh; delete pc.dataset.rh; } }
   if(faixa){ faixa.style.display = VISAO_GERENTE ? '' : 'none'; faixa.innerHTML = VISAO_GERENTE ? `${ic('eye')}<span class="fx-t">Você está vendo o portal como o gerente da <span class="pill">${esc(S.loja)}</span> vê: só esta loja, sem visão geral, acessos, regras do RH e carga da base. O que você mudar aqui fica salvo normalmente.</span> <button class="btn peq" id="faixaVoltar">Voltar à visão do RH</button>` : ''; }
+  if(typeof aplicarTelasPerfil==='function') aplicarTelasPerfil();
 }
 function renderRegras(){
   const card = $('cardRegras'); if(!card) return;
@@ -4167,11 +4537,11 @@ const MAIS = [['FF','Feriado'],['DAY','Dayoff'],['CO','Compensação'],['FER','F
 const NOME_TURNO_HE = {A:'Abertura', I:'Intermediário', F:'Fechamento'};
 function rotPincel(c){
   if(c==='') return {cls:'c-LIMPAR', rot:'⌫', nome:'Apagar', det:'Clique nas células para limpar'};
-  if(c==='HE'){ const t = TURNOS[{A:'ABE',I:'INT',F:'FEC'}[turnoHE]]; return {cls:'c-HE', rot:'HE', nome:'Hora extra', det:'Na folga · '+NOME_TURNO_HE[turnoHE]+(t && HORARIO_NA_GRADE?' '+t.util.join('–'):'')}; }
+  if(c==='HE'){ const t = TURNOS[{A:'ABE',I:'INT',F:'FEC'}[turnoHE]]; return {cls:'c-HE', rot:'HE', nome:'Hora extra', det:'Na folga · '+NOME_TURNO_HE[turnoHE]+(t && HORARIO_NA_GRADE?' '+horarioNoMes({A:'ABE',I:'INT',F:'FEC'}[turnoHE]):'')}; }
   const x = COD[c]; if(!x) return {cls:'', rot:c, nome:'', det:''};
   const t = TURNOS[c], mais = MAIS.find(k=>k[0]===c);
   const nome = (PRINC.find(k=>k[0]===c)||[])[2] || (mais && mais[1]) || x.desc;
-  const det = !HORARIO_NA_GRADE ? (t ? 'seg a sáb' : (x.desc!==nome && !/\d:\d/.test(x.desc) ? x.desc : '')) : t ? t.util.join('–') + (t.sab.join()!==t.util.join() ? ' · sáb ' + t.sab.join('–') : ' · seg a sáb · 8h24') : (c==='DOM' ? '13:00–20:00' : (x.desc!==nome ? x.desc : ''));
+  const det = !HORARIO_NA_GRADE ? (t ? 'seg a sáb' : (x.desc!==nome ? descSemHora(x.desc) : '')) : (t || c==='DOM') ? horarioNoMes(c) : (x.desc!==nome ? x.desc : '');
   return {cls:x.cls, rot:c==='DAY'?'🎉':x.rot, nome, det};
 }
 function renderPinceis(){
@@ -4195,12 +4565,23 @@ function marcarAtivo(){
   $('beMaisBtn').innerHTML = (emMais ? `<span class="mini ${r.cls}">${esc(r.rot)}</span>${esc(r.nome)}` : `<span class="be-ic">${bi('grid')}</span>Mais opções`) + `<span class="seta">${bi('down')}</span>`;
   $('beAtivo').innerHTML = `<span class="mini ${r.cls}">${esc(r.rot)}</span><span class="tx-sel"><small>Código selecionado</small><b>${esc(r.nome)}</b>${r.det?`<span>${esc(r.det)}</span>`:''}</span>`;
 }
+function renderRegrasDinamicas(){
+  const d = $('regraDomingo'), f = $('regraFechados'); if(!d || !f) return;
+  const p = padraoDe(infoDia((S && S.mes ? S.mes : '2026-12') + '-01')), int = +p.intervalo||0;
+  const tInt = int >= 60 && int % 60 === 0 ? (int/60) + 'h' : int + ' min';
+  d.innerHTML = (HORARIO_NA_GRADE ? `Domingo das ${esc(p.DOM[0])} às ${esc(p.DOM[1])}. ` : '') + `Todos os turnos têm ${tInt} de intervalo, que não entra nas horas.`;
+  const ds = PAINEL.fechados.map(x=>x.dm.slice(3) + '/' + x.dm.slice(0,2));
+  f.style.display = ds.length ? '' : 'none';
+  f.innerHTML = `<b>${esc(ds.length > 1 ? ds.slice(0,-1).join(', ') + ' e ' + ds[ds.length-1] : ds[0] || '')}</b>: shopping fechado em todos os anos. Todo mundo fica de folga, e essa folga conta como a folga da semana.`;
+}
 function renderLegenda(){
-  $('legenda').innerHTML = '<tr><th>Código</th><th>Descrição</th><th>Seg–sex</th><th>Sábado</th></tr>' + CODIGOS.filter(x=>x.tipo!=='he' || x.c==='HEA').map(x=>{
-    if(x.tipo==='he') return `<tr><td><span class="chip c-HE">HE</span></td><td>Hora extra na folga</td><td colspan="2">Horário do turno escolhido. Conta como a folga da semana e como presença na loja.</td></tr>`;
+  // com "Mostrar horários" desligado na engrenagem, a legenda fica só com os códigos (pedido do RH, 27/11/2026)
+  const comHora = HORARIO_NA_GRADE, int = padraoDe(infoDia((S && S.mes ? S.mes : '2026-12') + '-01')).intervalo;
+  $('legenda').innerHTML = '<tr><th>Código</th><th>Descrição</th>' + (comHora ? '<th>Horário no mês</th>' : '') + '</tr>' + CODIGOS.filter(x=>x.tipo!=='he' || x.c==='HEA').map(x=>{
+    if(x.tipo==='he') return `<tr><td><span class="chip c-HE">HE</span></td><td>Hora extra na folga</td>${comHora ? '<td>Horário do turno escolhido. Conta como a folga da semana e como presença na loja.</td>' : ''}</tr>`;
     const t = TURNOS[x.c];
-    return `<tr><td><span class="chip ${x.cls}">${esc(x.rot)}</span></td><td>${esc(t?t.nome:x.desc)}</td><td>${t?t.util.join('–')+' ('+fmtH(H_UTIL)+')':''}</td><td>${t?t.sab.join('–')+' ('+fmtH(H_SAB)+')':(x.c==='DOM'?'domingo 13:00–20:00 ('+fmtH(H_DOM)+')':'')}</td></tr>`;
-  }).join('') + '<tr><td colspan="4" style="color:var(--gx-muted)">Todos os turnos têm 1h de intervalo intrajornada.</td></tr>';
+    return `<tr><td><span class="chip ${x.cls}">${esc(x.rot)}</span></td><td>${esc(t?t.nome:descSemHora(x.desc))}</td>${comHora ? `<td>${t || x.c==='DOM' ? esc(horarioNoMes(x.c)) : ''}</td>` : ''}</tr>`;
+  }).join('') + `<tr><td colspan="${comHora ? 3 : 2}" style="color:var(--gx-muted)">Todos os turnos têm ${int >= 60 && int % 60 === 0 ? (int/60) + 'h' : int + ' min'} de intervalo intrajornada.</td></tr>`;
 }
 function chip(tipo, txt){ const ic = {ok:'✓',at:'!',er:'✕',ne:'–'}[tipo]; return `<span class="st-chip ${tipo}">${ic} ${txt}</span>`; }
 function renderAnalise(V){
@@ -4451,7 +4832,7 @@ function achatarHistorico(regs, f){
   });
   return linhas.sort((x,y)=>y.quando-x.quando || (x.colaborador>y.colaborador?1:-1) || (x.dia-y.dia));
 }
-const nomeCod = c => !c ? '' : (COD[c] ? COD[c].desc.replace(' 13:00–20:00','') : c);
+const nomeCod = c => !c ? '' : (COD[c] ? descSemHora(COD[c].desc) : c);
 const chipCod = c => !c ? '<span style="color:var(--gx-muted)">vazio</span>' : (COD[c] ? `<span class="hist-cod ${COD[c].cls}" title="${esc(COD[c].desc)}">${esc(COD[c].rot)}</span> <small>${esc(nomeCod(c))}</small>` : esc(c));
 let HIST_LINHAS = [];
 function renderHistFiltros(){
@@ -4556,7 +4937,7 @@ async function imagemEscala(){
     c.fillStyle = bg; c.fillRect(lx, yy-13, 34, 18); if(x.c==='FER'||x.c==='AF'||x.c==='FQ'){ c.strokeStyle='#C9C9C9'; c.strokeRect(lx+.5, yy-12.5, 33, 17); }
     c.fillStyle = fg; c.font = F(700,10.5); centro(x.tipo==='he'?'HE':x.rot, lx, 34, yy);
     const t = TURNOS[x.c]; c.fillStyle = '#344054'; c.font = F(500,11);
-    c.fillText(corta(x.tipo==='he' ? 'Hora extra na folga' : (t ? t.nome+' '+t.util.join('–') : x.desc), (W-pad*2)/6 - 44), lx+40, yy);
+    c.fillText(corta(x.tipo==='he' ? 'Hora extra na folga' : (t ? t.nome + (HORARIO_NA_GRADE ? ' ' + horarioNoMes(x.c) : '') : (HORARIO_NA_GRADE && x.c==='DOM' ? 'Domingo ' + horarioNoMes('DOM') : descSemHora(x.desc))), (W-pad*2)/6 - 44), lx+40, yy);
   });
   if(gs.length){ c.fillStyle = '#667085'; c.font = F(500,11); c.fillText(corta('* ' + OBS_CONF, W-pad*2), x0, ly + linhasLeg*26 + 14); }
   const blob = await new Promise(res=>cv.toBlob(res, 'image/png'));
@@ -4722,6 +5103,7 @@ function trocarLojaMes(loja, mes){
   const mudouMes = !S || S.mes!==mes;
   Object.keys(VIZ).forEach(k=>delete VIZ[k]); Object.keys(VIZ_BUSCA).forEach(k=>delete VIZ_BUSCA[k]);
   S = carregar(loja, mes); diaSel = 1; renderConfig(); renderEquipe(); render(true);
+  if(mudouMes){ renderLegenda(); renderRegrasDinamicas(); }
   abrirDoBanco(loja, mes); if(mudouMes) assinarVG();
   if(typeof carregarFluxo==='function') carregarFluxo(loja, mes);
   if(typeof carregarVendas==='function') carregarVendas(loja, mes);
@@ -4729,7 +5111,15 @@ function trocarLojaMes(loja, mes){
 $('fLoja').addEventListener('change', e=>trocarLojaMes(e.target.value, S.mes));
 $('fMes').addEventListener('change', e=>{ if(e.target.value) trocarLojaMes(S.loja, e.target.value); });
 $('fGerente').addEventListener('input', e=>{ S.gerente = e.target.value; salvar(); });
-$('fInicio').addEventListener('change', e=>{ if(!e.target.value) return; INICIO_5X2 = e.target.value; try{ localStorage.setItem('xambre.escala5x2.inicio', INICIO_5X2); }catch(err){} render(); });
+// início da 5x2: é o mesmo período de "Tipos de escala" da engrenagem (vale para todos no portal)
+$('fInicio').addEventListener('change', e=>{
+  if(!e.target.value) return;
+  const p = clonar(PAINEL), r5 = p.regimes.find(x=>x.regime==='5x2');
+  if(r5) r5.desde = e.target.value; else p.regimes.push({desde:e.target.value, regime:'5x2'});
+  try{ localStorage.setItem('xambre.escala5x2.inicio', e.target.value); }catch(err){}
+  aplicarPainel(p); salvarPainelLocal(); if(typeof salvarPainelRemoto==='function') salvarPainelRemoto(PAINEL);
+  render(true);
+});
 $('pdTipo').innerHTML = Object.entries(PEDIDOS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
 $('pdAdd').addEventListener('click', ()=>{
   const pid = $('pdPessoa').value, tipo = $('pdTipo').value, dias = lerDias($('pdDias').value, diasDoMes().length);
@@ -4977,7 +5367,7 @@ function marcarVistas(){
   });
 }
 // escondido para o perfil (gerente, supervisor, prévia): display:none no próprio bloco ou num bloco acima, dentro do main
-function ocultoPorPapel(el){ for(let x = el; x && x.tagName!=='MAIN'; x = x.parentElement) if(x.style && x.style.display==='none') return true; return false; }
+function ocultoPorPapel(el){ for(let x = el; x && x.tagName!=='MAIN'; x = x.parentElement) if((x.style && x.style.display==='none') || (x.classList && x.classList.contains('oculto-perfil'))) return true; return false; }
 const vistaDisponivel = v => v==='escala' || NAV_ITENS.some(n=>n[3]===v && $(n[0]) && !ocultoPorPapel($(n[0])) && !(n[0]==='heRH' && !$(n[0]).innerHTML));
 function setVista(v, rolarAte){
   marcarVistas();
@@ -5035,15 +5425,36 @@ const IC_TEMA = {
   escuro:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>'
 };
 const temaAtual = () => { const t = document.documentElement.getAttribute('data-tema'); return TEMAS.includes(t) ? t : 'auto'; };
-function aplicarTema(t){
+function aplicarTema(t, guardar = true){
   document.documentElement.setAttribute('data-tema', t);
-  try{ localStorage.setItem('escalagx.tema', t); }catch(e){}
+  if(guardar){ try{ localStorage.setItem('escalagx.tema', t); }catch(e){} }
   document.querySelectorAll('[data-tema-bt]').forEach(b=>{ b.innerHTML = IC_TEMA[t]; b.title = 'Tema ' + NOME_TEMA[t] + ' · clique para trocar'; b.setAttribute('aria-label', b.title); });
   const escuro = t==='escuro' || (t==='auto' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
   const m = document.querySelector('meta[name="theme-color"]'); if(m) m.content = escuro ? '#0B0D12' : '#F4F5F8';
 }
 document.addEventListener('click', e=>{ if(e.target.closest('[data-tema-bt]')) aplicarTema(TEMAS[(TEMAS.indexOf(temaAtual()) + 1) % TEMAS.length]); });
-try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>aplicarTema(temaAtual())); }catch(e){}
+try{ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>aplicarTema(temaAtual(), false)); }catch(e){}
+// quem nunca escolheu o tema no botão fica com o padrão que o RH definiu na engrenagem
+const temaEscolhido = () => { try{ return !!localStorage.getItem('escalagx.tema'); }catch(e){ return false; } };
+/* ---------- paletas (cor de destaque) da engrenagem ----------
+   Cada tom de laranja do visual vira o tom da paleta com a MESMA luminância: os contrastes (texto grafite sobre a
+   cor, textos coloridos sobre fundo claro/escuro) continuam iguais aos do laranja, conferidos pelo axe-core. */
+const PALETAS = {"azul":{"#3D1603":"#072144","#5A2306":"#0C3366","#6A2806":"#0D3B78","#7A2E06":"#0E448B","#7A2E08":"#104489","#93370D":"#1753A2","#9A3A0A":"#1457AD","#C2410C":"#186AD5","#E9540D":"#3985EA","#F2753A":"#5D9BEC","#FF641C":"#4F97F6","#FF6B22":"#559BF6","#FF7A35":"#63A3F7","#FF8A3D":"#72ACF8","#FF8A50":"#73ACF8","#FF9A5C":"#83B6F8","#FFAE85":"#9BC4FA","#FFB08A":"#9DC5FA","#FFB38A":"#A0C7FA","#FFC6A6":"#B7D5FB","#FFCDB3":"#C0DAFC","#FFD3BC":"#C7DEFC","#FFD9C4":"#CFE2FC","#FFE3D1":"#DBEAFD","#FFE3D3":"#DBEAFD","#FFE4D5":"#DCEBFD","#FFF0E8":"#ECF4FE","#FFF1E8":"#EDF4FE","#FFF8F4":"#F6FAFF","#FFFBF8":"#FAFCFF","255,100,28":"79,151,246","255,138,61":"114,172,248","255,227,209":"219,234,253","255,240,232":"236,244,254","255,241,232":"237,244,254"},"verde":{"#3D1603":"#072718","#5A2306":"#0C3B25","#6A2806":"#0E462C","#7A2E06":"#0F5032","#7A2E08":"#115032","#93370D":"#16603E","#9A3A0A":"#156540","#C2410C":"#197C4E","#E9540D":"#1E985F","#F2753A":"#24AE6E","#FF641C":"#18AB67","#FF6B22":"#19AF69","#FF7A35":"#1AB86E","#FF8A3D":"#1CC174","#FF8A50":"#1CC274","#FF9A5C":"#1DCD7B","#FFAE85":"#1FDC84","#FFB08A":"#20DE85","#FFB38A":"#24E088","#FFC6A6":"#68E9AD","#FFCDB3":"#7EEDB9","#FFD3BC":"#8FEFC2","#FFD9C4":"#A0F1CB","#FFE3D1":"#BAF5D9","#FFE3D3":"#BAF5DA","#FFE4D5":"#BDF6DB","#FFF0E8":"#DBFAEC","#FFF1E8":"#DDFAED","#FFF8F4":"#EEFDF6","#FFFBF8":"#F5FEFA","255,100,28":"24,171,103","255,138,61":"28,193,116","255,227,209":"186,245,217","255,240,232":"219,250,236","255,241,232":"221,250,237"},"roxo":{"#3D1603":"#2A0E5B","#5A2306":"#401785","#6A2806":"#4A1A9C","#7A2E06":"#551DB5","#7A2E08":"#551FB2","#93370D":"#6629D0","#9A3A0A":"#6B2BDA","#C2410C":"#824CE0","#E9540D":"#9A6EE7","#F2753A":"#AB87EA","#FF641C":"#AA81F1","#FF6B22":"#AD85F1","#FF7A35":"#B38EF2","#FF8A3D":"#BA99F4","#FF8A50":"#BB9AF4","#FF9A5C":"#C3A5F5","#FFAE85":"#CEB6F7","#FFB08A":"#CFB8F7","#FFB38A":"#D0BAF7","#FFC6A6":"#DCCAF9","#FFCDB3":"#E0D1FA","#FFD3BC":"#E3D6FA","#FFD9C4":"#E7DBFB","#FFE3D1":"#EDE4FC","#FFE3D3":"#EDE5FC","#FFE4D5":"#EEE6FC","#FFF0E8":"#F5F1FD","#FFF1E8":"#F6F2FE","#FFF8F4":"#FBF8FE","#FFFBF8":"#FCFBFF","255,100,28":"170,129,241","255,138,61":"186,153,244","255,227,209":"237,228,252","255,240,232":"245,241,253","255,241,232":"246,242,254"},"grafite":{"#3D1603":"#1D222B","#5A2306":"#2C3441","#6A2806":"#343D4D","#7A2E06":"#3C4659","#7A2E08":"#3C4659","#93370D":"#49556A","#9A3A0A":"#4C5970","#C2410C":"#5D6E8A","#E9540D":"#7687A3","#F2753A":"#8C9AB1","#FF641C":"#8797B2","#FF6B22":"#8B9AB5","#FF7A35":"#93A1BA","#FF8A3D":"#9DAAC0","#FF8A50":"#9EABC1","#FF9A5C":"#A8B4C8","#FFAE85":"#B8C2D2","#FFB08A":"#BAC3D3","#FFB38A":"#BCC5D4","#FFC6A6":"#CCD2DE","#FFCDB3":"#D2D8E2","#FFD3BC":"#D7DCE5","#FFD9C4":"#DCE1E9","#FFE3D1":"#E5E8EE","#FFE3D3":"#E5E9EE","#FFE4D5":"#E6E9EF","#FFF0E8":"#F1F3F6","#FFF1E8":"#F2F4F7","#FFF8F4":"#F8F9FB","#FFFBF8":"#FBFCFD","255,100,28":"135,151,178","255,138,61":"157,170,192","255,227,209":"229,232,238","255,240,232":"241,243,246","255,241,232":"242,244,247"}};
+const NOME_PALETA = {laranja:'Laranja Xambre (padrão)', azul:'Azul', verde:'Verde', roxo:'Roxo', grafite:'Grafite'};
+const CSS_ORIGINAL = new WeakMap();
+function aplicarPaleta(nome){
+  const mapa = PALETAS[nome] || null;
+  document.querySelectorAll('style').forEach(st=>{
+    if(!CSS_ORIGINAL.has(st)) CSS_ORIGINAL.set(st, st.textContent);
+    const orig = CSS_ORIGINAL.get(st);
+    const novo = !mapa ? orig : orig.replace(/#[0-9a-fA-F]{6}\b|(rgba?\(\s*)(255\s*,\s*\d+\s*,\s*\d+)/g, (m, pre, rgb) => {
+      if(rgb){ const k = rgb.replace(/\s/g, ''); return mapa[k] ? pre + mapa[k] : m; }
+      return mapa[m.toUpperCase()] || m;
+    });
+    if(st.textContent !== novo) st.textContent = novo;
+  });
+  document.documentElement.setAttribute('data-paleta', mapa ? nome : 'laranja');
+}
 aplicarTema(temaAtual());
 // botão de atualizar (raio): abre o ATUALIZAR ESCALA.bat pelo endereço escalagx:// (registrado pelo próprio .bat no Windows)
 document.addEventListener('click', e=>{ if(e.target.closest('#btnAtualizarApp')) setTimeout(()=>toast('Se o atualizador não abriu, dê dois cliques no ATUALIZAR ESCALA.bat uma vez neste computador: ele liga este botão.'), 1500); });
@@ -5225,6 +5636,7 @@ $('btnSair').addEventListener('click', ()=>sair(''));
 /* ================= Início ================= */
 const lojaIni = storeGet('xambre.escala5x2.ultimaLoja');
 S = carregar(LOJAS.includes(lojaIni) ? lojaIni : LOJAS[0], mesPadrao());
+window.__painelUI = true; aplicarPainel(PAINEL);
 renderConfig(); renderBaseStatus(); renderEquipe(); renderPinceis(); renderLegenda(); render(true);
 $('vistaSel').addEventListener('change', e=>setVista(e.target.value));
 setVista(VISTA);
